@@ -55,7 +55,7 @@ export function getRoutePathByRouteName(routeName: string) {
  *
  * @param routePath route path
  */
-export function getPathParamFromroutePath(routePath: string) {
+export function getPathParamFromRoutePath(routePath: string) {
   const [path, param = ''] = routePath.split('/:');
 
   return {

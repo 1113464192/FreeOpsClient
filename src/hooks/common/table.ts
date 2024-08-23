@@ -40,7 +40,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     transformer: res => {
       const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
 
-      const recordsWithIndex = records.map((item, index) => {
+      const recordsWithIndex = (records || []).map((item, index) => {
         return {
           ...item,
           index: (current - 1) * size + index + 1
@@ -231,7 +231,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
   }
 
   /** the checked row keys of table */
-  const checkedRowKeys = ref<string[]>([]);
+  const checkedRowKeys = ref<number[]>([]);
 
   /** the hook after the batch delete operation is completed */
   async function onBatchDeleted() {

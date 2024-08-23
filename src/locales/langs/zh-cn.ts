@@ -4,8 +4,7 @@ const local: App.I18n.Schema = {
     updateTitle: '系统版本更新通知',
     updateContent: '检测到系统有新版本发布，是否立即刷新页面？',
     updateConfirm: '立即刷新',
-    updateCancel: '稍后再说',
-    routeModelError: '目前后端代码不支持dynamic,VITE_AUTH_ROUTE_MODE仅允许填static'
+    updateCancel: '稍后再说'
   },
   common: {
     action: '操作',
@@ -28,6 +27,7 @@ const local: App.I18n.Schema = {
     index: '序号',
     keywordSearch: '请输入关键词搜索',
     logout: '退出登录',
+    logoutMaskToeknFailed: '后端拉黑token失败',
     logoutConfirm: '确认退出登录吗？',
     lookForward: '敬请期待',
     modify: '修改',

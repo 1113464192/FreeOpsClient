@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { fetchGetUserList } from '@/service/api';
+import { deleteUsers, fetchGetUserList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
@@ -63,7 +63,7 @@ const {
           return null;
         }
 
-        const tagMap: Record<Api.SystemManage.userGender, NaiveUI.ThemeColor> = {
+        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
           1: 'primary',
           2: 'error'
         };
@@ -152,13 +152,21 @@ const {
 async function handleBatchDelete() {
   // request
   console.log(checkedRowKeys.value);
+  const { error } = await deleteUsers(checkedRowKeys.value);
+  if (error) {
+    return;
+  }
 
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
+async function handleDelete(id: number) {
   // request
   console.log(id);
+  const { error } = await deleteUsers([id]);
+  if (error) {
+    return;
+  }
 
   onDeleted();
 }

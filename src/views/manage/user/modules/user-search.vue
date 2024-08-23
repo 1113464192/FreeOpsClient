@@ -31,6 +31,26 @@ const rules = computed<Record<RuleKey, App.Global.FormRule>>(() => {
   };
 });
 
+// 计算属性：将 EnableStatus 类型从 number 转换为 string
+const stringEnableStatusOptions = computed(() => {
+  return enableStatusOptions
+    .filter(option => option.value !== null)
+    .map(option => ({
+      ...option,
+      value: option.value.toString()
+    }));
+});
+
+// 计算属性：将 EnableStatus 类型从 number 转换为 string
+const stringUserGenderOptions = computed(() => {
+  return userGenderOptions
+    .filter(option => option.value !== null)
+    .map(option => ({
+      ...option,
+      value: option.value.toString()
+    }));
+});
+
 async function reset() {
   await restoreValidation();
   emit('reset');
@@ -53,7 +73,7 @@ async function search() {
           <NSelect
             v-model:value="model.userGender"
             :placeholder="$t('page.manage.user.form.userGender')"
-            :options="translateOptions(userGenderOptions)"
+            :options="translateOptions(stringUserGenderOptions)"
             clearable
           />
         </NFormItemGi>
@@ -70,7 +90,7 @@ async function search() {
           <NSelect
             v-model:value="model.status"
             :placeholder="$t('page.manage.user.form.userStatus')"
-            :options="translateOptions(enableStatusOptions)"
+            :options="translateOptions(stringEnableStatusOptions)"
             clearable
           />
         </NFormItemGi>

@@ -4,8 +4,7 @@ const local: App.I18n.Schema = {
     updateTitle: 'System Version Update Notification',
     updateContent: 'A new version of the system has been detected. Do you want to refresh the page immediately?',
     updateConfirm: 'Refresh immediately',
-    updateCancel: 'Later',
-    routeModelError: 'Currently, the Backend code does not support dynamic, and VITE_AUTH_ROUTE_MODE can only be static'
+    updateCancel: 'Later'
   },
   common: {
     action: 'Action',
@@ -28,6 +27,7 @@ const local: App.I18n.Schema = {
     index: 'Index',
     keywordSearch: 'Please enter keyword',
     logout: 'Logout',
+    logoutMaskToeknFailed: 'Backend failed to mask the token.',
     logoutConfirm: 'Are you sure you want to log out?',
     lookForward: 'Coming soon',
     modify: 'Modify',

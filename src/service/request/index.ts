@@ -40,17 +40,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
         authStore.resetStore();
       }
 
-      function handleBackendError() {
-        const resMessage = response?.data?.msg;
-        const resData = response?.data?.data;
-        const errString = `错误信息: ${resMessage}: ${resData}\n`;
-        window.$dialog?.error({
-          title: $t('request.error'),
-          content: errString,
-          positiveText: $t('common.confirm')
-        });
-      }
-
       function logoutAndCleanup() {
         handleLogout();
         window.removeEventListener('beforeunload', handleLogout);
@@ -62,13 +51,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       const logoutCodes = import.meta.env.VITE_SERVICE_LOGOUT_CODES?.split(',') || [];
       if (logoutCodes.includes(response.data.code)) {
         handleLogout();
-        return null;
-      }
-
-      // 对 VITE_SERVICE_ERROR_CODE 的处理逻辑
-      const errorCode = import.meta.env.VITE_SERVICE_ERROR_CODE || [];
-      if (String(response.data.code) === errorCode) {
-        handleBackendError();
         return null;
       }
 
@@ -125,7 +107,7 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       // get backend error message and code
       if (error.code === BACKEND_ERROR_CODE || error.response?.data?.code === BACKEND_ERROR_CODE) {
-        message = error.response?.data?.msg || message;
+        message = `${error.response?.data?.msg}   ${error.message}`;
         backendErrorCode = error.response?.data?.code || '';
       }
 

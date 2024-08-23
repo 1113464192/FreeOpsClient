@@ -1,10 +1,9 @@
 <script setup lang="tsx">
-import { NButton, NPopconfirm, NTag } from 'naive-ui';
+import { NButton, NPopconfirm } from 'naive-ui';
 import { fetchGetRoleList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import { enableStatusRecord } from '@/constants/business';
 import RoleOperateDrawer from './modules/role-operate-drawer.vue';
 import RoleSearch from './modules/role-search.vue';
 
@@ -62,26 +61,6 @@ const {
       key: 'roleDesc',
       title: $t('page.manage.role.roleDesc'),
       minWidth: 120
-    },
-    {
-      key: 'status',
-      title: $t('page.manage.role.roleStatus'),
-      align: 'center',
-      width: 100,
-      render: row => {
-        if (row.status === null) {
-          return null;
-        }
-
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
-          1: 'success',
-          2: 'warning'
-        };
-
-        const label = $t(enableStatusRecord[row.status]);
-
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
-      }
     },
     {
       key: 'operate',

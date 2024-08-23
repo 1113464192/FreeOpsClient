@@ -110,14 +110,14 @@ declare namespace Api {
      * - "1": "male"
      * - "2": "female"
      */
-    type userGender = '1' | '2';
+    type UserGender = '1' | '2';
 
     /** user */
     type User = Common.CommonRecord<{
       /** user name */
       username: string;
       /** user gender */
-      userGender: userGender | null;
+      userGender: UserGender | null;
       /** user nick name */
       nickname: string;
       /** user phone */
@@ -125,7 +125,7 @@ declare namespace Api {
       /** user email */
       userEmail: string;
       /** user role code collection */
-      userRoles: string[];
+      userRoles?: number[];
     }>;
 
     /** user search params */
@@ -143,7 +143,7 @@ declare namespace Api {
      * - "1": directory
      * - "2": menu
      */
-    type menuType = 1 | 2;
+    type MenuType = 1 | 2;
 
     type MenuButton = {
       /**
@@ -185,7 +185,7 @@ declare namespace Api {
       /** parent menu id */
       parentId: number;
       /** menu type */
-      menuType: menuType;
+      menuType: MenuType;
       /** menu name */
       menuName: string;
       /** route name */
@@ -217,10 +217,11 @@ declare namespace Api {
       children?: MenuTree[];
     };
 
-    type MenuSearchParams = CommonType.RecordNullable<{
-      id: number;
-    }> &
-      CommonSearchParams;
+    type MenuSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Menu, 'id'>> & CommonSearchParams;
+    // type MenuSearchParams = CommonType.RecordNullable<{
+    //   id: number;
+    // }> &
+    //   CommonSearchParams;
 
     type UpdateButtonParams = {
       id?: number;

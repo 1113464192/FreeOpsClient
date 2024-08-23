@@ -18,12 +18,12 @@ export function fetchGetAllRoles() {
 }
 
 /** get roles of user */
-export function fetchGetUserRoles(userId: number) {
+export function fetchGetUserRoles(uid: number) {
   return request<Api.SystemManage.RoleList>({
     url: `/users/roles`,
     method: 'get',
     params: {
-      userId
+      uid
     }
   });
 }
@@ -46,6 +46,41 @@ export function fetchGetMenuList(params?: Api.SystemManage.MenuSearchParams) {
   });
 }
 
+/** get all pages */
+export function fetchGetAllPages() {
+  return request<string[]>({
+    url: '/menus/all-pages',
+    method: 'get'
+  });
+}
+
+/** get menu tree */
+export function fetchGetMenuTree() {
+  return request<Api.SystemManage.MenuTree[]>({
+    url: '/menus/tree',
+    method: 'get'
+  });
+}
+
+export function updateUserRoles(userId: number, roleIds: number[]) {
+  return request({
+    url: '/users/bind-roles',
+    method: 'put',
+    data: {
+      userId,
+      roleIds
+    }
+  });
+}
+
+export function updateUser(data: Api.SystemManage.User) {
+  return request({
+    url: '/users',
+    method: 'post',
+    data
+  });
+}
+
 export function updateButton(data: Api.SystemManage.UpdateButtonParams[]) {
   return request({
     url: '/buttons',
@@ -62,18 +97,22 @@ export function updateMenu(data: Api.SystemManage.Menu) {
   });
 }
 
-/** get all pages */
-export function fetchGetAllPages() {
-  return request<string[]>({
-    url: '/menus/all-pages',
-    method: 'get'
+export function deleteUsers(ids: number[]) {
+  return request({
+    url: '/users',
+    method: 'delete',
+    data: {
+      ids
+    }
   });
 }
 
-/** get menu tree */
-export function fetchGetMenuTree() {
-  return request<Api.SystemManage.MenuTree[]>({
-    url: '/menus/tree',
-    method: 'get'
+export function deleteRoles(ids: number[]) {
+  return request({
+    url: '/roles',
+    method: 'delete',
+    data: {
+      ids
+    }
   });
 }

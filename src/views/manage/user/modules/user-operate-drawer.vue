@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { fetchGetAllRoles, fetchGetUserRoles } from '@/service/api';
+import { fetchGetAllRoles, fetchGetUserList, fetchGetUserRoles, updateUser, updateUserRoles } from '@/service/api';
+// import { fetchGetAllRoles, fetchGetUserRoles, updateUser } from '@/service/api';
+
 import { $t } from '@/locales';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 
@@ -39,12 +41,16 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.User, 'username' | 'userGender' | 'nickname' | 'userPhone' | 'userEmail' | 'status'>;
+type Model = Pick<
+  Api.SystemManage.User,
+  'id' | 'username' | 'userGender' | 'nickname' | 'userPhone' | 'userEmail' | 'status'
+>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
+    id: 0,
     username: '',
     userGender: null,
     nickname: '',
@@ -63,7 +69,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 
 /** the enabled role options */
 const roleOptions = ref<CommonType.Option<number>[]>([]);
-const userRoles = ref<string[]>([]);
+const userRoles = ref<number[]>([]);
 
 async function getRoleOptions() {
   const { error, data } = await fetchGetAllRoles();
@@ -92,13 +98,11 @@ async function getUserRoles() {
     return;
   }
   const { error, data } = await fetchGetUserRoles(props.rowData?.id);
-  if (!error) {
-    for (let i: number = 0; i < data.records.length; i += 1) {
-      userRoles.value = data.records.map(record => record.roleName);
-    }
-  } else {
-    console.log(error.message);
-    window.$message?.error(error.message);
+  if (error) {
+    return;
+  }
+  for (let i: number = 0; i < data.records.length; i += 1) {
+    userRoles.value = data.records.map(record => record.id);
   }
 }
 
@@ -108,7 +112,33 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  // request
+  console.log('model', model);
+  // 更新用户信息
+  const { error: userError } = await updateUser(model);
+  if (userError) {
+    return;
+  }
+  // 如果是新增的话，判断是否有角色要更新，再获取用户ID
+  if (props.operateType === 'add' && userRoles.value.length !== 0) {
+    const params = {
+      current: 1,
+      size: 10,
+      username: model.username
+    };
+    const { error: rolesError, data } = await fetchGetUserList(params);
+    if (rolesError) {
+      return;
+    }
+    model.id = data.records[0].id;
+  }
+  // 判断是否有角色要更新
+  if (userRoles.value.length !== 0) {
+    const { error: rolesError } = await updateUserRoles(model.id, userRoles.value);
+    if (rolesError) {
+      return;
+    }
+  }
+
   window.$message?.success($t('common.updateSuccess'));
   closeDrawer();
   emit('submitted');
@@ -119,7 +149,9 @@ watch(visible, () => {
     handleInitModel();
     restoreValidation();
     getRoleOptions();
-    getUserRoles();
+    if (props.operateType === 'edit') {
+      getUserRoles();
+    }
   }
 });
 </script>
@@ -147,7 +179,12 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio
+              v-for="item in enableStatusOptions"
+              :key="item.value"
+              :value="Number(item.value)"
+              :label="$t(item.label)"
+            />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userRole')" path="roles">

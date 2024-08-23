@@ -255,7 +255,6 @@ declare namespace App {
         updateContent: string;
         updateConfirm: string;
         updateCancel: string;
-        routeModelError: string;
       };
       common: {
         action: string;
@@ -278,6 +277,7 @@ declare namespace App {
         index: string;
         keywordSearch: string;
         logout: string;
+        logoutMaskToeknFailed: string;
         logoutConfirm: string;
         lookForward: string;
         modify: string;

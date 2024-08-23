@@ -17,6 +17,14 @@ export function fetchLogin(username: string, password: string) {
   });
 }
 
+/** Login */
+export function fetchLogout() {
+  return request({
+    url: '/users/logout',
+    method: 'post'
+  });
+}
+
 /** Get user info */
 export function fetchGetUserInfo() {
   return request<Api.Auth.UserInfo>({ url: '/users/privilege' });
