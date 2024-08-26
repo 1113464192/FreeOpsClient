@@ -8,9 +8,9 @@ declare namespace Api {
     /** common params of paginating */
     interface PaginatingCommonParams {
       /** current page number */
-      current: number;
+      current?: number;
       /** page size */
-      size: number;
+      size?: number;
       /** total count */
       total: number;
     }
@@ -104,6 +104,13 @@ declare namespace Api {
     /** all role */
     type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
 
+    /** role bind req */
+    interface RoleRelation {
+      roleId: number;
+      associationType: number; // 1: api 2: menu 3: button
+      objectIds: number[];
+    }
+
     /**
      * user gender
      *
@@ -155,6 +162,14 @@ declare namespace Api {
       /** button description */
       desc: string;
     };
+
+    type Button = {
+      id: number;
+      buttonCode: string;
+      buttonDesc: string;
+      menuId: number;
+    };
+    type ButtonList = Common.PaginatingQueryRecord<Button>;
 
     /**
      * icon type
@@ -227,5 +242,12 @@ declare namespace Api {
       id?: number;
       menuId: number;
     } & MenuButton;
+
+    type ButtonSearchParams = CommonType.RecordNullable<{
+      id?: number;
+      code?: string;
+      menuId?: number;
+    }> &
+      CommonSearchParams;
   }
 }

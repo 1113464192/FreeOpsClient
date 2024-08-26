@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import { $t } from '@/locales';
+import { fetchGetButtonList, fetchGetRoleButtons, updateRoleRelation } from '@/service/api';
 
 defineOptions({
   name: 'ButtonAuthModal'
@@ -33,32 +34,38 @@ const tree = shallowRef<ButtonConfig[]>([]);
 
 async function getAllButtons() {
   // request
-  tree.value = [
-    { id: 1, label: 'button1', code: 'code1' },
-    { id: 2, label: 'button2', code: 'code2' },
-    { id: 3, label: 'button3', code: 'code3' },
-    { id: 4, label: 'button4', code: 'code4' },
-    { id: 5, label: 'button5', code: 'code5' },
-    { id: 6, label: 'button6', code: 'code6' },
-    { id: 7, label: 'button7', code: 'code7' },
-    { id: 8, label: 'button8', code: 'code8' },
-    { id: 9, label: 'button9', code: 'code9' },
-    { id: 10, label: 'button10', code: 'code10' }
-  ];
+  const { error, data } = await fetchGetButtonList();
+  if (error) {
+    return;
+  }
+  tree.value = data.records.map((item: Api.SystemManage.Button) => ({
+    id: item.id,
+    label: item.buttonDesc,
+    code: item.buttonCode
+  }));
 }
 
 const checks = shallowRef<number[]>([]);
 
 async function getChecks() {
   console.log(props.roleId);
-  // request
-  checks.value = [1, 2, 3, 4, 5];
+  const { error, data } = await fetchGetRoleButtons([props.roleId]);
+  if (error) {
+    return;
+  }
+  checks.value = data;
 }
 
-function handleSubmit() {
+async function handleSubmit() {
   console.log(checks.value, props.roleId);
-  // request
-
+  const { error } = await updateRoleRelation({
+    roleId: props.roleId,
+    associationType: 3,
+    objectIds: checks.value
+  });
+  if (error) {
+    return;
+  }
   window.$message?.success?.($t('common.modifySuccess'));
 
   closeModal();

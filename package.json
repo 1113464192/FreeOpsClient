@@ -61,6 +61,7 @@
     "naive-ui": "2.38.2",
     "nprogress": "0.2.0",
     "pinia": "2.1.7",
+    "qs": "6.12.1",
     "tailwind-merge": "2.3.0",
     "vue": "3.4.30",
     "vue-draggable-plus": "0.5.0",

@@ -6,7 +6,7 @@ import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
-import { fetchGetAllRoles } from '@/service/api';
+import { fetchGetAllRoles, updateButton, updateMenu } from '@/service/api';
 import {
   getLayoutAndPage,
   getPathParamFromRoutePath,
@@ -56,6 +56,7 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.Menu,
+  | 'id'
   | 'menuType'
   | 'menuName'
   | 'routeName'
@@ -74,18 +75,22 @@ type Model = Pick<
   | 'activeMenu'
   | 'multiTab'
   | 'fixedIndexInTab'
+  | 'props'
+  | 'showRole'
 > & {
   query: NonNullable<Api.SystemManage.Menu['query']>;
   buttons: NonNullable<Api.SystemManage.Menu['buttons']>;
   layout: string;
   page: string;
   pathParam: string;
+  isPropsBoolean: boolean;
 };
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
+    id: props.rowData?.id || 0,
     menuType: 1,
     menuName: '',
     routeName: '',
@@ -100,6 +105,7 @@ function createDefaultModel(): Model {
     parentId: 0,
     status: 1,
     keepAlive: false,
+    showRole: false,
     constant: false,
     order: 0,
     href: null,
@@ -107,6 +113,8 @@ function createDefaultModel(): Model {
     activeMenu: null,
     multiTab: false,
     fixedIndexInTab: null,
+    isPropsBoolean: false,
+    props: [],
     query: [],
     buttons: []
   };
@@ -121,7 +129,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   routePath: defaultRequiredRule
 };
 
-const disabledMenuType = computed(() => props.operateType === 'edit');
+const disabledmenuType = computed(() => props.operateType === 'edit');
 
 const localIcons = getLocalIcons();
 const localIconOptions = localIcons.map<SelectOption>(item => ({
@@ -156,16 +164,16 @@ const pageOptions = computed(() => {
 const layoutOptions: CommonType.Option[] = [
   {
     label: 'base',
-    value: 'base'
+    value: 'layout.base'
   },
   {
     label: 'blank',
-    value: 'blank'
+    value: 'layout.blank'
   }
 ];
 
 /** the enabled role options */
-const roleOptions = ref<CommonType.Option<string>[]>([]);
+const roleOptions = ref<CommonType.Option<number>[]>([]);
 
 async function getRoleOptions() {
   const { error, data } = await fetchGetAllRoles();
@@ -173,10 +181,10 @@ async function getRoleOptions() {
   if (!error) {
     const options = data.map(item => ({
       label: item.roleName,
-      value: item.roleCode
+      value: item.id
     }));
 
-    roleOptions.value = [...options];
+    roleOptions.value = options;
   }
 }
 
@@ -212,7 +220,7 @@ function closeDrawer() {
   visible.value = false;
 }
 
-function handleUpdateRoutePathByRouteName() {
+function handleUpdateroutePathByRouteName() {
   if (model.routeName) {
     model.routePath = getRoutePathByRouteName(model.routeName);
   } else {
@@ -246,20 +254,65 @@ function getSubmitParams() {
   params.component = component;
   params.routePath = routePath;
 
-  return params;
+  return params as Model;
+}
+
+async function updateModel(params: Model): Promise<void> {
+  model.menuType = params.menuType;
+  model.menuName = params.menuName;
+  model.routeName = params.routeName;
+  model.routePath = params.routePath;
+  model.pathParam = params.pathParam;
+  model.component = params.component;
+  model.layout = params.layout;
+  model.page = params.page;
+  model.i18nKey = params.i18nKey;
+  model.icon = params.icon;
+  model.iconType = params.iconType;
+  model.status = params.status;
+  model.parentId = params.parentId;
+  model.keepAlive = params.keepAlive;
+  model.constant = params.constant;
+  model.order = params.order;
+  model.href = params.href;
+  model.hideInMenu = params.hideInMenu;
+  model.showRole = params.showRole;
+  model.activeMenu = params.activeMenu;
+  model.multiTab = params.multiTab;
+  model.fixedIndexInTab = params.fixedIndexInTab;
+  model.query = params.query;
+  model.buttons = params.buttons;
+  if (params.props && params.isPropsBoolean === true) {
+    model.props = params.props;
+  } else if (params.isPropsBoolean === true) {
+    model.props = true;
+  }
+  await updateMenu(model);
+  const buttons: Api.SystemManage.UpdateButtonParams[] = model.buttons.map(button => ({
+    menuId: model.id,
+    code: button.code,
+    desc: button.desc
+  }));
+  await updateButton(buttons);
 }
 
 async function handleSubmit() {
-  await validate();
+  try {
+    await validate();
 
-  const params = getSubmitParams();
+    const params = getSubmitParams();
 
-  console.log('params: ', params);
+    console.log('params: ', params);
 
-  // request
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
-  emit('submitted');
+    await updateModel(params);
+
+    // request
+    window.$message?.success($t('common.updateSuccess'));
+    closeDrawer();
+    emit('submitted');
+  } catch (error) {
+    window.$message?.error($t('common.error'));
+  }
 }
 
 watch(visible, () => {
@@ -273,7 +326,7 @@ watch(visible, () => {
 watch(
   () => model.routeName,
   () => {
-    handleUpdateRoutePathByRouteName();
+    handleUpdateroutePathByRouteName();
     handleUpdateI18nKeyByRouteName();
   }
 );
@@ -285,7 +338,7 @@ watch(
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
         <NGrid responsive="screen" item-responsive>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.menuType')" path="menuType">
-            <NRadioGroup v-model:value="model.menuType" :disabled="disabledMenuType">
+            <NRadioGroup v-model:value="model.menuType" :disabled="disabledmenuType">
               <NRadio v-for="item in menuTypeOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
             </NRadioGroup>
           </NFormItemGi>
@@ -397,6 +450,12 @@ watch(
               <NRadio :value="false" :label="$t('common.yesOrNo.no')" />
             </NRadioGroup>
           </NFormItemGi>
+          <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.props')" path="isPropsBoolean">
+            <NRadioGroup v-model:value="model.isPropsBoolean">
+              <NRadio :value="true" :label="$t('common.yesOrNo.yes')" />
+              <NRadio :value="false" :label="$t('common.yesOrNo.no')" />
+            </NRadioGroup>
+          </NFormItemGi>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.fixedIndexInTab')" path="fixedIndexInTab">
             <NInputNumber
               v-model:value="model.fixedIndexInTab"
@@ -412,6 +471,34 @@ watch(
               :key-placeholder="$t('page.manage.menu.form.queryKey')"
               :value-placeholder="$t('page.manage.menu.form.queryValue')"
             >
+              <template #action="{ index, create, remove }">
+                <NSpace class="ml-12px">
+                  <NButton size="medium" @click="() => create(index)">
+                    <icon-ic:round-plus class="text-icon" />
+                  </NButton>
+                  <NButton size="medium" @click="() => remove(index)">
+                    <icon-ic-round-remove class="text-icon" />
+                  </NButton>
+                </NSpace>
+              </template>
+            </NDynamicInput>
+          </NFormItemGi>
+          <NFormItemGi v-if="model.isPropsBoolean === true" span="24" :label="$t('page.manage.menu.assignProps')">
+            <NDynamicInput v-model:value="model.props as Array<Record<string, any>>" :on-create="handleCreateButton">
+              <template #default="{ value }">
+                <div class="ml-8px flex-y-center flex-1 gap-12px">
+                  <NInput
+                    v-model:value="value.code"
+                    :placeholder="$t('page.manage.menu.form.propsKey')"
+                    class="flex-1"
+                  />
+                  <NInput
+                    v-model:value="value.desc"
+                    :placeholder="$t('page.manage.menu.form.propsValue')"
+                    class="flex-1"
+                  />
+                </div>
+              </template>
               <template #action="{ index, create, remove }">
                 <NSpace class="ml-12px">
                   <NButton size="medium" @click="() => create(index)">

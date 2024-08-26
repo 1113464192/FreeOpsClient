@@ -4,7 +4,7 @@ import { $t } from '@/locales';
 import { fetchGetAllPages, fetchGetMenuTree, fetchGetRoleMenus, updateRoleRelation } from '@/service/api';
 
 defineOptions({
-  name: 'MenuAuthModal'
+  name: 'ApiAuthModal'
 });
 
 interface Props {
@@ -22,7 +22,19 @@ function closeModal() {
   visible.value = false;
 }
 
-const title = computed(() => $t('common.edit') + $t('page.manage.role.menuAuth'));
+const title = computed(() => $t('common.edit') + $t('page.manage.role.apiAuth'));
+
+const apiBase = shallowRef('');
+
+async function getApiBase() {
+  console.log(props.roleId);
+
+  apiBase.value = 'api';
+}
+
+async function updateApiBase(val: string) {
+  apiBase.value = val;
+}
 
 const pages = shallowRef<string[]>([]);
 
@@ -33,6 +45,15 @@ async function getPages() {
     pages.value = data;
   }
 }
+
+const pageSelectOptions = computed(() => {
+  const opts: CommonType.Option[] = pages.value.map(page => ({
+    label: page,
+    value: page
+  }));
+
+  return opts;
+});
 
 const tree = shallowRef<Api.SystemManage.MenuTree[]>([]);
 
@@ -73,6 +94,7 @@ async function handleSubmit() {
 }
 
 function init() {
+  getApiBase();
   getPages();
   getTree();
   getChecks();
@@ -87,6 +109,16 @@ watch(visible, val => {
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
+    <div class="flex-y-center gap-16px pb-12px">
+      <div>{{ $t('page.manage.menu.home') }}</div>
+      <NSelect
+        :value="apiBase"
+        :options="pageSelectOptions"
+        size="small"
+        class="w-160px"
+        @update:value="updateApiBase"
+      />
+    </div>
     <NTree
       v-model:checked-keys="checks"
       :data="tree"

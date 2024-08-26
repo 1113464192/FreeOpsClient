@@ -3,6 +3,7 @@ import { computed, reactive, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
+import { updateRole } from '@/service/api';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
 
@@ -33,6 +34,7 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 const { defaultRequiredRule } = useFormRules();
 const { bool: menuAuthVisible, setTrue: openMenuAuthModal } = useBoolean();
 const { bool: buttonAuthVisible, setTrue: openButtonAuthModal } = useBoolean();
+const { bool: apiAuthVisible, setTrue: openApiAuthModal } = useBoolean();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
@@ -42,26 +44,24 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'roleDesc'>;
+const model: Api.SystemManage.Role = reactive(createDefaultModel());
 
-const model: Model = reactive(createDefaultModel());
-
-function createDefaultModel(): Model {
+function createDefaultModel(): Api.SystemManage.Role {
   return {
+    id: 0,
+    status: null,
     roleName: '',
     roleCode: '',
     roleDesc: ''
   };
 }
 
-type RuleKey = Exclude<keyof Model, 'roleDesc'>;
+type RuleKey = Exclude<keyof Api.SystemManage.Role, 'roleDesc' | 'id' | 'status'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   roleName: defaultRequiredRule,
   roleCode: defaultRequiredRule
 };
-
-const roleId = computed(() => props.rowData?.id || -1);
 
 const isEdit = computed(() => props.operateType === 'edit');
 
@@ -79,7 +79,11 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  // request
+  console.log('model', model);
+  const { error } = await updateRole(model);
+  if (error) {
+    return;
+  }
   window.$message?.success($t('common.updateSuccess'));
   closeDrawer();
   emit('submitted');
@@ -109,9 +113,11 @@ watch(visible, () => {
       </NForm>
       <NSpace v-if="isEdit">
         <NButton @click="openMenuAuthModal">{{ $t('page.manage.role.menuAuth') }}</NButton>
-        <MenuAuthModal v-model:visible="menuAuthVisible" :role-id="roleId" />
+        <MenuAuthModal v-model:visible="menuAuthVisible" :role-id="model.id" />
         <NButton @click="openButtonAuthModal">{{ $t('page.manage.role.buttonAuth') }}</NButton>
-        <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="roleId" />
+        <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="model.id" />
+        <NButton @click="openApiAuthModal">{{ $t('page.manage.role.apiAuth') }}</NButton>
+        <ButtonAuthModal v-model:visible="apiAuthVisible" :role-id="model.id" />
       </NSpace>
       <template #footer>
         <NSpace :size="16">

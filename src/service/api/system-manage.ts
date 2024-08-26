@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { request } from '../request';
 
 /** get role list */
@@ -46,6 +47,15 @@ export function fetchGetMenuList(params?: Api.SystemManage.MenuSearchParams) {
   });
 }
 
+/** get button list */
+export function fetchGetButtonList(params?: Api.SystemManage.ButtonSearchParams) {
+  return request<Api.SystemManage.ButtonList>({
+    url: '/buttons',
+    method: 'get',
+    params
+  });
+}
+
 /** get all pages */
 export function fetchGetAllPages() {
   return request<string[]>({
@@ -59,6 +69,46 @@ export function fetchGetMenuTree() {
   return request<Api.SystemManage.MenuTree[]>({
     url: '/menus/tree',
     method: 'get'
+  });
+}
+
+/** get the menu for role binding */
+export function fetchGetRoleMenus(ids: number[]) {
+  return request<number[]>({
+    url: '/roles/menus',
+    method: 'get',
+    params: {
+      ids
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
+  });
+}
+
+export function fetchGetRoleApis(ids: number[]) {
+  return request<number[]>({
+    url: '/roles/apis',
+    method: 'get',
+    params: {
+      ids
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
+  });
+}
+
+export function fetchGetRoleButtons(ids: number[]) {
+  return request<number[]>({
+    url: '/roles/buttons',
+    method: 'get',
+    params: {
+      ids
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
   });
 }
 
@@ -77,6 +127,22 @@ export function updateUser(data: Api.SystemManage.User) {
   return request({
     url: '/users',
     method: 'post',
+    data
+  });
+}
+
+export function updateRole(data: Api.SystemManage.Role) {
+  return request({
+    url: '/roles',
+    method: 'post',
+    data
+  });
+}
+
+export function updateRoleRelation(data: Api.SystemManage.RoleRelation) {
+  return request({
+    url: '/roles/bind',
+    method: 'put',
     data
   });
 }
