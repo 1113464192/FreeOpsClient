@@ -1,5 +1,5 @@
-const LAYOUT_PREFIX = 'layout.';
-const VIEW_PREFIX = 'view.';
+export const LAYOUT_PREFIX = 'layout.';
+export const VIEW_PREFIX = 'view.';
 const FIRST_LEVEL_ROUTE_COMPONENT_SPLIT = '$';
 
 export function getLayoutAndPage(component?: string | null) {

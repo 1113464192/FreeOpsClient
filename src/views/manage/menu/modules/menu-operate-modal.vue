@@ -6,7 +6,7 @@ import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
-import { fetchGetAllRoles, updateButton, updateMenu } from '@/service/api';
+import { updateButton, updateMenu } from '@/service/api';
 import {
   getLayoutAndPage,
   getPathParamFromRoutePath,
@@ -76,7 +76,6 @@ type Model = Pick<
   | 'multiTab'
   | 'fixedIndexInTab'
   | 'props'
-  | 'showRole'
 > & {
   query: NonNullable<Api.SystemManage.Menu['query']>;
   buttons: NonNullable<Api.SystemManage.Menu['buttons']>;
@@ -84,9 +83,14 @@ type Model = Pick<
   page: string;
   pathParam: string;
   isPropsBoolean: boolean;
+  propsArray: { key: string; value: any }[];
 };
 
 const model: Model = reactive(createDefaultModel());
+
+// 字符串才能出发naiveUI的组件默认值，否则只能自己选
+const menuStatus = ref<string>('1');
+const iconType = ref<string>('1');
 
 function createDefaultModel(): Model {
   return {
@@ -105,7 +109,6 @@ function createDefaultModel(): Model {
     parentId: 0,
     status: 1,
     keepAlive: false,
-    showRole: false,
     constant: false,
     order: 0,
     href: null,
@@ -114,9 +117,10 @@ function createDefaultModel(): Model {
     multiTab: false,
     fixedIndexInTab: null,
     isPropsBoolean: false,
-    props: [],
+    props: false,
     query: [],
-    buttons: []
+    buttons: [],
+    propsArray: []
   };
 }
 
@@ -172,20 +176,21 @@ const layoutOptions: CommonType.Option[] = [
   }
 ];
 
-/** the enabled role options */
-const roleOptions = ref<CommonType.Option<number>[]>([]);
-
-async function getRoleOptions() {
-  const { error, data } = await fetchGetAllRoles();
-
-  if (!error) {
-    const options = data.map(item => ({
-      label: item.roleName,
-      value: item.id
-    }));
-
-    roleOptions.value = options;
+function convertPropsToArray(modelProps: Record<string, any> | boolean): { key: string; value: any }[] {
+  if (typeof modelProps === 'boolean') {
+    return [];
   }
+  return Object.entries(modelProps).map(([key, value]) => ({ key, value }));
+}
+
+function convertArrayToProps(propArray: { key: string; value: any }[]): Record<string, any> {
+  return propArray.reduce(
+    (acc, { key, value }) => {
+      acc[key] = value;
+      return acc;
+    },
+    {} as Record<string, any>
+  );
 }
 
 function handleInitModel() {
@@ -208,11 +213,17 @@ function handleInitModel() {
     Object.assign(model, rest, { layout, page, routePath: path, pathParam: param });
   }
 
-  if (!model.query) {
-    model.query = [];
+  if (!model.status) {
+    window.$message?.error($t('common.error', { status: model.status }));
+    return;
   }
-  if (!model.buttons) {
-    model.buttons = [];
+  menuStatus.value = model.status.toString();
+  iconType.value = model.iconType.toString();
+  if (model.props) {
+    model.propsArray = convertPropsToArray(model.props);
+  }
+  if (model.props) {
+    model.isPropsBoolean = true;
   }
 }
 
@@ -237,9 +248,9 @@ function handleUpdateI18nKeyByRouteName() {
 }
 
 function handleCreateButton() {
-  const buttonItem: Api.SystemManage.MenuButton = {
-    code: '',
-    desc: ''
+  const buttonItem: Pick<Api.SystemManage.Button, 'buttonCode' | 'buttonDesc'> = {
+    buttonCode: '',
+    buttonDesc: ''
   };
 
   return buttonItem;
@@ -253,6 +264,13 @@ function getSubmitParams() {
 
   params.component = component;
   params.routePath = routePath;
+
+  // 将 propsArray 转换回对象形式
+  if (params.isPropsBoolean === true && params.propsArray.length > 0) {
+    params.props = convertArrayToProps(model.propsArray);
+  } else {
+    params.props = false;
+  }
 
   return params as Model;
 }
@@ -268,32 +286,49 @@ async function updateModel(params: Model): Promise<void> {
   model.page = params.page;
   model.i18nKey = params.i18nKey;
   model.icon = params.icon;
-  model.iconType = params.iconType;
-  model.status = params.status;
   model.parentId = params.parentId;
   model.keepAlive = params.keepAlive;
   model.constant = params.constant;
   model.order = params.order;
   model.href = params.href;
   model.hideInMenu = params.hideInMenu;
-  model.showRole = params.showRole;
   model.activeMenu = params.activeMenu;
   model.multiTab = params.multiTab;
   model.fixedIndexInTab = params.fixedIndexInTab;
   model.query = params.query;
-  model.buttons = params.buttons;
+
+  model.iconType = Number.parseInt(iconType.value, 10) as Api.Common.EnableStatus;
+  model.status = Number.parseInt(menuStatus.value, 10) as Api.Common.EnableStatus;
   if (params.props && params.isPropsBoolean === true) {
     model.props = params.props;
   } else if (params.isPropsBoolean === true) {
     model.props = true;
+  } else {
+    model.props = false;
   }
-  await updateMenu(model);
-  const buttons: Api.SystemManage.UpdateButtonParams[] = model.buttons.map(button => ({
-    menuId: model.id,
-    code: button.code,
-    desc: button.desc
-  }));
-  await updateButton(buttons);
+
+  console.log('model: ', model);
+  const { error: menuError } = await updateMenu(model);
+  if (menuError) {
+    throw new Error(menuError.response?.data.msg);
+  }
+
+  if (params.buttons.length > 0) {
+    const filteredButtons = params.buttons.filter(
+      button => button.buttonCode !== '' && button.buttonCode !== null && button.buttonCode !== undefined
+    );
+    if (filteredButtons.length > 0) {
+      const buttons: Api.SystemManage.UpdateButtonParams[] = filteredButtons.map(button => ({
+        menuId: model.id,
+        buttonCode: button.buttonCode,
+        buttonDesc: button.buttonDesc
+      }));
+      const { error: buttonError } = await updateButton(buttons);
+      if (buttonError) {
+        throw new Error(buttonError.response?.data.msg);
+      }
+    }
+  }
 }
 
 async function handleSubmit() {
@@ -311,7 +346,8 @@ async function handleSubmit() {
     closeDrawer();
     emit('submitted');
   } catch (error) {
-    window.$message?.error($t('common.error'));
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    window.$message?.error($t('common.error') + errorMessage);
   }
 }
 
@@ -319,7 +355,7 @@ watch(visible, () => {
   if (visible.value) {
     handleInitModel();
     restoreValidation();
-    getRoleOptions();
+    // getRoleOptions();
   }
 });
 
@@ -375,7 +411,7 @@ watch(
             <NInputNumber v-model:value="model.order" class="w-full" :placeholder="$t('page.manage.menu.form.order')" />
           </NFormItemGi>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.iconTypeTitle')" path="iconType">
-            <NRadioGroup v-model:value="model.iconType">
+            <NRadioGroup v-model:value="iconType">
               <NRadio
                 v-for="item in menuIconTypeOptions"
                 :key="item.value"
@@ -401,7 +437,7 @@ watch(
             </template>
           </NFormItemGi>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.menuStatus')" path="status">
-            <NRadioGroup v-model:value="model.status">
+            <NRadioGroup v-model:value="menuStatus">
               <NRadio
                 v-for="item in enableStatusOptions"
                 :key="item.value"
@@ -484,21 +520,12 @@ watch(
             </NDynamicInput>
           </NFormItemGi>
           <NFormItemGi v-if="model.isPropsBoolean === true" span="24" :label="$t('page.manage.menu.assignProps')">
-            <NDynamicInput v-model:value="model.props as Array<Record<string, any>>" :on-create="handleCreateButton">
-              <template #default="{ value }">
-                <div class="ml-8px flex-y-center flex-1 gap-12px">
-                  <NInput
-                    v-model:value="value.code"
-                    :placeholder="$t('page.manage.menu.form.propsKey')"
-                    class="flex-1"
-                  />
-                  <NInput
-                    v-model:value="value.desc"
-                    :placeholder="$t('page.manage.menu.form.propsValue')"
-                    class="flex-1"
-                  />
-                </div>
-              </template>
+            <NDynamicInput
+              v-model:value="model.propsArray"
+              preset="pair"
+              :key-placeholder="$t('page.manage.menu.form.propsKey')"
+              :value-placeholder="$t('page.manage.menu.form.propsValue')"
+            >
               <template #action="{ index, create, remove }">
                 <NSpace class="ml-12px">
                   <NButton size="medium" @click="() => create(index)">
@@ -516,12 +543,12 @@ watch(
               <template #default="{ value }">
                 <div class="ml-8px flex-y-center flex-1 gap-12px">
                   <NInput
-                    v-model:value="value.code"
+                    v-model:value="value.buttonCode"
                     :placeholder="$t('page.manage.menu.form.buttonCode')"
                     class="flex-1"
                   />
                   <NInput
-                    v-model:value="value.desc"
+                    v-model:value="value.buttonDesc"
                     :placeholder="$t('page.manage.menu.form.buttonDesc')"
                     class="flex-1"
                   />

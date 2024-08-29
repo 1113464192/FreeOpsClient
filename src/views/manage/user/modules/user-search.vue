@@ -41,7 +41,7 @@ const stringEnableStatusOptions = computed(() => {
     }));
 });
 
-// 计算属性：将 EnableStatus 类型从 number 转换为 string
+// 计算属性：将 UserGender 类型从 number 转换为 string
 const stringUserGenderOptions = computed(() => {
   return userGenderOptions
     .filter(option => option.value !== null)

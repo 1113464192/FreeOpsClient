@@ -152,17 +152,6 @@ declare namespace Api {
      */
     type MenuType = 1 | 2;
 
-    type MenuButton = {
-      /**
-       * button code
-       *
-       * it can be used to control the button permission
-       */
-      code: string;
-      /** button description */
-      desc: string;
-    };
-
     type Button = {
       id: number;
       buttonCode: string;
@@ -174,8 +163,8 @@ declare namespace Api {
     /**
      * icon type
      *
-     * - "1": iconify icon
-     * - "2": local icon
+     * - 1: iconify icon
+     * - 2: local icon
      */
     type IconType = 1 | 2;
 
@@ -193,7 +182,7 @@ declare namespace Api {
       | 'query'
       | 'roles'
     > & {
-      props?: Array<Record<string, any>> | boolean;
+      props?: { [key: string]: string } | boolean;
     };
 
     type Menu = Common.CommonRecord<{
@@ -213,10 +202,8 @@ declare namespace Api {
       icon: string;
       /** icon type */
       iconType: IconType;
-      /** limit viewing with roles */
-      showRole?: boolean | null;
       /** buttons */
-      buttons?: MenuButton[] | null;
+      buttons?: Pick<Button, 'buttonCode' | 'buttonDesc'>[] | null;
       /** children menu */
       children?: Menu[] | null;
     }> &
@@ -228,7 +215,6 @@ declare namespace Api {
     type MenuTree = {
       id: number;
       label: string;
-      pId: number;
       children?: MenuTree[];
     };
 
@@ -240,8 +226,7 @@ declare namespace Api {
 
     type UpdateButtonParams = {
       id?: number;
-      menuId: number;
-    } & MenuButton;
+    } & Omit<Button, 'id'>;
 
     type ButtonSearchParams = CommonType.RecordNullable<{
       id?: number;
@@ -249,5 +234,24 @@ declare namespace Api {
       menuId?: number;
     }> &
       CommonSearchParams;
+
+    interface ApiModel {
+      id?: number;
+      path: string;
+      method: string;
+      apiGroup: string;
+      description?: string;
+    }
+
+    type ApiList = Common.PaginatingQueryRecord<ApiModel>;
+
+    type ApiSearchParams = CommonType.RecordNullable<Omit<Api.SystemManage.ApiModel, 'description'>> &
+      CommonSearchParams;
+
+    type ApiTree = {
+      id: number;
+      label: string;
+      children?: ApiTree[];
+    };
   }
 }

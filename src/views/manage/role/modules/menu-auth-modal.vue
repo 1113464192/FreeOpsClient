@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
-import { fetchGetAllPages, fetchGetMenuTree, fetchGetRoleMenus, updateRoleRelation } from '@/service/api';
+import { fetchGetMenuTree, fetchGetRoleMenus, updateRoleRelation } from '@/service/api';
 
 defineOptions({
   name: 'MenuAuthModal'
@@ -23,16 +23,6 @@ function closeModal() {
 }
 
 const title = computed(() => $t('common.edit') + $t('page.manage.role.menuAuth'));
-
-const pages = shallowRef<string[]>([]);
-
-async function getPages() {
-  const { error, data } = await fetchGetAllPages();
-
-  if (!error) {
-    pages.value = data;
-  }
-}
 
 const tree = shallowRef<Api.SystemManage.MenuTree[]>([]);
 
@@ -73,7 +63,6 @@ async function handleSubmit() {
 }
 
 function init() {
-  getPages();
   getTree();
   getChecks();
 }

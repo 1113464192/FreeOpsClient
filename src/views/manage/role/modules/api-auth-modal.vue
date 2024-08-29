@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
-import { fetchGetAllPages, fetchGetMenuTree, fetchGetRoleMenus, updateRoleRelation } from '@/service/api';
+import { fetchGetApiTree, fetchGetRoleApis, updateRoleRelation } from '@/service/api';
 
 defineOptions({
   name: 'ApiAuthModal'
@@ -24,41 +24,14 @@ function closeModal() {
 
 const title = computed(() => $t('common.edit') + $t('page.manage.role.apiAuth'));
 
-const apiBase = shallowRef('');
+const tree = shallowRef<Api.SystemManage.ApiTree[]>([]);
 
-async function getApiBase() {
-  console.log(props.roleId);
+const showIrrelevantNodes = ref(false);
 
-  apiBase.value = 'api';
-}
-
-async function updateApiBase(val: string) {
-  apiBase.value = val;
-}
-
-const pages = shallowRef<string[]>([]);
-
-async function getPages() {
-  const { error, data } = await fetchGetAllPages();
-
-  if (!error) {
-    pages.value = data;
-  }
-}
-
-const pageSelectOptions = computed(() => {
-  const opts: CommonType.Option[] = pages.value.map(page => ({
-    label: page,
-    value: page
-  }));
-
-  return opts;
-});
-
-const tree = shallowRef<Api.SystemManage.MenuTree[]>([]);
+const pattern = ref('');
 
 async function getTree() {
-  const { error, data } = await fetchGetMenuTree();
+  const { error, data } = await fetchGetApiTree();
 
   if (!error) {
     tree.value = data;
@@ -70,7 +43,7 @@ const checks = shallowRef<number[]>([]);
 async function getChecks() {
   console.log(props.roleId);
   // request
-  const { error, data } = await fetchGetRoleMenus([props.roleId]);
+  const { error, data } = await fetchGetRoleApis([props.roleId]);
   if (error) {
     return;
   }
@@ -80,9 +53,11 @@ async function getChecks() {
 async function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
+  // 先去除掉checks.value中为负数的ID(目录ID)
+  checks.value = checks.value.filter(id => id > 0);
   const { error } = await updateRoleRelation({
     roleId: props.roleId,
-    associationType: 2,
+    associationType: 1,
     objectIds: checks.value
   });
   if (error) {
@@ -94,8 +69,6 @@ async function handleSubmit() {
 }
 
 function init() {
-  getApiBase();
-  getPages();
   getTree();
   getChecks();
 }
@@ -109,19 +82,17 @@ watch(visible, val => {
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
-    <div class="flex-y-center gap-16px pb-12px">
-      <div>{{ $t('page.manage.menu.home') }}</div>
-      <NSelect
-        :value="apiBase"
-        :options="pageSelectOptions"
-        size="small"
-        class="w-160px"
-        @update:value="updateApiBase"
-      />
-    </div>
+    <NInput v-model:value="pattern" placeholder="搜索" />
+    <NSwitch v-model:value="showIrrelevantNodes">
+      <template #checked>展示搜索无关的节点</template>
+      <template #unchecked>隐藏搜索无关的节点</template>
+    </NSwitch>
     <NTree
       v-model:checked-keys="checks"
+      :show-irrelevant-nodes="showIrrelevantNodes"
+      :pattern="pattern"
       :data="tree"
+      cascade
       key-field="id"
       checkable
       expand-on-click

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+import { deleteMenus, fetchGetAllPages, fetchGetMenuList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -66,9 +66,13 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       align: 'center',
       width: 60,
       render: row => {
-        const icon = row.iconType === 1 && row.icon ? row.icon : undefined;
+        let icon = row.iconType === 1 ? row.icon : undefined;
 
-        const localIcon = row.iconType === 2 && row.icon ? row.icon : undefined;
+        const localIcon = row.iconType === 2 ? row.icon : undefined;
+
+        if (row.iconType === 1 && icon === '') {
+          icon = import.meta.env.VITE_MENU_ICON;
+        }
 
         return (
           <div class="flex-center">
@@ -182,14 +186,20 @@ function handleAdd() {
 async function handleBatchDelete() {
   // request
   console.log(checkedRowKeys.value);
-
+  const { error } = await deleteMenus(checkedRowKeys.value);
+  if (error) {
+    return;
+  }
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
+async function handleDelete(id: number) {
   // request
   console.log(id);
-
+  const { error } = await deleteMenus([id]);
+  if (error) {
+    return;
+  }
   onDeleted();
 }
 

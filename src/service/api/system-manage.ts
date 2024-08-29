@@ -64,6 +64,14 @@ export function fetchGetAllPages() {
   });
 }
 
+/** get api tree */
+export function fetchGetApiTree() {
+  return request<Api.SystemManage.ApiTree[]>({
+    url: '/apis/tree',
+    method: 'get'
+  });
+}
+
 /** get menu tree */
 export function fetchGetMenuTree() {
   return request<Api.SystemManage.MenuTree[]>({
@@ -147,11 +155,13 @@ export function updateRoleRelation(data: Api.SystemManage.RoleRelation) {
   });
 }
 
-export function updateButton(data: Api.SystemManage.UpdateButtonParams[]) {
+export function updateButton(buttons: Api.SystemManage.UpdateButtonParams[]) {
   return request({
     url: '/buttons',
     method: 'post',
-    data
+    data: {
+      buttons
+    }
   });
 }
 
@@ -176,6 +186,16 @@ export function deleteUsers(ids: number[]) {
 export function deleteRoles(ids: number[]) {
   return request({
     url: '/roles',
+    method: 'delete',
+    data: {
+      ids
+    }
+  });
+}
+
+export function deleteMenus(ids: number[]) {
+  return request({
+    url: '/menus',
     method: 'delete',
     data: {
       ids

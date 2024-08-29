@@ -6,6 +6,7 @@ import { $t } from '@/locales';
 import { updateRole } from '@/service/api';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
+import ApiAuthModal from './api-auth-modal.vue';
 
 defineOptions({
   name: 'RoleOperateDrawer'
@@ -117,7 +118,7 @@ watch(visible, () => {
         <NButton @click="openButtonAuthModal">{{ $t('page.manage.role.buttonAuth') }}</NButton>
         <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="model.id" />
         <NButton @click="openApiAuthModal">{{ $t('page.manage.role.apiAuth') }}</NButton>
-        <ButtonAuthModal v-model:visible="apiAuthVisible" :role-id="model.id" />
+        <ApiAuthModal v-model:visible="apiAuthVisible" :role-id="model.id" />
       </NSpace>
       <template #footer>
         <NSpace :size="16">
