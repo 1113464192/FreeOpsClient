@@ -202,3 +202,14 @@ export function deleteMenus(ids: number[]) {
     }
   });
 }
+
+// 注意，这里的ids是菜单的ids
+export function deleteButtons(ids: number[]) {
+  return request({
+    url: '/buttons',
+    method: 'delete',
+    data: {
+      ids
+    }
+  });
+}

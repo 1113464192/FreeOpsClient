@@ -6,7 +6,7 @@ import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
-import { updateButton, updateMenu } from '@/service/api';
+import { deleteButtons, fetchGetButtonList, fetchGetMenuList, updateButton, updateMenu } from '@/service/api';
 import {
   getLayoutAndPage,
   getPathParamFromRoutePath,
@@ -193,7 +193,7 @@ function convertArrayToProps(propArray: { key: string; value: any }[]): Record<s
   );
 }
 
-function handleInitModel() {
+async function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
   if (!props.rowData) return;
@@ -220,11 +220,16 @@ function handleInitModel() {
   menuStatus.value = model.status.toString();
   iconType.value = model.iconType.toString();
   if (model.props) {
+    model.isPropsBoolean = true;
     model.propsArray = convertPropsToArray(model.props);
   }
-  if (model.props) {
-    model.isPropsBoolean = true;
+
+  const { data, error: buttonError } = await fetchGetButtonList({ menuId: model.id });
+  if (buttonError) {
+    window.$message?.error($t('common.error', { data: buttonError.response?.data.msg }));
+    return;
   }
+  model.buttons = data.records;
 }
 
 function closeDrawer() {
@@ -313,6 +318,14 @@ async function updateModel(params: Model): Promise<void> {
     throw new Error(menuError.response?.data.msg);
   }
 
+  // if (model.id === 0) {
+  const { data, error: getMenuError } = await fetchGetMenuList({ menuName: model.menuName });
+  if (getMenuError) {
+    throw new Error(getMenuError.response?.data.msg);
+  }
+  model.id = data.records[0].id;
+  // }
+
   if (params.buttons.length > 0) {
     const filteredButtons = params.buttons.filter(
       button => button.buttonCode !== '' && button.buttonCode !== null && button.buttonCode !== undefined
@@ -327,6 +340,16 @@ async function updateModel(params: Model): Promise<void> {
       if (buttonError) {
         throw new Error(buttonError.response?.data.msg);
       }
+    } else {
+      const { error: buttonError } = await deleteButtons([model.id]);
+      if (buttonError) {
+        throw new Error(buttonError.response?.data.msg);
+      }
+    }
+  } else {
+    const { error: buttonError } = await deleteButtons([model.id]);
+    if (buttonError) {
+      throw new Error(buttonError.response?.data.msg);
     }
   }
 }

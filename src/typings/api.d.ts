@@ -182,7 +182,7 @@ declare namespace Api {
       | 'query'
       | 'roles'
     > & {
-      props?: { [key: string]: string } | boolean;
+      props?: Record<string, any> | boolean;
     };
 
     type Menu = Common.CommonRecord<{
@@ -218,7 +218,8 @@ declare namespace Api {
       children?: MenuTree[];
     };
 
-    type MenuSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Menu, 'id'>> & CommonSearchParams;
+    type MenuSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Menu, 'id' | 'menuName'>> &
+      CommonSearchParams;
     // type MenuSearchParams = CommonType.RecordNullable<{
     //   id: number;
     // }> &
