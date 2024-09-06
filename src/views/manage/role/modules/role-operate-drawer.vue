@@ -50,7 +50,7 @@ const model: Api.SystemManage.Role = reactive(createDefaultModel());
 function createDefaultModel(): Api.SystemManage.Role {
   return {
     id: 0,
-    status: null,
+    status: 1,
     roleName: '',
     roleCode: '',
     roleDesc: ''

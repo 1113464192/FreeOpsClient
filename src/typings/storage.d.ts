@@ -30,6 +30,7 @@ declare namespace StorageType {
     overrideThemeFlag: string;
     /** The user info */
     username: string;
+    loginRememberMe: boolean;
     /** The global tabs */
     globalTabs: App.Global.Tab[];
     /** The backup theme setting before is mobile */

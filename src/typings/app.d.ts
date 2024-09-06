@@ -274,6 +274,7 @@ declare namespace App {
         confirmDelete: string;
         edit: string;
         error: string;
+        invalidId: string;
         index: string;
         keywordSearch: string;
         logout: string;
@@ -281,6 +282,7 @@ declare namespace App {
         logoutConfirm: string;
         lookForward: string;
         modify: string;
+        detail: string;
         modifySuccess: string;
         noData: string;
         operate: string;
@@ -535,6 +537,46 @@ declare namespace App {
               male: string;
               female: string;
             };
+          };
+          userRecord: {
+            title: string;
+            createdAt: string;
+            ip: string;
+            method: string;
+            path: string;
+            agent: string;
+            body: string;
+            userId: string;
+            username: string;
+            status: string;
+            latency: string;
+            resp: string;
+            form: {
+              username: string;
+              date: string;
+            };
+          };
+          api: {
+            path: string;
+            method: string;
+            apiGroup: string;
+            description: string;
+            form: {
+              path: string;
+              method: string;
+              apiGroup: string;
+              description: string;
+              tip: {
+                apiGroup: string;
+                path: string;
+              };
+            };
+            search: {
+              apiGroup: string;
+            };
+            addApi: string;
+            addChildApi: string;
+            editApi: string;
           };
           menu: {
             home: string;

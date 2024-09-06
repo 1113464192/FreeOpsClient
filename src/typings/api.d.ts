@@ -83,6 +83,7 @@ declare namespace Api {
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
     /** role */
+    // 保留status是为了兼容soybean框架的table.ts
     type Role = Common.CommonRecord<{
       /** role name */
       roleName: string;
@@ -93,9 +94,7 @@ declare namespace Api {
     }>;
 
     /** role search params */
-    type RoleSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status' | 'id'>
-    > &
+    type RoleSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'id'>> &
       CommonSearchParams;
 
     /** role list */
@@ -220,10 +219,6 @@ declare namespace Api {
 
     type MenuSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Menu, 'id' | 'menuName'>> &
       CommonSearchParams;
-    // type MenuSearchParams = CommonType.RecordNullable<{
-    //   id: number;
-    // }> &
-    //   CommonSearchParams;
 
     type UpdateButtonParams = {
       id?: number;
@@ -236,17 +231,17 @@ declare namespace Api {
     }> &
       CommonSearchParams;
 
-    interface ApiModel {
-      id?: number;
+    type ApiModel = Common.CommonRecord<{
       path: string;
       method: string;
       apiGroup: string;
       description?: string;
-    }
+      children?: ApiModel[];
+    }>;
 
     type ApiList = Common.PaginatingQueryRecord<ApiModel>;
 
-    type ApiSearchParams = CommonType.RecordNullable<Omit<Api.SystemManage.ApiModel, 'description'>> &
+    type ApiSearchParams = CommonType.RecordNullable<Partial<Pick<Api.SystemManage.ApiModel, 'apiGroup' | 'id'>>> &
       CommonSearchParams;
 
     type ApiTree = {
@@ -254,5 +249,32 @@ declare namespace Api {
       label: string;
       children?: ApiTree[];
     };
+
+    type UserRecord = Common.CommonRecord<{
+      ip: string;
+      createdAt: string;
+      method: string;
+      path: string;
+      agent: string;
+      body: string;
+      userId: number;
+      username: string;
+      status: number;
+      latency: number;
+      resp: string;
+    }>;
+
+    type UserRecordSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.UserRecord, 'username'> & {
+        date: string;
+      }
+    > &
+      CommonSearchParams;
+
+    interface UserRecordMonthsResponse {
+      dates: string[];
+    }
+
+    type UserRecordList = Common.PaginatingQueryRecord<UserRecord>;
   }
 }

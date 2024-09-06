@@ -217,6 +217,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'manage_api',
+        path: '/manage/api',
+        component: 'view.manage_api',
+        meta: {
+          title: 'manage_api',
+          i18nKey: 'route.manage_api'
+        }
+      },
+      {
         name: 'manage_menu',
         path: '/manage/menu',
         component: 'view.manage_menu',
@@ -264,6 +273,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           hideInMenu: true,
           roles: ['R_ADMIN'],
           activeMenu: 'manage_user'
+        }
+      },
+      {
+        name: 'manage_user-record',
+        path: '/manage/user-record',
+        component: 'view.manage_user-record',
+        meta: {
+          title: 'manage_user-record',
+          i18nKey: 'route.manage_user-record'
         }
       }
     ]

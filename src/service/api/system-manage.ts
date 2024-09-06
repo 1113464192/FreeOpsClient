@@ -56,6 +56,15 @@ export function fetchGetButtonList(params?: Api.SystemManage.ButtonSearchParams)
   });
 }
 
+/** get api list */
+export function fetchGetApiList(params?: Api.SystemManage.ApiSearchParams) {
+  return request<Api.SystemManage.ApiList>({
+    url: '/apis',
+    method: 'get',
+    params
+  });
+}
+
 /** get all pages */
 export function fetchGetAllPages() {
   return request<string[]>({
@@ -68,6 +77,14 @@ export function fetchGetAllPages() {
 export function fetchGetApiTree() {
   return request<Api.SystemManage.ApiTree[]>({
     url: '/apis/tree',
+    method: 'get'
+  });
+}
+
+/** get api group */
+export function fetchGetApiGroups() {
+  return request<string[]>({
+    url: '/apis/group',
     method: 'get'
   });
 }
@@ -139,7 +156,7 @@ export function updateUser(data: Api.SystemManage.User) {
   });
 }
 
-export function updateRole(data: Api.SystemManage.Role) {
+export function updateRole(data: Omit<Api.SystemManage.Role, 'status'>) {
   return request({
     url: '/roles',
     method: 'post',
@@ -168,6 +185,14 @@ export function updateButton(buttons: Api.SystemManage.UpdateButtonParams[]) {
 export function updateMenu(data: Api.SystemManage.Menu) {
   return request({
     url: '/menus',
+    method: 'post',
+    data
+  });
+}
+
+export function updateApi(data: Omit<Api.SystemManage.ApiModel, 'status'>) {
+  return request({
+    url: '/apis',
     method: 'post',
     data
   });
@@ -203,6 +228,16 @@ export function deleteMenus(ids: number[]) {
   });
 }
 
+export function deleteApis(ids: number[]) {
+  return request({
+    url: '/apis',
+    method: 'delete',
+    data: {
+      ids
+    }
+  });
+}
+
 // 注意，这里的ids是菜单的ids
 export function deleteButtons(ids: number[]) {
   return request({
@@ -211,5 +246,34 @@ export function deleteButtons(ids: number[]) {
     data: {
       ids
     }
+  });
+}
+
+// 用户记录查询
+export async function fetchGetUserRecordList(params: Api.SystemManage.UserRecordSearchParams) {
+  // 如果没有传入日期，则获取最新的日期,获取失败则继续执行触发报错
+  if (!params.date) {
+    const { data } = await fetchGetUserRecordMonths();
+    if (data) {
+      const dates = data.dates;
+      // 假设日期格式为 "YYYY_MM"，可以直接进行字符串比较
+      const latestDate = dates.sort().pop();
+      if (latestDate) {
+        params.date = latestDate;
+      }
+    }
+  }
+  return request<Api.SystemManage.UserRecordList>({
+    url: '/users/history-action',
+    method: 'get',
+    params
+  });
+}
+
+// 用户操作记录表有几个月可供查询
+export function fetchGetUserRecordMonths() {
+  return request<Api.SystemManage.UserRecordMonthsResponse>({
+    url: '/users/history-month-exist',
+    method: 'get'
   });
 }

@@ -24,6 +24,8 @@ const model: FormModel = reactive({
 
 const rememberMe = ref(false);
 
+const checked = rememberMe;
+
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   // inside computed to make locale reactive, if not apply i18n, you can define it without computed
   const { formRules } = useFormRules();
@@ -34,11 +36,19 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   };
 });
 
+function handleCheckedChange(param: boolean) {
+  rememberMe.value = param;
+}
+
 async function handleSubmit() {
   await validate();
   // 如果rememberMe是true，就保存用户名和密码在local中，下次登录时自动填充
-  if (rememberMe.value) {
+  if (rememberMe.value === true) {
     localStg.set('username', model.username);
+    localStg.set('loginRememberMe', true);
+  } else {
+    localStg.remove('username');
+    localStg.remove('loginRememberMe');
   }
   await authStore.login(model.username, model.password);
 }
@@ -48,6 +58,10 @@ onMounted(() => {
   const savedUsername = localStg.get('username');
   if (savedUsername) {
     model.username = savedUsername;
+  }
+  const savedRememberMe = localStg.get('loginRememberMe');
+  if (savedRememberMe) {
+    rememberMe.value = true;
   }
 });
 </script>
@@ -67,7 +81,9 @@ onMounted(() => {
     </NFormItem>
     <NSpace vertical :size="24">
       <div class="flex-y-center justify-between">
-        <NCheckbox v-model="rememberMe">{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
+        <NCheckbox :checked="checked" @update:checked="handleCheckedChange">
+          {{ $t('page.login.pwdLogin.rememberMe') }}
+        </NCheckbox>
       </div>
       <NButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
         {{ $t('common.confirm') }}

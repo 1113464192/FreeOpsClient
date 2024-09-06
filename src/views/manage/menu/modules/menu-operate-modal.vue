@@ -277,10 +277,17 @@ function getSubmitParams() {
     params.props = false;
   }
 
+  params.iconType = Number.parseInt(iconType.value, 10) as Api.Common.EnableStatus;
+  params.status = Number.parseInt(menuStatus.value, 10) as Api.Common.EnableStatus;
+  params.menuType = Number.parseInt(params.menuType as unknown as string, 10) as Api.SystemManage.MenuType;
+
   return params as Model;
 }
 
 async function updateModel(params: Model): Promise<void> {
+  if (props.operateType === 'addChild') {
+    model.id = 0;
+  }
   model.menuType = params.menuType;
   model.menuName = params.menuName;
   model.routeName = params.routeName;
@@ -301,9 +308,9 @@ async function updateModel(params: Model): Promise<void> {
   model.multiTab = params.multiTab;
   model.fixedIndexInTab = params.fixedIndexInTab;
   model.query = params.query;
+  model.iconType = params.iconType;
+  model.status = params.status;
 
-  model.iconType = Number.parseInt(iconType.value, 10) as Api.Common.EnableStatus;
-  model.status = Number.parseInt(menuStatus.value, 10) as Api.Common.EnableStatus;
   if (params.props && params.isPropsBoolean === true) {
     model.props = params.props;
   } else if (params.isPropsBoolean === true) {
@@ -318,7 +325,6 @@ async function updateModel(params: Model): Promise<void> {
     throw new Error(menuError.response?.data.msg);
   }
 
-  // if (model.id === 0) {
   const { data, error: getMenuError } = await fetchGetMenuList({ menuName: model.menuName });
   if (getMenuError) {
     throw new Error(getMenuError.response?.data.msg);
@@ -326,30 +332,32 @@ async function updateModel(params: Model): Promise<void> {
   model.id = data.records[0].id;
   // }
 
-  if (params.buttons.length > 0) {
-    const filteredButtons = params.buttons.filter(
-      button => button.buttonCode !== '' && button.buttonCode !== null && button.buttonCode !== undefined
-    );
-    if (filteredButtons.length > 0) {
-      const buttons: Api.SystemManage.UpdateButtonParams[] = filteredButtons.map(button => ({
-        menuId: model.id,
-        buttonCode: button.buttonCode,
-        buttonDesc: button.buttonDesc
-      }));
-      const { error: buttonError } = await updateButton(buttons);
-      if (buttonError) {
-        throw new Error(buttonError.response?.data.msg);
+  if (params.buttons !== null) {
+    if (params.buttons.length > 0) {
+      const filteredButtons = params.buttons.filter(
+        button => button.buttonCode !== '' && button.buttonCode !== null && button.buttonCode !== undefined
+      );
+      if (filteredButtons.length > 0) {
+        const buttons: Api.SystemManage.UpdateButtonParams[] = filteredButtons.map(button => ({
+          menuId: model.id,
+          buttonCode: button.buttonCode,
+          buttonDesc: button.buttonDesc
+        }));
+        const { error: buttonError } = await updateButton(buttons);
+        if (buttonError) {
+          throw new Error(buttonError.response?.data.msg);
+        }
+      } else {
+        const { error: buttonError } = await deleteButtons([model.id]);
+        if (buttonError) {
+          throw new Error(buttonError.response?.data.msg);
+        }
       }
     } else {
       const { error: buttonError } = await deleteButtons([model.id]);
       if (buttonError) {
         throw new Error(buttonError.response?.data.msg);
       }
-    }
-  } else {
-    const { error: buttonError } = await deleteButtons([model.id]);
-    if (buttonError) {
-      throw new Error(buttonError.response?.data.msg);
     }
   }
 }

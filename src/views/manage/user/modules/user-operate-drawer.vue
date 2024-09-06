@@ -122,7 +122,7 @@ async function handleSubmit() {
   if (props.operateType === 'add' && userRoles.value.length !== 0) {
     const params = {
       current: 1,
-      size: 10,
+      size: 1,
       username: model.username
     };
     const { error: rolesError, data } = await fetchGetUserList(params);

@@ -24,6 +24,7 @@ const local: App.I18n.Schema = {
     confirmDelete: '确认删除吗？',
     edit: '编辑',
     error: '错误',
+    invalidId: '无效ID',
     index: '序号',
     keywordSearch: '请输入关键词搜索',
     logout: '退出登录',
@@ -31,6 +32,7 @@ const local: App.I18n.Schema = {
     logoutConfirm: '确认退出登录吗？',
     lookForward: '敬请期待',
     modify: '修改',
+    detail: '详情',
     modifySuccess: '修改成功',
     noData: '无数据',
     operate: '操作',
@@ -158,6 +160,7 @@ const local: App.I18n.Schema = {
     document_unocss: 'UnoCSS文档',
     document_naive: 'Naive UI文档',
     document_antd: 'Ant Design Vue文档',
+    manage_api: 'API管理',
     'user-center': '个人中心',
     about: '关于',
     function: '系统功能',
@@ -174,6 +177,7 @@ const local: App.I18n.Schema = {
     manage_user: '用户管理',
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
+    'manage_user-record': '用户操作记录',
     manage_menu: '菜单管理',
     'multi-menu': '多级菜单',
     'multi-menu_first': '菜单一',
@@ -360,6 +364,46 @@ const local: App.I18n.Schema = {
           male: '男',
           female: '女'
         }
+      },
+      userRecord: {
+        title: '用户操作记录',
+        createdAt: '操作时间',
+        ip: 'IP地址',
+        method: '请求方法',
+        path: '请求路径',
+        agent: 'User-Agent',
+        body: '请求体',
+        userId: '用户ID',
+        username: '用户名',
+        status: '后端返回码',
+        latency: '延迟(纳秒)',
+        resp: '响应体',
+        form: {
+          username: '请输入用户名',
+          date: '请选择日期'
+        }
+      },
+      api: {
+        path: 'API路径',
+        method: '请求方法',
+        description: 'API描述',
+        apiGroup: 'API分组',
+        form: {
+          path: '请输入API路径',
+          method: '请选择请求方法',
+          description: '请输入API描述',
+          apiGroup: '请输入API分组',
+          tip: {
+            path: 'API路径不要写成/user/, 而是/user',
+            apiGroup: '新增API直接输入分组,即可自动生成分组父目录,无需单独创建分组'
+          }
+        },
+        search: {
+          apiGroup: '请输入完整的API分组名'
+        },
+        addApi: '新增API',
+        addChildApi: '新增子API',
+        editApi: '编辑API'
       },
       menu: {
         home: '首页',

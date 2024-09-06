@@ -24,6 +24,7 @@ const local: App.I18n.Schema = {
     confirmDelete: 'Are you sure you want to delete?',
     edit: 'Edit',
     error: 'Error',
+    invalidId: 'Invalid ID',
     index: 'Index',
     keywordSearch: 'Please enter keyword',
     logout: 'Logout',
@@ -31,6 +32,7 @@ const local: App.I18n.Schema = {
     logoutConfirm: 'Are you sure you want to log out?',
     lookForward: 'Coming soon',
     modify: 'Modify',
+    detail: 'Detail',
     modifySuccess: 'Modify Success',
     noData: 'No Data',
     operate: 'Operate',
@@ -158,6 +160,7 @@ const local: App.I18n.Schema = {
     document_unocss: 'UnoCSS Document',
     document_naive: 'Naive UI Document',
     document_antd: 'Ant Design Vue Document',
+    manage_api: 'API Manage',
     'user-center': 'User Center',
     about: 'About',
     function: 'System Function',
@@ -174,6 +177,7 @@ const local: App.I18n.Schema = {
     manage_user: 'User Manage',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
+    'manage_user-record': 'User Record',
     manage_menu: 'Menu Manage',
     'multi-menu': 'Multi Menu',
     'multi-menu_first': 'Menu One',
@@ -360,6 +364,47 @@ const local: App.I18n.Schema = {
           male: 'Male',
           female: 'Female'
         }
+      },
+      userRecord: {
+        title: 'User Operation Record',
+        createdAt: 'Time',
+        ip: 'IP',
+        method: 'Method',
+        path: 'Path',
+        agent: 'User-Agent',
+        body: 'Body',
+        userId: 'UserID',
+        username: 'Username',
+        status: 'BackendCode',
+        latency: 'Latency (nanoseconds)',
+        resp: 'ResponseBody',
+        form: {
+          username: 'Please enter username',
+          date: 'Please select date'
+        }
+      },
+      api: {
+        path: 'API Path',
+        method: 'Request Method',
+        description: 'API Description',
+        apiGroup: 'API Group',
+        search: {
+          apiGroup: 'Please enter the full API group'
+        },
+        form: {
+          path: 'Please enter the API path',
+          method: 'Please select the request method',
+          description: 'Please enter the API description',
+          apiGroup: 'Please enter the API group',
+          tip: {
+            apiGroup:
+              'The new API directly input groups, and the parent directory of the group can be automatically generated, without creating a separate group',
+            path: 'if the API is /user, just enter /user, do not write /user/'
+          }
+        },
+        addApi: 'Add API',
+        addChildApi: 'Add Child API',
+        editApi: 'Edit API'
       },
       menu: {
         home: 'Home',
