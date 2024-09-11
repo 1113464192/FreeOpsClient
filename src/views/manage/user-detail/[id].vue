@@ -7,7 +7,8 @@ defineProps<Props>();
 </script>
 
 <template>
-  <LookForward />
+  <!-- <LookForward /> -->
+  <div>id: {{ id }}</div>
 </template>
 
 <style scoped></style>

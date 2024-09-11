@@ -378,9 +378,13 @@ const local: App.I18n.Schema = {
         status: '后端返回码',
         latency: '延迟(纳秒)',
         resp: '响应体',
+        date: '日期',
         form: {
           username: '请输入用户名',
-          date: '请选择日期'
+          ip: '请输入完整IP地址',
+          date: '请选择日期',
+          method: '请选择请求方法',
+          status: '请输入后端返回码范围'
         }
       },
       api: {

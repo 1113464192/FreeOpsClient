@@ -101,8 +101,10 @@ async function getUserRoles() {
   if (error) {
     return;
   }
-  for (let i: number = 0; i < data.records.length; i += 1) {
-    userRoles.value = data.records.map(record => record.id);
+  if (data.records?.length && data.records.length > 0) {
+    for (let i: number = 0; i < data.records.length; i += 1) {
+      userRoles.value = data.records.map(record => record.id);
+    }
   }
 }
 
@@ -132,8 +134,14 @@ async function handleSubmit() {
     model.id = data.records[0].id;
   }
   // 判断是否有角色要更新
-  if (userRoles.value.length !== 0) {
+  if (userRoles.value.length > 0) {
     const { error: rolesError } = await updateUserRoles(model.id, userRoles.value);
+    if (rolesError) {
+      return;
+    }
+  } else {
+    // 如果没有角色要更新，删除用户的所有角色
+    const { error: rolesError } = await updateUserRoles(model.id, []);
     if (rolesError) {
       return;
     }

@@ -1,7 +1,8 @@
 <script setup lang="tsx">
+import { onMounted } from 'vue';
 import { NButton } from 'naive-ui';
 // import { fetchGetUserRecordList, fetchGetUserRecordMonths } from '@/service/api';
-import { fetchGetUserRecordList } from '@/service/api';
+import { fetchGetUserRecordList, fetchGetUserRecordMonths } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -9,32 +10,17 @@ import UserRecordSearch from './modules/user-record-search.vue';
 
 const appStore = useAppStore();
 
-// async function getUserRecordDate() {
-//   const { data, error } = await fetchGetUserRecordMonths();
-//   if (error) {
-//     return '';
-//   }
-
-//   if (data.dates.length > 0) {
-//     const dates = data.dates;
-//     // 假设日期格式为 "YYYY_MM"，可以直接进行字符串比较
-//     const latestDate = dates.sort().pop();
-//     if (latestDate) {
-//       return latestDate;
-//     }
-//     return '';
-//   }
-//   return '';
-// }
-
-// const defaultDate = await getUserRecordDate();
-
 function handleButtonShow(titleValue: string, msg: string) {
   window.$dialog?.info({
     title: $t(titleValue as App.I18n.I18nKey),
     content: msg
   });
 }
+
+// 立即调用的异步函数（IIFE）
+(async () => {
+  await fetchLatestDate();
+})();
 
 const {
   columns,
@@ -54,6 +40,9 @@ const {
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     username: null,
+    method: null,
+    status: null,
+    ip: null,
     date: null
   },
   columns: () => [
@@ -79,18 +68,18 @@ const {
       key: 'ip',
       title: $t('page.manage.userRecord.ip'),
       align: 'center',
-      minWidth: 90
+      minWidth: 60
     },
     {
       key: 'method',
       title: $t('page.manage.userRecord.method'),
-      minWidth: 120
+      width: 64
     },
     {
       key: 'path',
       title: $t('page.manage.userRecord.path'),
       align: 'center',
-      width: 140
+      minWidth: 120
     },
     {
       key: 'status',
@@ -160,8 +149,27 @@ const {
     }
   ]
 });
-
 const { checkedRowKeys } = useTableOperate(data, getData);
+
+async function fetchLatestDate() {
+  try {
+    const { data: mData, error } = await fetchGetUserRecordMonths();
+    if (error) {
+      return;
+    }
+    const dates = mData.dates;
+    const latestDate = dates.sort().pop();
+    if (latestDate) {
+      searchParams.date = latestDate;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+onMounted(async () => {
+  await fetchLatestDate();
+});
 </script>
 
 <template>

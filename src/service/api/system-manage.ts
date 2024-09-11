@@ -277,3 +277,12 @@ export function fetchGetUserRecordMonths() {
     method: 'get'
   });
 }
+
+// 修改用户密码
+export function updateUserPassword(data: Api.SystemManage.UpdatePasswordParams) {
+  return request({
+    url: '/users/password',
+    method: 'patch',
+    data
+  });
+}

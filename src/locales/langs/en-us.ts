@@ -378,9 +378,13 @@ const local: App.I18n.Schema = {
         status: 'BackendCode',
         latency: 'Latency (nanoseconds)',
         resp: 'ResponseBody',
+        date: 'Date',
         form: {
           username: 'Please enter username',
-          date: 'Please select date'
+          ip: 'Please enter full IP',
+          date: 'Please select date',
+          method: 'Please select request method',
+          status: 'Please enter the range of backend return code'
         }
       },
       api: {

@@ -59,7 +59,7 @@ const { columns, columnChecks, data, loading, pagination, searchParams, resetSea
         key: 'operate',
         title: $t('common.operate'),
         align: 'center',
-        width: 230,
+        width: 120,
         render: row => (
           <div class="flex-center justify-end gap-8px">
             {row.id < 0 && (

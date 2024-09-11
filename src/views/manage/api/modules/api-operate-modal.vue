@@ -148,7 +148,7 @@ watch(visible, () => {
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-800px">
     <NScrollbar class="h-480px pr-20px">
-      <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
+      <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" label-align="right" :label-width="100">
         <NGrid responsive="screen" item-responsive>
           <NFormItemGi span="30 m:16" :label="$t('page.manage.api.path')" path="path">
             <NInput v-model:value="model.path" :placeholder="$t('page.manage.api.form.tip.path')" />

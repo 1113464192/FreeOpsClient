@@ -551,9 +551,13 @@ declare namespace App {
             status: string;
             latency: string;
             resp: string;
+            date: string;
             form: {
               username: string;
+              ip: string;
               date: string;
+              method: string;
+              status: string;
             };
           };
           api: {

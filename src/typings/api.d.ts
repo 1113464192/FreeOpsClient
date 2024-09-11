@@ -265,8 +265,9 @@ declare namespace Api {
     }>;
 
     type UserRecordSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.UserRecord, 'username'> & {
+      Pick<Api.SystemManage.UserRecord, 'username' | 'method' | 'ip'> & {
         date: string;
+        status: string;
       }
     > &
       CommonSearchParams;
@@ -276,5 +277,9 @@ declare namespace Api {
     }
 
     type UserRecordList = Common.PaginatingQueryRecord<UserRecord>;
+    interface UpdatePasswordParams {
+      id: number;
+      newPassword: string;
+    }
   }
 }
