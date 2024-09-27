@@ -9,6 +9,7 @@ const local: App.I18n.Schema = {
   common: {
     action: '操作',
     add: '新增',
+    buyHost: '买服务器',
     addSuccess: '添加成功',
     backToHome: '返回首页',
     batchDelete: '批量删除',
@@ -26,6 +27,7 @@ const local: App.I18n.Schema = {
     error: '错误',
     invalidId: '无效ID',
     index: '序号',
+    id: 'ID',
     keywordSearch: '请输入关键词搜索',
     logout: '退出登录',
     logoutMaskToeknFailed: '后端拉黑token失败',
@@ -36,6 +38,7 @@ const local: App.I18n.Schema = {
     modifySuccess: '修改成功',
     noData: '无数据',
     operate: '操作',
+    cloudOperate: '云平台操作',
     pleaseCheckValue: '请检查输入的值是否合法',
     refresh: '刷新',
     reset: '重置',
@@ -174,6 +177,7 @@ const local: App.I18n.Schema = {
     'function_toggle-auth': '切换权限',
     'function_super-page': '超级管理员可见',
     manage: '系统管理',
+    asset: '资产管理',
     manage_user: '用户管理',
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
@@ -185,6 +189,8 @@ const local: App.I18n.Schema = {
     'multi-menu_second': '菜单二',
     'multi-menu_second_child': '菜单二子菜单',
     'multi-menu_second_child_home': '菜单二子菜单首页',
+    asset_project: '项目管理',
+    asset_host: '服务器管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -331,6 +337,7 @@ const local: App.I18n.Schema = {
         menuAuth: '菜单权限',
         buttonAuth: '按钮权限',
         apiAuth: 'API权限',
+        projectAuth: '项目权限',
         form: {
           roleName: '请输入角色名称',
           roleCode: '请输入角色编码',
@@ -412,7 +419,6 @@ const local: App.I18n.Schema = {
       menu: {
         home: '首页',
         title: '菜单列表',
-        id: 'ID',
         parentId: '父级菜单ID',
         menuType: '菜单类型',
         menuName: '菜单名称',
@@ -481,6 +487,74 @@ const local: App.I18n.Schema = {
           local: '本地图标'
         }
       }
+    },
+    asset: {
+      project: {
+        title: '项目列表',
+        name: '项目名称',
+        cloudPlatform: '云平台',
+        hostTotal: '服务器数量',
+        gameTotal: '游服数量',
+        crossTotal: '跨服数量',
+        commonTotal: '公共服数量',
+        form: {
+          name: '请输入项目名',
+          cloudPlatform: '请选择云平台'
+        },
+        addProject: '新增项目',
+        editProject: '编辑项目',
+        search: {
+          name: '请输入项目名'
+        },
+        cloudOperate: {
+          create: '新增云项目',
+          update: '同步云项目'
+        }
+      },
+      host: {
+        title: '服务器列表',
+        name: '服务器名',
+        ipv4: 'ipv4',
+        ipv6: 'ipv6',
+        vip: '内网IP',
+        projectName: '项目名',
+        zone: '地区',
+        cloud: '云平台',
+        system: '操作系统',
+        cores: 'CPU核数',
+        dataDisk: '数据盘(G)',
+        mem: '内存(G)',
+        gameTotal: '游服数量',
+        crossTotal: '跨服数量',
+        commonTotal: '公共服数量',
+        buyHostCount: '买服务器总数',
+        form: {
+          name: '请输入服务器名',
+          ipv4: '请输入ipv4',
+          ipv6: '请输入ipv6',
+          vip: '请输入内网IP',
+          projectName: '请选择项目名',
+          zone: '请输入地区',
+          cloud: '请选择云平台',
+          system: '请输入操作系统',
+          cores: '请输入CPU核数',
+          dataDisk: '请输入数据盘(G)',
+          mem: '请输入内存(G)',
+          buyHostCount: '请输入购买服务器的总数'
+        },
+        addHost: '新增服务器',
+        editHost: '编辑服务器',
+        search: {
+          name: '请输入服务器名',
+          ipv4: '请输入ipv4',
+          ipv6: '请输入ipv6',
+          vip: '请输入内网IP',
+          projectName: '请输入项目名',
+          zone: '请输入地区',
+          cloud: '请选择云平台',
+          system: '请输入操作系统'
+        }
+      }
     }
   },
   form: {
@@ -508,6 +582,18 @@ const local: App.I18n.Schema = {
     email: {
       required: '请输入邮箱',
       invalid: '邮箱格式不正确'
+    },
+    ipv4: {
+      required: '请输入IPV4',
+      invalid: 'IPV4不正确'
+    },
+    ipv6: {
+      required: '请输入IPV6',
+      invalid: 'IPV6不正确'
+    },
+    vip: {
+      required: '请输入内网IP',
+      invalid: '内网IP不正确'
     }
   },
   dropdown: {

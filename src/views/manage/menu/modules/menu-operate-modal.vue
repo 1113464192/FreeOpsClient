@@ -168,11 +168,11 @@ const pageOptions = computed(() => {
 const layoutOptions: CommonType.Option[] = [
   {
     label: 'base',
-    value: 'layout.base'
+    value: 'base'
   },
   {
     label: 'blank',
-    value: 'layout.blank'
+    value: 'blank'
   }
 ];
 

@@ -17,6 +17,7 @@ interface Emits {
   (e: 'add'): void;
   (e: 'delete'): void;
   (e: 'refresh'): void;
+  (e: 'buyHost'): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -35,6 +36,10 @@ function batchDelete() {
 
 function refresh() {
   emit('refresh');
+}
+
+function buyHost() {
+  emit('buyHost');
 }
 </script>
 
@@ -65,6 +70,12 @@ function refresh() {
         <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
       </template>
       {{ $t('common.refresh') }}
+    </NButton>
+    <NButton size="small" ghost type="primary" @click="buyHost">
+      <template #icon>
+        <icon-ic-round-plus class="text-icon" />
+      </template>
+      {{ $t('common.buyHost') }}
     </NButton>
     <TableColumnSetting v-model:columns="columns" />
     <slot name="suffix"></slot>

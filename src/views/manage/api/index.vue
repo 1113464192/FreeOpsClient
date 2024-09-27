@@ -27,7 +27,7 @@ const { columns, columnChecks, data, loading, pagination, searchParams, resetSea
       },
       {
         key: 'id',
-        title: $t('page.manage.menu.id'),
+        title: $t('common.id'),
         align: 'center',
         render: row => (row.id < 0 ? 0 : row.id)
       },

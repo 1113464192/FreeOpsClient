@@ -137,6 +137,19 @@ export function fetchGetRoleButtons(ids: number[]) {
   });
 }
 
+export function fetchGetRoleProjects(ids: number[]) {
+  return request<number[]>({
+    url: '/roles/projects',
+    method: 'get',
+    params: {
+      ids
+    },
+    paramsSerializer: params => {
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
+  });
+}
+
 export function updateUserRoles(userId: number, roleIds: number[]) {
   return request({
     url: '/users/bind-roles',

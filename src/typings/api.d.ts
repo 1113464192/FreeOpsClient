@@ -35,6 +35,7 @@ declare namespace Api {
       /** record status */
       status: EnableStatus | null;
     } & T;
+    type CommonSearchParams = Pick<PaginatingCommonParams, 'current' | 'size'>;
   }
 
   /**
@@ -80,8 +81,6 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
-
     /** role */
     // 保留status是为了兼容soybean框架的table.ts
     type Role = Common.CommonRecord<{
@@ -95,7 +94,7 @@ declare namespace Api {
 
     /** role search params */
     type RoleSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'id'>> &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     /** role list */
     type RoleList = Common.PaginatingQueryRecord<Role>;
@@ -106,7 +105,7 @@ declare namespace Api {
     /** role bind req */
     interface RoleRelation {
       roleId: number;
-      associationType: number; // 1: api 2: menu 3: button
+      associationType: number; // 1: api 2: menu 3: button 4: project
       objectIds: number[];
     }
 
@@ -138,7 +137,7 @@ declare namespace Api {
     type UserSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.User, 'id' | 'username' | 'userGender' | 'nickname' | 'userPhone' | 'userEmail' | 'status'>
     > &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
@@ -218,7 +217,7 @@ declare namespace Api {
     };
 
     type MenuSearchParams = CommonType.RecordNullable<Pick<Api.SystemManage.Menu, 'id' | 'menuName'>> &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     type UpdateButtonParams = {
       id?: number;
@@ -229,7 +228,7 @@ declare namespace Api {
       code?: string;
       menuId?: number;
     }> &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     type ApiModel = Common.CommonRecord<{
       path: string;
@@ -242,7 +241,7 @@ declare namespace Api {
     type ApiList = Common.PaginatingQueryRecord<ApiModel>;
 
     type ApiSearchParams = CommonType.RecordNullable<Partial<Pick<Api.SystemManage.ApiModel, 'apiGroup' | 'id'>>> &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     type ApiTree = {
       id: number;
@@ -270,16 +269,73 @@ declare namespace Api {
         status: string;
       }
     > &
-      CommonSearchParams;
+      Common.CommonSearchParams;
 
     interface UserRecordMonthsResponse {
       dates: string[];
     }
 
     type UserRecordList = Common.PaginatingQueryRecord<UserRecord>;
+
     interface UpdatePasswordParams {
       id: number;
       newPassword: string;
     }
+  }
+  namespace AssetManage {
+    type Project = Common.CommonRecord<{
+      name: string;
+      cloudPlatform: string;
+    }>;
+
+    type ProjectSearchParams = CommonType.RecordNullable<Pick<Api.AssetManage.Project, 'name' | 'status'>> &
+      Common.CommonSearchParams;
+
+    type ProjectAssetTotal = {
+      hostTotal: number;
+      gameTotal: number;
+      crossTotal: number;
+      commonTotal: number;
+    };
+
+    type ProjectList = Common.PaginatingQueryRecord<Project & ProjectAssetTotal>;
+
+    type Host = Common.CommonRecord<{
+      name: string;
+      ipv4: string;
+      ipv6: string;
+      vip: string;
+      zone: string;
+      cloud: string;
+      system: string;
+      cores: number;
+      dataDisk: number;
+      mem: number;
+      projectId: number;
+    }>;
+
+    type HostSearchParams = CommonType.RecordNullable<
+      Omit<Api.AssetManage.Host, 'cores' | 'dataDisk' | 'mem' | 'projectId'> & {
+        projectName: string;
+      }
+    > &
+      Common.CommonSearchParams;
+
+    type HostList = Common.PaginatingQueryRecord<
+      Host &
+        Omit<ProjectAssetTotal, 'hostTotal'> & {
+          projectName: string;
+        }
+    >;
+  }
+  namespace CloudManage {
+    type CloudProject = {
+      name: string; // 项目名
+      cloudPlatform: string; // 云平台
+    };
+
+    type UpdateCloudProjectReq = {
+      id: number; // 云项目ID
+    } & CloudProject;
   }
 }

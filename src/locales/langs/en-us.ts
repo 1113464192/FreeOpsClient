@@ -9,6 +9,7 @@ const local: App.I18n.Schema = {
   common: {
     action: 'Action',
     add: 'Add',
+    buyHost: 'Buy Host',
     addSuccess: 'Add Success',
     backToHome: 'Back to home',
     batchDelete: 'Batch Delete',
@@ -26,6 +27,7 @@ const local: App.I18n.Schema = {
     error: 'Error',
     invalidId: 'Invalid ID',
     index: 'Index',
+    id: 'ID',
     keywordSearch: 'Please enter keyword',
     logout: 'Logout',
     logoutMaskToeknFailed: 'Backend failed to mask the token.',
@@ -36,6 +38,7 @@ const local: App.I18n.Schema = {
     modifySuccess: 'Modify Success',
     noData: 'No Data',
     operate: 'Operate',
+    cloudOperate: 'Cloud Operate',
     pleaseCheckValue: 'Please check whether the value is valid',
     refresh: 'Refresh',
     reset: 'Reset',
@@ -174,6 +177,7 @@ const local: App.I18n.Schema = {
     'function_toggle-auth': 'Toggle Auth',
     'function_super-page': 'Super Admin Visible',
     manage: 'System Manage',
+    asset: 'Asset Manage',
     manage_user: 'User Manage',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
@@ -185,6 +189,8 @@ const local: App.I18n.Schema = {
     'multi-menu_second': 'Menu Two',
     'multi-menu_second_child': 'Menu Two Child',
     'multi-menu_second_child_home': 'Menu Two Child Home',
+    asset_project: 'Project Asset',
+    asset_host: 'Host Asset',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -331,6 +337,7 @@ const local: App.I18n.Schema = {
         menuAuth: 'Menu Auth',
         buttonAuth: 'Button Auth',
         apiAuth: 'Api Auth',
+        projectAuth: 'Project Auth',
         form: {
           roleName: 'Please enter role name',
           roleCode: 'Please enter role code',
@@ -413,7 +420,6 @@ const local: App.I18n.Schema = {
       menu: {
         home: 'Home',
         title: 'Menu List',
-        id: 'ID',
         parentId: 'Parent ID',
         menuType: 'Menu Type',
         menuName: 'Menu Name',
@@ -482,6 +488,74 @@ const local: App.I18n.Schema = {
           local: 'Local Icon'
         }
       }
+    },
+    asset: {
+      project: {
+        title: 'Project List',
+        name: 'Project Name',
+        cloudPlatform: 'Cloud Platform',
+        hostTotal: 'Host Total',
+        gameTotal: 'Game Total',
+        crossTotal: 'Cross Total',
+        commonTotal: 'Common Total',
+        form: {
+          name: 'Please enter project name',
+          cloudPlatform: 'Please select cloud platform'
+        },
+        addProject: 'Add Project',
+        editProject: 'Edit Project',
+        search: {
+          name: 'Please enter project name'
+        },
+        cloudOperate: {
+          create: 'Create Cloud Project',
+          update: 'Update Cloud Project'
+        }
+      },
+      host: {
+        title: 'Host List',
+        name: 'Host Name',
+        ipv4: 'IPv4',
+        ipv6: 'IPv6',
+        vip: 'Internal IP',
+        projectName: 'Project Name',
+        zone: 'Zone',
+        cloud: 'Cloud Platform',
+        system: 'Operating System',
+        cores: 'CPU Cores',
+        dataDisk: 'Data Disk (G)',
+        mem: 'Memory (G)',
+        gameTotal: 'Host Game Count',
+        crossTotal: 'Host Cross Count',
+        commonTotal: 'Host Common Count',
+        buyHostCount: 'Buy Host Count',
+        form: {
+          name: 'Please enter host name',
+          ipv4: 'Please enter IPv4',
+          ipv6: 'Please enter IPv6',
+          vip: 'Please enter internal IP',
+          projectName: 'Please select project name',
+          zone: 'Please enter zone',
+          cloud: 'Please select cloud platform',
+          system: 'Please enter operating system',
+          cores: 'Please enter CPU cores',
+          dataDisk: 'Please enter data disk (G)',
+          mem: 'Please enter memory (G)',
+          buyHostCount: 'Please enter the number of hosts to buy'
+        },
+        addHost: 'Add Host',
+        editHost: 'Edit Host',
+        search: {
+          name: 'Please enter Host name',
+          ipv4: 'Please enter IPv4',
+          ipv6: 'Please enter IPv6',
+          vip: 'Please enter internal IP',
+          projectName: 'Please enter project name',
+          zone: 'Please enter zone',
+          cloud: 'Please select cloud platform',
+          system: 'Please enter operating system'
+        }
+      }
     }
   },
   form: {
@@ -509,6 +583,18 @@ const local: App.I18n.Schema = {
     email: {
       required: 'Please enter email',
       invalid: 'Email format is incorrect'
+    },
+    ipv4: {
+      required: 'Please enter ipv4',
+      invalid: 'ipv4 format is incorrect'
+    },
+    ipv6: {
+      required: 'Please enter ipv6',
+      invalid: 'ipv6 format is incorrect'
+    },
+    vip: {
+      required: 'Please enter virtual ip',
+      invalid: 'virtual ip format is incorrect'
     }
   },
   dropdown: {

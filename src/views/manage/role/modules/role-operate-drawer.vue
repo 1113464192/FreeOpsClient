@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
-import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { updateRole } from '@/service/api';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
 import ApiAuthModal from './api-auth-modal.vue';
+import ProjectAuthModal from './project-auth-modal.vue';
 
 defineOptions({
   name: 'RoleOperateDrawer'
@@ -31,11 +32,12 @@ const visible = defineModel<boolean>('visible', {
   default: false
 });
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
-const { defaultRequiredRule } = useFormRules();
+// const { formRef, validate, restoreValidation } = useNaiveForm();
+const { formRef } = useNaiveForm();
 const { bool: menuAuthVisible, setTrue: openMenuAuthModal } = useBoolean();
 const { bool: buttonAuthVisible, setTrue: openButtonAuthModal } = useBoolean();
 const { bool: apiAuthVisible, setTrue: openApiAuthModal } = useBoolean();
+const { bool: projectAuthVisible, setTrue: openProjectAuthModal } = useBoolean();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
@@ -57,13 +59,6 @@ function createDefaultModel(): Api.SystemManage.Role {
   };
 }
 
-type RuleKey = Exclude<keyof Api.SystemManage.Role, 'roleDesc' | 'id' | 'status'>;
-
-const rules: Record<RuleKey, App.Global.FormRule> = {
-  roleName: defaultRequiredRule,
-  roleCode: defaultRequiredRule
-};
-
 const isEdit = computed(() => props.operateType === 'edit');
 
 function handleInitModel() {
@@ -79,7 +74,7 @@ function closeDrawer() {
 }
 
 async function handleSubmit() {
-  await validate();
+  // await validate();
   console.log('model', model);
   const { error } = await updateRole(model);
   if (error) {
@@ -93,7 +88,7 @@ async function handleSubmit() {
 watch(visible, () => {
   if (visible.value) {
     handleInitModel();
-    restoreValidation();
+    // restoreValidation();
   }
 });
 </script>
@@ -101,7 +96,7 @@ watch(visible, () => {
 <template>
   <NDrawer v-model:show="visible" display-directive="show" :width="360">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
-      <NForm ref="formRef" :model="model" :rules="rules">
+      <NForm ref="formRef" :model="model">
         <NFormItem :label="$t('page.manage.role.roleName')" path="roleName">
           <NInput v-model:value="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
         </NFormItem>
@@ -119,6 +114,8 @@ watch(visible, () => {
         <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="model.id" />
         <NButton @click="openApiAuthModal">{{ $t('page.manage.role.apiAuth') }}</NButton>
         <ApiAuthModal v-model:visible="apiAuthVisible" :role-id="model.id" />
+        <NButton @click="openProjectAuthModal">{{ $t('page.manage.role.projectAuth') }}</NButton>
+        <ProjectAuthModal v-model:visible="projectAuthVisible" :role-id="model.id"></ProjectAuthModal>
       </NSpace>
       <template #footer>
         <NSpace :size="16">

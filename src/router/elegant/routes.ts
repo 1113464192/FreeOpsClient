@@ -51,6 +51,35 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'asset',
+    path: '/asset',
+    component: 'layout.base',
+    meta: {
+      title: 'asset',
+      i18nKey: 'route.asset'
+    },
+    children: [
+      {
+        name: 'asset_host',
+        path: '/asset/host',
+        component: 'view.asset_host',
+        meta: {
+          title: 'asset_host',
+          i18nKey: 'route.asset_host'
+        }
+      },
+      {
+        name: 'asset_project',
+        path: '/asset/project',
+        component: 'view.asset_project',
+        meta: {
+          title: 'asset_project',
+          i18nKey: 'route.asset_project'
+        }
+      }
+    ]
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',

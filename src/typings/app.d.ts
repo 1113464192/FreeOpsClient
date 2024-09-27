@@ -259,6 +259,7 @@ declare namespace App {
       common: {
         action: string;
         add: string;
+        buyHost: string;
         addSuccess: string;
         backToHome: string;
         batchDelete: string;
@@ -276,6 +277,7 @@ declare namespace App {
         error: string;
         invalidId: string;
         index: string;
+        id: string;
         keywordSearch: string;
         logout: string;
         logoutMaskToeknFailed: string;
@@ -286,6 +288,7 @@ declare namespace App {
         modifySuccess: string;
         noData: string;
         operate: string;
+        cloudOperate: string;
         pleaseCheckValue: string;
         refresh: string;
         reset: string;
@@ -512,6 +515,7 @@ declare namespace App {
             menuAuth: string;
             buttonAuth: string;
             apiAuth: string;
+            projectAuth: string;
           };
           user: {
             title: string;
@@ -585,7 +589,6 @@ declare namespace App {
           menu: {
             home: string;
             title: string;
-            id: string;
             parentId: string;
             menuType: string;
             menuName: string;
@@ -655,6 +658,74 @@ declare namespace App {
             };
           };
         };
+        asset: {
+          project: {
+            title: string;
+            name: string;
+            cloudPlatform: string;
+            hostTotal: string;
+            gameTotal: string;
+            crossTotal: string;
+            commonTotal: string;
+            form: {
+              name: string;
+              cloudPlatform: string;
+            };
+            addProject: string;
+            editProject: string;
+            search: {
+              name: string;
+            };
+            cloudOperate: {
+              create: string;
+              update: string;
+            };
+          };
+          host: {
+            title: string;
+            name: string;
+            ipv4: string;
+            ipv6: string;
+            vip: string;
+            projectName: string;
+            zone: string;
+            cloud: string;
+            system: string;
+            cores: string;
+            dataDisk: string;
+            mem: string;
+            gameTotal: string;
+            crossTotal: string;
+            commonTotal: string;
+            buyHostCount: string;
+            form: {
+              name: string;
+              ipv4: string;
+              ipv6: string;
+              vip: string;
+              projectName: string;
+              zone: string;
+              cloud: string;
+              system: string;
+              cores: string;
+              dataDisk: string;
+              mem: string;
+              buyHostCount: string;
+            };
+            addHost: string;
+            editHost: string;
+            search: {
+              name: string;
+              ipv4: string;
+              ipv6: string;
+              vip: string;
+              projectName: string;
+              zone: string;
+              cloud: string;
+              system: string;
+            };
+          };
+        };
       };
       form: {
         required: string;
@@ -664,6 +735,9 @@ declare namespace App {
         confirmPwd: FormMsg;
         code: FormMsg;
         email: FormMsg;
+        ipv4: FormMsg;
+        ipv6: FormMsg;
+        vip: FormMsg;
       };
       dropdown: Record<Global.DropdownKey, string>;
       icon: {
