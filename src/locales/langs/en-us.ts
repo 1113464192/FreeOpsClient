@@ -156,7 +156,7 @@ const local: App.I18n.Schema = {
     'iframe-page': 'Iframe',
     home: 'Home',
     document: 'Document',
-    document_project: 'Project Document',
+    document_project: 'Project Document(Internal Link: github does not allow)',
     'document_project-link': 'Project Document(External Link)',
     document_vue: 'Vue Document',
     document_vite: 'Vite Document',
@@ -391,7 +391,7 @@ const local: App.I18n.Schema = {
           ip: 'Please enter full IP',
           date: 'Please select date',
           method: 'Please select request method',
-          status: 'Please enter the range of backend return code'
+          status: 'Please select the range of backend return code'
         }
       },
       api: {
@@ -441,7 +441,7 @@ const local: App.I18n.Schema = {
         multiTab: 'Multi Tab',
         fixedIndexInTab: 'Fixed Index In Tab',
         query: 'Query Params',
-        button: 'Button',
+        button: 'Button(If modified, rebind the role)',
         props: 'Props',
         assignProps: 'assignProps(if null, Default path args)',
         buttonCode: 'Button Code',
@@ -554,6 +554,39 @@ const local: App.I18n.Schema = {
           zone: 'Please enter zone',
           cloud: 'Please select cloud platform',
           system: 'Please enter operating system'
+        }
+      }
+    },
+    opsManage: {
+      game: {
+        title: 'Game List',
+        type: 'Game Type',
+        status: 'Game Status',
+        lbName: 'LB Name',
+        lbListenerPort: 'LB Listener Port',
+        serverPort: 'Game Server Port',
+        projectName: 'Project Name',
+        hostName: 'Host Name',
+        crossId: 'Cross ID',
+        commonId: 'Common ID',
+        form: {
+          type: 'Please select game type',
+          status: 'Please select game status',
+          lbName: 'Please enter LB name',
+          lbListenerPort: 'Please enter LB listener port',
+          serverPort: 'Please enter game server port',
+          projectName: 'Please select project name',
+          hostName: 'Please select host name',
+          crossId: 'Please enter cross ID',
+          commonId: 'Please enter common ID'
+        },
+        search: {
+          type: 'Please select game type',
+          status: 'Please select game status',
+          projectName: 'Please enter project name',
+          hostName: 'Please enter host name',
+          crossId: 'Please enter cross ID',
+          commonId: 'Please enter common ID'
         }
       }
     }

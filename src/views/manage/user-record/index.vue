@@ -73,7 +73,7 @@ const {
     {
       key: 'method',
       title: $t('page.manage.userRecord.method'),
-      width: 64
+      width: 74
     },
     {
       key: 'path',

@@ -95,6 +95,7 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    console.log('init model', model);
   }
 }
 
@@ -108,7 +109,7 @@ async function handleSubmit() {
   model.mem = Number.parseInt(memStr.value, 10);
   model.dataDisk = Number.parseInt(dataDiskStr.value, 10);
   console.log('model', model);
-  // 更新项目信息
+  // 更新服务器信息
   const { error: hostError } = await updateHost(model);
   if (hostError) {
     return;

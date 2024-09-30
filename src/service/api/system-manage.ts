@@ -252,9 +252,9 @@ export function deleteApis(ids: number[]) {
 }
 
 // 注意，这里的ids是菜单的ids
-export function deleteButtons(ids: number[]) {
+export function deleteMenuButtons(ids: number[]) {
   return request({
-    url: '/buttons',
+    url: '/buttons/menus',
     method: 'delete',
     data: {
       ids

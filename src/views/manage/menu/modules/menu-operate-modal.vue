@@ -6,7 +6,7 @@ import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
-import { deleteButtons, fetchGetButtonList, fetchGetMenuList, updateButton, updateMenu } from '@/service/api';
+import { deleteMenuButtons, fetchGetButtonList, fetchGetMenuList, updateButton, updateMenu } from '@/service/api';
 import {
   getLayoutAndPage,
   getPathParamFromRoutePath,
@@ -88,7 +88,7 @@ type Model = Pick<
 
 const model: Model = reactive(createDefaultModel());
 
-// 字符串才能出发naiveUI的组件默认值，否则只能自己选
+// NRadio组件，字符串才能触发naiveUI的组件默认值，否则只能自己选
 const menuStatus = ref<string>('1');
 const iconType = ref<string>('1');
 
@@ -348,13 +348,13 @@ async function updateModel(params: Model): Promise<void> {
           throw new Error(buttonError.response?.data.msg);
         }
       } else {
-        const { error: buttonError } = await deleteButtons([model.id]);
+        const { error: buttonError } = await deleteMenuButtons([model.id]);
         if (buttonError) {
           throw new Error(buttonError.response?.data.msg);
         }
       }
     } else {
-      const { error: buttonError } = await deleteButtons([model.id]);
+      const { error: buttonError } = await deleteMenuButtons([model.id]);
       if (buttonError) {
         throw new Error(buttonError.response?.data.msg);
       }

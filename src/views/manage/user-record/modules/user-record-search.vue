@@ -71,7 +71,7 @@ function search() {
             clearable
           />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.userRecord.form.status')" path="status" class="pr-24px">
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.userRecord.status')" path="status" class="pr-24px">
           <NSelect
             v-model:value="model.status"
             :placeholder="$t('page.manage.userRecord.form.status')"

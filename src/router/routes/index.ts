@@ -96,7 +96,7 @@ const customRoutes: CustomRoute[] = [
         path: '/document/project',
         component: 'view.iframe-page',
         props: {
-          url: 'https://docs.soybeanjs.cn/zh'
+          url: 'https://github.com/1113464192/FreeOpsServer'
         },
         meta: {
           title: 'document_project',
@@ -114,7 +114,7 @@ const customRoutes: CustomRoute[] = [
           i18nKey: 'route.document_project-link',
           order: 2,
           localIcon: 'logo',
-          href: 'https://docs.soybeanjs.cn/zh'
+          href: 'https://github.com/1113464192/FreeOpsClient'
         }
       },
       {

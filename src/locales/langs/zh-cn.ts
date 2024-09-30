@@ -156,7 +156,7 @@ const local: App.I18n.Schema = {
     'iframe-page': '外链页面',
     home: '首页',
     document: '文档',
-    document_project: '项目文档',
+    document_project: '项目文档(内链: github不允许)',
     'document_project-link': '项目文档(外链)',
     document_vue: 'Vue文档',
     document_vite: 'Vite文档',
@@ -382,7 +382,7 @@ const local: App.I18n.Schema = {
         body: '请求体',
         userId: '用户ID',
         username: '用户名',
-        status: '后端返回码',
+        status: '返回码',
         latency: '延迟(纳秒)',
         resp: '响应体',
         date: '日期',
@@ -391,7 +391,7 @@ const local: App.I18n.Schema = {
           ip: '请输入完整IP地址',
           date: '请选择日期',
           method: '请选择请求方法',
-          status: '请输入后端返回码范围'
+          status: '请选择后端返回码范围'
         }
       },
       api: {
@@ -440,7 +440,7 @@ const local: App.I18n.Schema = {
         multiTab: '支持多页签',
         fixedIndexInTab: '固定在页签中的序号',
         query: '路由参数',
-        button: '按钮',
+        button: '按钮(有修改需要重新绑定角色)',
         props: '传递属性',
         assignProps: '指定属性传递(为空则默认路径参数)',
         buttonCode: '按钮编码',
@@ -553,6 +553,39 @@ const local: App.I18n.Schema = {
           zone: '请输入地区',
           cloud: '请选择云平台',
           system: '请输入操作系统'
+        }
+      }
+    },
+    opsManage: {
+      game: {
+        title: '游戏服列表',
+        type: '游戏服类型',
+        status: '游戏服状态',
+        lbName: 'LB名',
+        lbListenerPort: 'LB监听器端口',
+        serverPort: '游戏服主端口',
+        projectName: '项目名',
+        hostName: '服务器名',
+        crossId: '跨服ID',
+        commonId: '公共服ID',
+        form: {
+          type: '请选择游服类型',
+          status: '请选择游服状态',
+          lbName: '请输入负载均衡名称',
+          lbListenerPort: '请输入负载均衡监听端口',
+          serverPort: '请输入游戏服端口',
+          projectName: '请选择项目名',
+          hostName: '请选择服务器名',
+          crossId: '请输入跨服ID',
+          commonId: '请输入公共服ID'
+        },
+        search: {
+          type: '请选择游服类型',
+          status: '请选择游服状态',
+          projectName: '请输入项目名',
+          hostName: '请输入服务器名',
+          crossId: '请输入跨服ID',
+          commonId: '请输入公共服ID'
         }
       }
     }

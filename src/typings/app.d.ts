@@ -726,6 +726,39 @@ declare namespace App {
             };
           };
         };
+        opsManage: {
+          game: {
+            title: string;
+            type: string;
+            status: string;
+            lbName: string;
+            lbListenerPort: string;
+            serverPort: string;
+            projectName: string;
+            hostName: string;
+            crossId: string;
+            commonId: string;
+            form: {
+              type: string;
+              status: string;
+              lbName: string;
+              lbListenerPort: string;
+              serverPort: string;
+              projectName: string;
+              hostName: string;
+              crossId: string;
+              commonId: string;
+            };
+            search: {
+              type: string;
+              status: string;
+              projectName: string;
+              hostName: string;
+              crossId: string;
+              commonId: string;
+            };
+          };
+        };
       };
       form: {
         required: string;

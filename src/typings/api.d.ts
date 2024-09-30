@@ -338,4 +338,31 @@ declare namespace Api {
       id: number; // 云项目ID
     } & CloudProject;
   }
+  namespace OpsManage {
+    // 1 运行中 2 停服 3 已合服 4 操作中
+    type EnableGameStatus = 1 | 2 | 3 | 4;
+    // 1 游服 2 跨服 3 公共服  ...后续有需要再加
+    type EnableGameType = 1 | 2 | 3;
+    type Game = {
+      id: number;
+      type: EnableGameType;
+      status: EnableGameStatus;
+      lbName: string;
+      lbListenerPort: number;
+      serverPort: number;
+      projectName: string;
+      hostName: string;
+      projectId: number;
+      hostId: number;
+      crossId: number;
+      commonId: number;
+    };
+
+    type GameSearchParams = CommonType.RecordNullable<
+      Pick<Api.OpsManage.Game, 'id' | 'type' | 'status' | 'projectName' | 'hostName' | 'crossId' | 'commonId'>
+    > &
+      Common.CommonSearchParams;
+
+    type GameList = Common.PaginatingQueryRecord<Game>;
+  }
 }
