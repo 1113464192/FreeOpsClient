@@ -1,9 +1,10 @@
-<!-- <script setup lang="tsx">
-import { NButton, NPopconfirm } from 'naive-ui';
+<script setup lang="tsx">
+import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { deleteGames, fetchGetGameList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
+import { gameStatusOptions, gameTypeOptions } from '@/constants/business';
 import GameOperateDrawer from './modules/game-operate-drawer.vue';
 import GameSearch from './modules/game-search.vue';
 
@@ -33,7 +34,8 @@ const {
     projectName: null,
     hostName: null,
     crossId: null,
-    commonId: null
+    commonId: null,
+    ipv4: null
   },
   columns: () => [
     {
@@ -48,38 +50,95 @@ const {
       width: 64
     },
     {
-      key: 'name',
-      title: $t('page.asset.project.name'),
+      key: 'type',
+      title: $t('page.opsManage.game.type'),
       align: 'center',
-      minWidth: 100
+      width: 100,
+      render: row => {
+        const typeOption = gameTypeOptions.find(option => String(option.value) === String(row.type));
+        const typeColor =
+          (
+            {
+              1: 'success', // game
+              2: 'warning', // cross
+              3: 'error' // common
+            } satisfies Record<number, 'success' | 'warning' | 'error'>
+          )[row.type] || 'info';
+        return (
+          <div class="flex-center gap-8px">
+            <NTag type={typeColor}>{typeOption ? $t(typeOption.label as App.I18n.I18nKey) : row.type}</NTag>
+          </div>
+        );
+      }
     },
     {
-      key: 'cloudPlatform',
-      title: $t('page.asset.project.cloudPlatform'),
+      key: 'status',
+      title: $t('page.opsManage.game.status'),
       align: 'center',
-      minWidth: 100
+      width: 100,
+      render: row => {
+        const statusOption = gameStatusOptions.find(option => String(option.value) === String(row.status));
+        const statusColor =
+          (
+            {
+              1: 'success', // running
+              2: 'error', // stopped
+              3: 'warning', // merged
+              4: 'info' // operating
+            } satisfies Record<number, 'success' | 'error' | 'warning' | 'info'>
+          )[row.status] || 'info';
+        return (
+          <div class="flex-center gap-8px">
+            <NTag type={statusColor}>{statusOption ? $t(statusOption.label as App.I18n.I18nKey) : row.status}</NTag>
+          </div>
+        );
+      }
     },
     {
-      key: 'hostTotal',
-      title: $t('page.asset.project.hostTotal'),
+      key: 'serverPort',
+      title: $t('page.opsManage.game.serverPort'),
       align: 'center',
       width: 100
     },
     {
-      key: 'gameTotal',
-      title: $t('page.asset.project.gameTotal'),
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'crossTotal',
-      title: $t('page.asset.project.crossTotal'),
+      key: 'projectName',
+      title: $t('page.opsManage.game.projectName'),
       align: 'center',
       width: 100
     },
     {
-      key: 'commonTotal',
-      title: $t('page.asset.project.commonTotal'),
+      key: 'hostName',
+      title: $t('page.opsManage.game.hostName'),
+      align: 'center',
+      minWidth: 160
+    },
+    {
+      key: 'ipv4',
+      title: $t('page.asset.host.ipv4'),
+      align: 'center',
+      minWidth: 140
+    },
+    {
+      key: 'lbName',
+      title: $t('page.opsManage.game.lbName'),
+      align: 'center',
+      minWidth: 100
+    },
+    {
+      key: 'lbListenerPort',
+      title: $t('page.opsManage.game.lbListenerPort'),
+      align: 'center',
+      width: 110
+    },
+    {
+      key: 'crossId',
+      title: $t('page.opsManage.game.crossId'),
+      align: 'center',
+      width: 64
+    },
+    {
+      key: 'commonId',
+      title: $t('page.opsManage.game.commonId'),
       align: 'center',
       width: 100
     },
@@ -105,22 +164,6 @@ const {
           </NPopconfirm>
         </div>
       )
-    },
-    {
-      key: 'cloudOperate',
-      title: $t('common.cloudOperate'),
-      align: 'center',
-      width: 200,
-      render: row => (
-        <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => createCloudProject(row.name, row.cloudPlatform)}>
-            {$t('page.asset.project.cloudOperate.create')}
-          </NButton>
-          <NButton type="primary" ghost size="small" onClick={() => updateCloudProject(row.name, row.cloudPlatform)}>
-            {$t('page.asset.project.cloudOperate.update')}
-          </NButton>
-        </div>
-      )
     }
   ]
 });
@@ -140,7 +183,7 @@ const {
 async function handleBatchDelete() {
   // request
   console.log(checkedRowKeys.value);
-  const { error } = await deleteProjects(checkedRowKeys.value);
+  const { error } = await deleteGames(checkedRowKeys.value);
   if (error) {
     return;
   }
@@ -151,7 +194,7 @@ async function handleBatchDelete() {
 async function handleDelete(id: number) {
   // request
   console.log(id);
-  const { error } = await deleteProjects([id]);
+  const { error } = await deleteGames([id]);
   if (error) {
     return;
   }
@@ -167,7 +210,12 @@ function edit(id: number) {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <GameSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard :title="$t('page.asset.project.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <NCard
+      :title="$t('page.opsManage.game.title')"
+      :bordered="false"
+      size="small"
+      class="sm:flex-1-hidden card-wrapper"
+    >
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"
@@ -184,7 +232,7 @@ function edit(id: number) {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="962"
+        :scroll-x="1322"
         :loading="loading"
         remote
         :row-key="row => row.id"
@@ -201,4 +249,4 @@ function edit(id: number) {
   </div>
 </template>
 
-<style scoped></style> -->
+<style scoped></style>

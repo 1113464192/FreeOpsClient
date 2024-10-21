@@ -26,7 +26,7 @@ declare namespace Api {
      * - "1": enabled
      * - "2": disabled
      */
-    type EnableStatus = 1 | 2;
+    type EnableStatus = number;
 
     /** common record */
     type CommonRecord<T = any> = {
@@ -285,6 +285,14 @@ declare namespace Api {
   namespace AssetManage {
     type Project = Common.CommonRecord<{
       name: string;
+      backendVersion: string;
+      frontendVersion: string;
+      gameRange: string;
+      crossRange: string;
+      commonRange: string;
+      oneGameMem: number;
+      oneCrossMem: number;
+      oneCommonMem: number;
       cloudPlatform: string;
     }>;
 
@@ -340,18 +348,19 @@ declare namespace Api {
   }
   namespace OpsManage {
     // 1 运行中 2 停服 3 已合服 4 操作中
-    type EnableGameStatus = 1 | 2 | 3 | 4;
+    type GameStatus = 1 | 2 | 3 | 4;
     // 1 游服 2 跨服 3 公共服  ...后续有需要再加
-    type EnableGameType = 1 | 2 | 3;
+    type GameType = 1 | 2 | 3;
     type Game = {
       id: number;
-      type: EnableGameType;
-      status: EnableGameStatus;
+      type: GameType;
+      status: GameStatus;
       lbName: string;
       lbListenerPort: number;
       serverPort: number;
       projectName: string;
       hostName: string;
+      ipv4: string;
       projectId: number;
       hostId: number;
       crossId: number;
@@ -359,7 +368,7 @@ declare namespace Api {
     };
 
     type GameSearchParams = CommonType.RecordNullable<
-      Pick<Api.OpsManage.Game, 'id' | 'type' | 'status' | 'projectName' | 'hostName' | 'crossId' | 'commonId'>
+      Pick<Api.OpsManage.Game, 'id' | 'type' | 'status' | 'projectName' | 'hostName' | 'ipv4' | 'crossId' | 'commonId'>
     > &
       Common.CommonSearchParams;
 

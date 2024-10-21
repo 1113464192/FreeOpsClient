@@ -49,6 +49,54 @@ const {
       minWidth: 100
     },
     {
+      key: 'backendVersion',
+      title: $t('page.asset.project.backendVersion'),
+      align: 'center',
+      width: 200
+    },
+    {
+      key: 'frontendVersion',
+      title: $t('page.asset.project.frontendVersion'),
+      align: 'center',
+      width: 200
+    },
+    {
+      key: 'gameRange',
+      title: $t('page.asset.project.gameRange'),
+      align: 'center',
+      width: 130
+    },
+    {
+      key: 'crossRange',
+      title: $t('page.asset.project.crossRange'),
+      align: 'center',
+      width: 130
+    },
+    {
+      key: 'commonRange',
+      title: $t('page.asset.project.commonRange'),
+      align: 'center',
+      width: 130
+    },
+    {
+      key: 'oneGameMem',
+      title: $t('page.asset.project.oneGameMem'),
+      align: 'center',
+      width: 130
+    },
+    {
+      key: 'oneCrossMem',
+      title: $t('page.asset.project.oneCrossMem'),
+      align: 'center',
+      width: 130
+    },
+    {
+      key: 'oneCommonMem',
+      title: $t('page.asset.project.oneCommonMem'),
+      align: 'center',
+      width: 130
+    },
+    {
       key: 'cloudPlatform',
       title: $t('page.asset.project.cloudPlatform'),
       align: 'center',
@@ -105,7 +153,7 @@ const {
       key: 'cloudOperate',
       title: $t('common.cloudOperate'),
       align: 'center',
-      width: 200,
+      width: 350,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => createCloudProject(row.name, row.cloudPlatform)}>
@@ -179,7 +227,8 @@ function edit(id: number) {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="962"
+        :virtual-scroll-x="true"
+        :scroll-x="2400"
         :loading="loading"
         remote
         :row-key="row => row.id"

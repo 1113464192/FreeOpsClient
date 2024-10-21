@@ -191,6 +191,8 @@ const local: App.I18n.Schema = {
     'multi-menu_second_child_home': '菜单二子菜单首页',
     asset_project: '项目管理',
     asset_host: '服务器管理',
+    'ops-manage': '运维管理',
+    'ops-manage_game': '游戏服管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -492,6 +494,14 @@ const local: App.I18n.Schema = {
       project: {
         title: '项目列表',
         name: '项目名称',
+        backendVersion: '后端版本',
+        frontendVersion: '前端版本',
+        gameRange: '游服ID范围',
+        crossRange: '跨服ID范围',
+        commonRange: '公共服ID范围',
+        oneGameMem: '单游服最大内存(G)',
+        oneCrossMem: '单跨服最大内存(G)',
+        oneCommonMem: '单公共服最大内存(G)',
         cloudPlatform: '云平台',
         hostTotal: '服务器数量',
         gameTotal: '游服数量',
@@ -499,6 +509,14 @@ const local: App.I18n.Schema = {
         commonTotal: '公共服数量',
         form: {
           name: '请输入项目名',
+          backendVersion: '请输入后端版本',
+          frontendVersion: '请输入前端版本',
+          gameRange: '请输入游服ID范围',
+          crossRange: '请输入跨服ID范围',
+          commonRange: '请输入公共服ID范围',
+          oneGameMem: '请输入最大内存(浮点数)',
+          oneCrossMem: '请输入最大内存(浮点数)',
+          oneCommonMem: '请输入最大内存(浮点数)',
           cloudPlatform: '请选择云平台'
         },
         addProject: '新增项目',
@@ -559,6 +577,7 @@ const local: App.I18n.Schema = {
     opsManage: {
       game: {
         title: '游戏服列表',
+        id: '游戏服ID',
         type: '游戏服类型',
         status: '游戏服状态',
         lbName: 'LB名',
@@ -566,26 +585,42 @@ const local: App.I18n.Schema = {
         serverPort: '游戏服主端口',
         projectName: '项目名',
         hostName: '服务器名',
+        hostIpv4: '服务器Ipv4',
         crossId: '跨服ID',
         commonId: '公共服ID',
+        addGame: '新增游戏服',
+        editGame: '编辑游戏服',
         form: {
+          id: '请输入游戏服ID',
           type: '请选择游服类型',
           status: '请选择游服状态',
           lbName: '请输入负载均衡名称',
           lbListenerPort: '请输入负载均衡监听端口',
           serverPort: '请输入游戏服端口',
           projectName: '请选择项目名',
-          hostName: '请选择服务器名',
+          hostIp: '请选择服务器IP',
           crossId: '请输入跨服ID',
           commonId: '请输入公共服ID'
         },
         search: {
+          id: '请输入游戏服ID',
           type: '请选择游服类型',
           status: '请选择游服状态',
           projectName: '请输入项目名',
           hostName: '请输入服务器名',
           crossId: '请输入跨服ID',
           commonId: '请输入公共服ID'
+        },
+        statusOption: {
+          running: '运行中',
+          stopped: '停服',
+          merged: '已合服',
+          operating: '操作中'
+        },
+        typeOption: {
+          game: '游服',
+          cross: '跨服',
+          common: '公共服'
         }
       }
     }

@@ -277,8 +277,8 @@ function getSubmitParams() {
     params.props = false;
   }
 
-  params.iconType = Number.parseInt(iconType.value, 10) as Api.Common.EnableStatus;
-  params.status = Number.parseInt(menuStatus.value, 10) as Api.Common.EnableStatus;
+  params.iconType = Number.parseInt(iconType.value, 10) as Api.SystemManage.IconType;
+  params.status = Number.parseInt(menuStatus.value, 10);
   params.menuType = Number.parseInt(params.menuType as unknown as string, 10) as Api.SystemManage.MenuType;
 
   return params as Model;

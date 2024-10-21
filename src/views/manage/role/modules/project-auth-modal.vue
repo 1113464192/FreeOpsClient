@@ -37,7 +37,7 @@ async function getAllProjects() {
   if (error) {
     return;
   }
-  tree.value = data.map((item: Omit<Api.AssetManage.Project, 'status'>) => ({
+  tree.value = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
     id: item.id,
     label: item.name
   }));

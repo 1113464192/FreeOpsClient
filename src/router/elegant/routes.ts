@@ -378,6 +378,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'ops-manage',
+    path: '/ops-manage',
+    component: 'layout.base',
+    meta: {
+      title: 'ops-manage',
+      i18nKey: 'route.ops-manage'
+    },
+    children: [
+      {
+        name: 'ops-manage_game',
+        path: '/ops-manage/game',
+        component: 'view.ops-manage_game',
+        meta: {
+          title: 'ops-manage_game',
+          i18nKey: 'route.ops-manage_game'
+        }
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

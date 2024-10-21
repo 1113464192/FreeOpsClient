@@ -27,3 +27,20 @@ export const menuIconTypeRecord: Record<Api.SystemManage.IconType, App.I18n.I18n
 };
 
 export const menuIconTypeOptions = transformRecordToOption(menuIconTypeRecord);
+
+export const gameStatusRecord: Record<Api.OpsManage.GameStatus, App.I18n.I18nKey> = {
+  1: 'page.opsManage.game.statusOption.running',
+  2: 'page.opsManage.game.statusOption.stopped',
+  3: 'page.opsManage.game.statusOption.merged',
+  4: 'page.opsManage.game.statusOption.operating'
+};
+
+export const gameStatusOptions = transformRecordToOption(gameStatusRecord);
+
+export const gameTypeRecord: Record<Api.OpsManage.GameType, App.I18n.I18nKey> = {
+  1: 'page.opsManage.game.typeOption.game',
+  2: 'page.opsManage.game.typeOption.cross',
+  3: 'page.opsManage.game.typeOption.common'
+};
+
+export const gameTypeOptions = transformRecordToOption(gameTypeRecord);

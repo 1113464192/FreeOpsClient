@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef, watch } from 'vue';
+import { computed, reactive, watch } from 'vue';
+import { NInputNumber } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { fetchAllProjects, updateHost } from '@/service/api';
 import { CloudPlatformOptions } from '@/constants/constants';
@@ -17,12 +18,6 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
-const coresStr = shallowRef<string>('');
-
-const memStr = shallowRef<string>('');
-
-const dataDiskStr = shallowRef<string>('');
 
 interface Emits {
   (e: 'submitted'): void;
@@ -83,7 +78,7 @@ async function getAllProjects() {
     return;
   }
 
-  const options = data.map((item: Omit<Api.AssetManage.Project, 'status'>) => ({
+  const options = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
     value: item.id,
     label: item.name
   }));
@@ -105,9 +100,6 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  model.cores = Number.parseInt(coresStr.value, 10);
-  model.mem = Number.parseInt(memStr.value, 10);
-  model.dataDisk = Number.parseInt(dataDiskStr.value, 10);
   console.log('model', model);
   // 更新服务器信息
   const { error: hostError } = await updateHost(model);
@@ -166,15 +158,15 @@ watch(visible, () => {
         </NFormItem>
 
         <NFormItem :label="$t('page.asset.host.cores')">
-          <NInput v-model:value="coresStr" :placeholder="$t('page.asset.host.form.cores')" />
+          <NInputNumber v-model:value="model.cores" :placeholder="$t('page.asset.host.form.cores')" />
         </NFormItem>
 
         <NFormItem :label="$t('page.asset.host.mem')">
-          <NInput v-model:value="memStr" :placeholder="$t('page.asset.host.form.mem')" />
+          <NInputNumber v-model:value="model.mem" :placeholder="$t('page.asset.host.form.mem')" />
         </NFormItem>
 
         <NFormItem :label="$t('page.asset.host.dataDisk')">
-          <NInput v-model:value="dataDiskStr" :placeholder="$t('page.asset.host.form.dataDisk')" />
+          <NInputNumber v-model:value="model.dataDisk" :placeholder="$t('page.asset.host.form.dataDisk')" />
         </NFormItem>
 
         <NFormItem :label="$t('page.asset.host.projectName')" path="projectId">

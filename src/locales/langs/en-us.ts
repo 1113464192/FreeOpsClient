@@ -191,6 +191,8 @@ const local: App.I18n.Schema = {
     'multi-menu_second_child_home': 'Menu Two Child Home',
     asset_project: 'Project Asset',
     asset_host: 'Host Asset',
+    'ops-manage': 'Ops Manage',
+    'ops-manage_game': 'Game Manage',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -493,6 +495,14 @@ const local: App.I18n.Schema = {
       project: {
         title: 'Project List',
         name: 'Project Name',
+        backendVersion: 'Backend Version',
+        frontendVersion: 'Frontend Version',
+        gameRange: 'Game ID Range',
+        crossRange: 'Cross ID Range',
+        commonRange: 'Common ID Range',
+        oneGameMem: 'One Game Max Memory(G)',
+        oneCrossMem: 'One Cross Max Memory(G)',
+        oneCommonMem: 'One Common Max Memory(G)',
         cloudPlatform: 'Cloud Platform',
         hostTotal: 'Host Total',
         gameTotal: 'Game Total',
@@ -500,6 +510,14 @@ const local: App.I18n.Schema = {
         commonTotal: 'Common Total',
         form: {
           name: 'Please enter project name',
+          backendVersion: 'Please enter backend version',
+          frontendVersion: 'Please enter frontend version',
+          gameRange: 'Please enter game ID range',
+          crossRange: 'Please enter cross ID range',
+          commonRange: 'Please enter common ID range',
+          oneGameMem: 'Please enter max memory(FLOAT)',
+          oneCrossMem: 'Please enter max memory(FLOAT)',
+          oneCommonMem: 'Please enter max memory(FLOAT)',
           cloudPlatform: 'Please select cloud platform'
         },
         addProject: 'Add Project',
@@ -560,6 +578,7 @@ const local: App.I18n.Schema = {
     opsManage: {
       game: {
         title: 'Game List',
+        id: 'Game ID',
         type: 'Game Type',
         status: 'Game Status',
         lbName: 'LB Name',
@@ -567,26 +586,42 @@ const local: App.I18n.Schema = {
         serverPort: 'Game Server Port',
         projectName: 'Project Name',
         hostName: 'Host Name',
+        hostIpv4: 'Host IPv4',
         crossId: 'Cross ID',
         commonId: 'Common ID',
+        addGame: 'Add Game',
+        editGame: 'Edit Game',
         form: {
+          id: 'Please enter game ID',
           type: 'Please select game type',
           status: 'Please select game status',
           lbName: 'Please enter LB name',
           lbListenerPort: 'Please enter LB listener port',
           serverPort: 'Please enter game server port',
           projectName: 'Please select project name',
-          hostName: 'Please select host name',
+          hostIp: 'Please select host IP',
           crossId: 'Please enter cross ID',
           commonId: 'Please enter common ID'
         },
         search: {
+          id: 'Please enter game ID',
           type: 'Please select game type',
           status: 'Please select game status',
           projectName: 'Please enter project name',
           hostName: 'Please enter host name',
           crossId: 'Please enter cross ID',
           commonId: 'Please enter common ID'
+        },
+        statusOption: {
+          running: 'Running',
+          stopped: 'Stopped',
+          merged: 'Merged',
+          operating: 'Operating'
+        },
+        typeOption: {
+          game: 'Game',
+          cross: 'Cross',
+          common: 'Common'
         }
       }
     }

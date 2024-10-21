@@ -2,7 +2,12 @@
 import { request } from '../request';
 
 // 新增/修改 游戏服对象
-export function updateGame(data: Api.OpsManage.Game) {
+export function updateGame(
+  data: Omit<Api.OpsManage.Game, 'projectName' | 'hostName' | 'ipv4'> & {
+    // 1: 创建 2: 更新
+    actionType: number;
+  }
+) {
   return request({
     url: '/games',
     method: 'post',
@@ -21,7 +26,7 @@ export function deleteGames(ids: number[]) {
   });
 }
 
-// 获取项目列表
+// 获取游戏列表
 export function fetchGetGameList(params?: Api.OpsManage.GameSearchParams) {
   return request<Api.OpsManage.GameList>({
     url: '/games',

@@ -32,7 +32,7 @@ export function fetchGetProjectList(params?: Api.AssetManage.ProjectSearchParams
 
 // 获取项目列表简要信息
 export function fetchAllProjects() {
-  return request<Omit<Api.AssetManage.Project, 'status'>[]>({
+  return request<Pick<Api.AssetManage.Project, 'id' | 'name'>[]>({
     url: '/projects/all-summary',
     method: 'get'
   });
@@ -78,6 +78,16 @@ export function fetchGetHostList(params: Api.AssetManage.HostSearchParams) {
     url: '/hosts',
     method: 'get',
     params
+  });
+}
+
+export function fetchAllHosts(id: number) {
+  return request<Pick<Api.AssetManage.Host, 'id' | 'name' | 'ipv4' | 'ipv6'>[]>({
+    url: '/hosts/summary',
+    method: 'get',
+    params: {
+      id
+    }
   });
 }
 

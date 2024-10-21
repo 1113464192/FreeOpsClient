@@ -46,6 +46,14 @@ function createDefaultModel(): Model {
   return {
     id: 0,
     name: '',
+    backendVersion: '',
+    frontendVersion: '',
+    gameRange: '',
+    crossRange: '',
+    commonRange: '',
+    oneGameMem: 0,
+    oneCrossMem: 0,
+    oneCommonMem: 0,
     cloudPlatform: ''
   };
 }
@@ -91,7 +99,30 @@ watch(visible, () => {
         <NFormItem :label="$t('page.asset.project.name')" path="name">
           <NInput v-model:value="model.name" :placeholder="$t('page.asset.project.form.name')" />
         </NFormItem>
-
+        <NFormItem :label="$t('page.asset.project.backendVersion')" path="backendVersion">
+          <NInput v-model:value="model.backendVersion" :placeholder="$t('page.asset.project.form.backendVersion')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.frontendVersion')" path="frontendVersion">
+          <NInput v-model:value="model.frontendVersion" :placeholder="$t('page.asset.project.form.frontendVersion')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.gameRange')" path="gameRange">
+          <NInput v-model:value="model.gameRange" :placeholder="$t('page.asset.project.form.gameRange')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.crossRange')" path="crossRange">
+          <NInput v-model:value="model.crossRange" :placeholder="$t('page.asset.project.form.crossRange')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.commonRange')" path="commonRange">
+          <NInput v-model:value="model.commonRange" :placeholder="$t('page.asset.project.form.commonRange')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.oneGameMem')" path="oneGameMem">
+          <NInputNumber v-model:value="model.oneGameMem" :placeholder="$t('page.asset.project.form.oneGameMem')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.oneCrossMem')" path="oneCrossMem">
+          <NInputNumber v-model:value="model.oneCrossMem" :placeholder="$t('page.asset.project.form.oneCrossMem')" />
+        </NFormItem>
+        <NFormItem :label="$t('page.asset.project.oneCommonMem')" path="oneCommonMem">
+          <NInputNumber v-model:value="model.oneCommonMem" :placeholder="$t('page.asset.project.form.oneCommonMem')" />
+        </NFormItem>
         <NFormItem :label="$t('page.asset.project.cloudPlatform')" path="cloudPlatform">
           <NSelect
             v-model:value="model.cloudPlatform"

@@ -43,7 +43,7 @@ async function getAllProjects() {
     return;
   }
 
-  const options = data.map((item: Omit<Api.AssetManage.Project, 'status'>) => ({
+  const options = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
     value: item.id,
     label: item.name
   }));

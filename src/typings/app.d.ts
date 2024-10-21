@@ -662,6 +662,14 @@ declare namespace App {
           project: {
             title: string;
             name: string;
+            backendVersion: string;
+            frontendVersion: string;
+            gameRange: string;
+            crossRange: string;
+            commonRange: string;
+            oneGameMem: string;
+            oneCrossMem: string;
+            oneCommonMem: string;
             cloudPlatform: string;
             hostTotal: string;
             gameTotal: string;
@@ -669,6 +677,14 @@ declare namespace App {
             commonTotal: string;
             form: {
               name: string;
+              backendVersion: string;
+              frontendVersion: string;
+              gameRange: string;
+              crossRange: string;
+              commonRange: string;
+              oneGameMem: string;
+              oneCrossMem: string;
+              oneCommonMem: string;
               cloudPlatform: string;
             };
             addProject: string;
@@ -729,6 +745,7 @@ declare namespace App {
         opsManage: {
           game: {
             title: string;
+            id: string;
             type: string;
             status: string;
             lbName: string;
@@ -736,26 +753,42 @@ declare namespace App {
             serverPort: string;
             projectName: string;
             hostName: string;
+            hostIpv4: string;
             crossId: string;
             commonId: string;
+            addGame: string;
+            editGame: string;
             form: {
+              id: string;
               type: string;
               status: string;
               lbName: string;
               lbListenerPort: string;
               serverPort: string;
               projectName: string;
-              hostName: string;
+              hostIp: string;
               crossId: string;
               commonId: string;
             };
             search: {
+              id: string;
               type: string;
               status: string;
               projectName: string;
               hostName: string;
               crossId: string;
               commonId: string;
+            };
+            statusOption: {
+              running: string;
+              stopped: string;
+              merged: string;
+              operating: string;
+            };
+            typeOption: {
+              game: string;
+              cross: string;
+              common: string;
             };
           };
         };

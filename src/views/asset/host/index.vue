@@ -67,19 +67,19 @@ const {
       key: 'ipv4',
       title: $t('page.asset.host.ipv4'),
       align: 'center',
-      minWidth: 60
+      width: 140
     },
     {
       key: 'ipv6',
       title: $t('page.asset.host.ipv6'),
       align: 'center',
-      width: 100
+      width: 220
     },
     {
       key: 'vip',
       title: $t('page.asset.host.vip'),
       align: 'center',
-      minWidth: 60
+      width: 140
     },
     {
       key: 'zone',
@@ -97,13 +97,31 @@ const {
       key: 'system',
       title: $t('page.asset.host.system'),
       align: 'center',
-      minWidth: 100
+      width: 200
     },
     {
       key: 'projectName',
       title: $t('page.asset.host.projectName'),
       align: 'center',
-      width: 60
+      width: 100
+    },
+    {
+      key: 'cores',
+      title: $t('page.asset.host.cores'),
+      align: 'center',
+      width: 80
+    },
+    {
+      key: 'mem',
+      title: $t('page.asset.host.mem'),
+      align: 'center',
+      width: 80
+    },
+    {
+      key: 'dataDisk',
+      title: $t('page.asset.host.dataDisk'),
+      align: 'center',
+      width: 80
     },
     {
       key: 'gameTotal',
@@ -209,7 +227,8 @@ function edit(id: number) {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="962"
+        :virtual-scroll-x="true"
+        :scroll-x="1810"
         :loading="loading"
         remote
         :row-key="row => row.id"
