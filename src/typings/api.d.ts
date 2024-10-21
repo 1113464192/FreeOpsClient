@@ -20,20 +20,12 @@ declare namespace Api {
       records: T[];
     }
 
-    /**
-     * enable status
-     *
-     * - "1": enabled
-     * - "2": disabled
-     */
-    type EnableStatus = number;
-
     /** common record */
     type CommonRecord<T = any> = {
       /** record id */
       id: number;
       /** record status */
-      status: EnableStatus | null;
+      status: number | null;
     } & T;
     type CommonSearchParams = Pick<PaginatingCommonParams, 'current' | 'size'>;
   }

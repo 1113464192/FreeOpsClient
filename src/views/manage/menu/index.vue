@@ -37,7 +37,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       align: 'center',
       width: 80,
       render: row => {
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
+        const tagMap: Record<number, NaiveUI.ThemeColor> = {
           1: 'default',
           2: 'primary'
         };
@@ -103,7 +103,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
           return null;
         }
 
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
+        const tagMap: Record<number, NaiveUI.ThemeColor> = {
           1: 'success',
           2: 'warning'
         };

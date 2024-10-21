@@ -101,7 +101,7 @@ const {
           return null;
         }
 
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
+        const tagMap: Record<number, NaiveUI.ThemeColor> = {
           1: 'success',
           2: 'warning'
         };

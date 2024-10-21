@@ -31,8 +31,8 @@ const rules = computed<Record<RuleKey, App.Global.FormRule>>(() => {
   };
 });
 
-// 计算属性：将 EnableStatus 类型从 number 转换为 string
-const stringEnableStatusOptions = computed(() => {
+// 计算属性：将 number 类型从 number 转换为 string
+const stringnumberOptions = computed(() => {
   return enableStatusOptions
     .filter(option => option.value !== null)
     .map(option => ({
@@ -90,7 +90,7 @@ async function search() {
           <NSelect
             v-model:value="model.status"
             :placeholder="$t('page.manage.user.form.userStatus')"
-            :options="translateOptions(stringEnableStatusOptions)"
+            :options="translateOptions(stringnumberOptions)"
             clearable
           />
         </NFormItemGi>
