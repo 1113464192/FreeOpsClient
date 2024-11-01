@@ -305,6 +305,7 @@ declare namespace Api {
       ipv4: string;
       ipv6: string;
       vip: string;
+      sshPort: number;
       zone: string;
       cloud: string;
       system: string;
@@ -315,7 +316,7 @@ declare namespace Api {
     }>;
 
     type HostSearchParams = CommonType.RecordNullable<
-      Omit<Api.AssetManage.Host, 'cores' | 'dataDisk' | 'mem' | 'projectId'> & {
+      Omit<Api.AssetManage.Host, 'cores' | 'dataDisk' | 'mem' | 'projectId' | 'sshPort'> & {
         projectName: string;
       }
     > &

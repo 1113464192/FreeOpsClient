@@ -52,6 +52,7 @@ function createDefaultModel(): Model {
     ipv4: '',
     ipv6: '',
     vip: '',
+    sshPort: 0,
     zone: '',
     cloud: '',
     system: '',
@@ -147,6 +148,10 @@ watch(visible, () => {
 
         <NFormItem :label="$t('page.asset.host.vip')" path="vip">
           <NInput v-model:value="model.vip" :placeholder="$t('page.asset.host.form.vip')" />
+        </NFormItem>
+
+        <NFormItem :label="$t('page.asset.host.sshPort')">
+          <NInputNumber v-model:value="model.sshPort" :placeholder="$t('page.asset.host.form.sshPort')" />
         </NFormItem>
 
         <NFormItem :label="$t('page.asset.host.zone')" path="zone">

@@ -703,6 +703,7 @@ declare namespace App {
             ipv4: string;
             ipv6: string;
             vip: string;
+            sshPort: string;
             projectName: string;
             zone: string;
             cloud: string;
@@ -719,6 +720,7 @@ declare namespace App {
               ipv4: string;
               ipv6: string;
               vip: string;
+              sshPort: string;
               projectName: string;
               zone: string;
               cloud: string;

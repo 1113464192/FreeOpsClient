@@ -82,6 +82,12 @@ const {
       width: 140
     },
     {
+      key: 'sshPort',
+      title: $t('page.asset.host.sshPort'),
+      align: 'center',
+      width: 80
+    },
+    {
       key: 'zone',
       title: $t('page.asset.host.zone'),
       align: 'center',
