@@ -31,7 +31,7 @@ const {
     status: null,
     id: null,
     type: null,
-    projectName: null,
+    projectId: null,
     hostName: null,
     crossId: null,
     commonId: null,

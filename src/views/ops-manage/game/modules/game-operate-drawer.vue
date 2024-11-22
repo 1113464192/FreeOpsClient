@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef, watch } from 'vue';
+import { computed, reactive, ref, shallowRef, watch } from 'vue';
 import { useNaiveForm } from '@/hooks/common/form';
-import { fetchAllHosts, fetchAllProjects, updateGame } from '@/service/api';
+import { fetchAllHosts, fetchGetSelfAllProjects, updateGame } from '@/service/api';
 import { gameStatusOptions, gameTypeOptions } from '@/constants/business';
 import { $t } from '@/locales';
 import { translateOptions } from '@/utils/common';
@@ -39,6 +39,7 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
+const disabled = computed(() => props.operateType === 'edit');
 const showSelectHost = shallowRef<boolean>(false);
 
 type Model = Omit<Api.OpsManage.Game, 'projectName' | 'hostName' | 'ipv4'> & {
@@ -90,19 +91,18 @@ const stringGameStatusOptions = computed(() => {
     }));
 });
 
-const projectOptions: CommonType.Option<number>[] = reactive([]);
-async function getAllProjects() {
-  // request
-  const { error, data } = await fetchAllProjects();
-  if (error) {
-    return;
-  }
+const projectOptions = ref<CommonType.Option<number>[]>([]);
+async function getProjectOptions() {
+  const { error, data } = await fetchGetSelfAllProjects();
 
-  const options = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
-    value: item.id,
-    label: item.name
-  }));
-  projectOptions.splice(0, projectOptions.length, ...options);
+  if (!error) {
+    const options = data.map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+
+    projectOptions.value = options;
+  }
 }
 
 // fetchAllHosts生成选项
@@ -150,7 +150,7 @@ async function handleSubmit() {
 watch(visible, () => {
   if (visible.value) {
     handleInitModel();
-    getAllProjects();
+    getProjectOptions();
     restoreValidation();
   }
 });
@@ -161,7 +161,11 @@ watch(visible, () => {
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model">
         <NFormItem :label="$t('page.opsManage.game.id')" path="id">
-          <NInputNumber v-model:value="model.id" :placeholder="$t('page.opsManage.game.form.id')" />
+          <NInputNumber
+            v-model:value="model.id"
+            :placeholder="$t('page.opsManage.game.form.id')"
+            :disabled="disabled"
+          />
         </NFormItem>
         <NFormItem :label="$t('page.opsManage.game.type')" path="type">
           <NSelect
@@ -169,6 +173,7 @@ watch(visible, () => {
             :placeholder="$t('page.opsManage.game.search.type')"
             :options="translateOptions(stringGameTypeOptions)"
             clearable
+            :disabled="disabled"
           />
         </NFormItem>
         <NFormItem :label="$t('page.opsManage.game.status')" path="status">
@@ -202,6 +207,7 @@ watch(visible, () => {
             v-model:value="model.projectId"
             :options="projectOptions"
             :placeholder="$t('page.opsManage.game.form.projectName')"
+            :disabled="disabled"
             @update:value="getAllHosts"
           />
         </NFormItem>

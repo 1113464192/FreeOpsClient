@@ -193,6 +193,8 @@ const local: App.I18n.Schema = {
     asset_host: 'Host Asset',
     'ops-manage': 'Ops Manage',
     'ops-manage_game': 'Game Manage',
+    'ops-manage_template': 'Template Manage',
+    'ops-manage_param-template': 'Param Template Manage',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -624,6 +626,38 @@ const local: App.I18n.Schema = {
           game: 'Game',
           cross: 'Cross',
           common: 'Common'
+        }
+      },
+      template: {
+        title: 'Template List',
+        name: 'Template Name',
+        content: 'Template Content',
+        projectId: 'Project Name',
+        addTemplate: 'Add Template',
+        editTemplate: 'Edit Template',
+        paramBind: 'Param Template Relation',
+        form: {
+          name: 'Please enter template name',
+          content: 'Please enter template content',
+          projectId: 'Please select project name'
+        },
+        search: {
+          name: 'Please enter template name',
+          projectId: 'Please enter project ID'
+        }
+      },
+      paramTemplate: {
+        title: 'Param Template List',
+        keyword: 'Keyword',
+        variable: 'Mapped Variable',
+        addParamTemplate: 'Add Param Template',
+        editParamTemplate: 'Edit Param Template',
+        form: {
+          keyword: 'Please enter keyword',
+          variable: 'Please enter mapped variable'
+        },
+        search: {
+          keyword: 'Please enter keyword'
         }
       }
     }

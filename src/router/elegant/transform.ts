@@ -208,6 +208,8 @@ const routeMap: RouteMap = {
   "multi-menu_second_child_home": "/multi-menu/second/child/home",
   "ops-manage": "/ops-manage",
   "ops-manage_game": "/ops-manage/game",
+  "ops-manage_param-template": "/ops-manage/param-template",
+  "ops-manage_template": "/ops-manage/template",
   "user-center": "/user-center"
 };
 

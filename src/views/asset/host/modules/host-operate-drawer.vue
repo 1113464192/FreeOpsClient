@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { NInputNumber } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { fetchAllProjects, updateHost } from '@/service/api';
+import { fetchGetSelfAllProjects, updateHost } from '@/service/api';
 import { CloudPlatformOptions } from '@/constants/constants';
 import { $t } from '@/locales';
 
@@ -71,19 +71,18 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   vip: defaultRequiredRule
 };
 
-const projectOptions: CommonType.Option<number>[] = reactive([]);
-async function getAllProjects() {
-  // request
-  const { error, data } = await fetchAllProjects();
-  if (error) {
-    return;
-  }
+const projectOptions = ref<CommonType.Option<number>[]>([]);
+async function getProjectOptions() {
+  const { error, data } = await fetchGetSelfAllProjects();
 
-  const options = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
-    value: item.id,
-    label: item.name
-  }));
-  projectOptions.splice(0, projectOptions.length, ...options);
+  if (!error) {
+    const options = data.map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+
+    projectOptions.value = options;
+  }
 }
 
 function handleInitModel() {
@@ -115,7 +114,7 @@ async function handleSubmit() {
 
 watch(visible, () => {
   if (visible.value) {
-    getAllProjects();
+    getProjectOptions();
     handleInitModel();
     restoreValidation();
   }

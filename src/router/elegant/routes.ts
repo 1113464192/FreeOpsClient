@@ -394,6 +394,24 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'ops-manage_game',
           i18nKey: 'route.ops-manage_game'
         }
+      },
+      {
+        name: 'ops-manage_param-template',
+        path: '/ops-manage/param-template',
+        component: 'view.ops-manage_param-template',
+        meta: {
+          title: 'ops-manage_param-template',
+          i18nKey: 'route.ops-manage_param-template'
+        }
+      },
+      {
+        name: 'ops-manage_template',
+        path: '/ops-manage/template',
+        component: 'view.ops-manage_template',
+        meta: {
+          title: 'ops-manage_template',
+          i18nKey: 'route.ops-manage_template'
+        }
       }
     ]
   },

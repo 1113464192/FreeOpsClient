@@ -38,6 +38,14 @@ export function fetchGetUserList(params: Api.SystemManage.UserSearchParams) {
   });
 }
 
+/** get all self project */
+export function fetchGetSelfAllProjects() {
+  return request<CommonType.Option<number>[]>({
+    url: '/users/project-options',
+    method: 'get'
+  });
+}
+
 /** get menu list */
 export function fetchGetMenuList(params?: Api.SystemManage.MenuSearchParams) {
   return request<Api.SystemManage.MenuList>({

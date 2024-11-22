@@ -198,7 +198,9 @@ watch(visible, () => {
         <NFormItem :label="$t('page.manage.user.userRole')" path="roles">
           <NSelect
             v-model:value="userRoles"
+            filterable
             multiple
+            clearable
             :options="roleOptions"
             :placeholder="$t('page.manage.user.form.userRole')"
           />

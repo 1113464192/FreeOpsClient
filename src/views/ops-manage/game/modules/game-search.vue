@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { NInputNumber } from 'naive-ui';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
 import { gameStatusOptions, gameTypeOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
+import { fetchGetSelfAllProjects } from '@/service/api';
 
 defineOptions({
   name: 'GameSearch'
@@ -20,6 +21,8 @@ const emit = defineEmits<Emits>();
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const model = defineModel<Api.OpsManage.GameSearchParams>('model', { required: true });
+
+const projectOptions = ref<CommonType.Option<number>[]>([]);
 
 const stringGameTypeOptions = computed(() => {
   return gameTypeOptions
@@ -39,6 +42,19 @@ const stringGameStatusOptions = computed(() => {
     }));
 });
 
+async function getProjectOptions() {
+  const { error, data } = await fetchGetSelfAllProjects();
+
+  if (!error) {
+    const options = data.map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+
+    projectOptions.value = options;
+  }
+}
+
 async function reset() {
   await restoreValidation();
   emit('reset');
@@ -48,6 +64,10 @@ async function search() {
   await validate();
   emit('search');
 }
+
+onMounted(async () => {
+  await getProjectOptions();
+});
 </script>
 
 <template>
@@ -73,13 +93,8 @@ async function search() {
             clearable
           />
         </NFormItemGi>
-        <NFormItemGi
-          span="24 s:12 m:6"
-          :label="$t('page.opsManage.game.projectName')"
-          path="projectName"
-          class="pr-24px"
-        >
-          <NInput v-model:value="model.projectName" :placeholder="$t('page.opsManage.game.search.projectName')" />
+        <NFormItemGi span="15 s:8 m:4" :label="$t('page.opsManage.game.projectName')" path="projectId" class="pr-24px">
+          <NSelect v-model:value="model.projectId" filterable clearable :options="projectOptions" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.opsManage.game.hostName')" path="hostName" class="pr-24px">
           <NInput v-model:value="model.hostName" :placeholder="$t('page.opsManage.game.search.hostName')" />

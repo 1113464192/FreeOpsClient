@@ -401,8 +401,8 @@ watch(
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-800px">
-    <NScrollbar class="h-480px pr-20px">
-      <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
+    <NScrollbar class="h-1200px pr-20px">
+      <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="800">
         <NGrid responsive="screen" item-responsive>
           <NFormItemGi span="24 m:12" :label="$t('page.manage.menu.menuType')" path="menuType">
             <NRadioGroup v-model:value="model.menuType" :disabled="disabledmenuType">

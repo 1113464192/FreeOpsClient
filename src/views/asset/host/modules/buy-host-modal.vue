@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { reactive, shallowRef, watch } from 'vue';
+import { reactive, ref, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
-import { createCloudHost, fetchAllProjects } from '@/service/api';
+import { createCloudHost, fetchGetSelfAllProjects } from '@/service/api';
 import { useNaiveForm } from '@/hooks/common/form';
 import { CloudPlatformOptions } from '@/constants/constants';
 
@@ -35,19 +35,18 @@ function createDefaultModel(): Model {
   };
 }
 
-const projectOptions: CommonType.Option<number>[] = reactive([]);
-async function getAllProjects() {
-  // request
-  const { error, data } = await fetchAllProjects();
-  if (error) {
-    return;
-  }
+const projectOptions = ref<CommonType.Option<number>[]>([]);
+async function getProjectOptions() {
+  const { error, data } = await fetchGetSelfAllProjects();
 
-  const options = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
-    value: item.id,
-    label: item.name
-  }));
-  projectOptions.splice(0, projectOptions.length, ...options);
+  if (!error) {
+    const options = data.map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+
+    projectOptions.value = options;
+  }
 }
 
 function closeDrawer() {
@@ -70,7 +69,7 @@ async function handleSubmit() {
 
 watch(visible, () => {
   if (visible.value) {
-    getAllProjects();
+    getProjectOptions();
   }
 });
 </script>

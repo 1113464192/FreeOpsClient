@@ -3,6 +3,7 @@ import { computed, reactive, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { updateApi } from '@/service/api';
+import { MethodOptions } from '@/constants/constants';
 
 defineOptions({
   name: 'ApiOperateModal'
@@ -66,25 +67,6 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   method: defaultRequiredRule,
   apiGroup: defaultRequiredRule
 };
-
-const methodOptions: CommonType.Option[] = [
-  {
-    label: 'GET',
-    value: 'GET'
-  },
-  {
-    label: 'POST',
-    value: 'POST'
-  },
-  {
-    label: 'PUT',
-    value: 'PUT'
-  },
-  {
-    label: 'DELETE',
-    value: 'DELETE'
-  }
-];
 
 async function handleInitModel() {
   Object.assign(model, createDefaultModel());
@@ -169,7 +151,7 @@ watch(visible, () => {
           <NFormItemGi span="30 m:16" :label="$t('page.manage.api.method')" path="method">
             <NSelect
               v-model:value="model.method"
-              :options="methodOptions"
+              :options="MethodOptions"
               :placeholder="$t('page.manage.api.form.method')"
             />
           </NFormItemGi>

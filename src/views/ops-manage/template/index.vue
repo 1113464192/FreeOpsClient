@@ -1,21 +1,13 @@
-<script setup lang="tsx">
-import { ref } from 'vue';
+<!-- <script setup lang="tsx">
 import { NButton, NPopconfirm } from 'naive-ui';
-import { deleteHosts, fetchGetHostList } from '@/service/api';
+import { deleteTemplates, fetchGetTemplateList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import HostOperateDrawer from './modules/host-operate-drawer.vue';
-import HostSearch from './modules/host-search.vue';
-import BuyHostDialog from './modules/buy-host-modal.vue';
+import TemplateOperateDrawer from './modules/template-operate-drawer.vue';
+import TemplateSearch from './modules/template-search.vue';
 
 const appStore = useAppStore();
-
-const buyHostDialogVisible = ref(false);
-
-function buyHost() {
-  buyHostDialogVisible.value = true;
-}
 
 const {
   columns,
@@ -28,22 +20,16 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
-  apiFn: fetchGetHostList,
+  apiFn: fetchGetTemplateList,
   showTotal: true,
   apiParams: {
     current: 1,
-    size: 20,
+    size: 10,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null,
-    projectId: null,
     name: null,
-    ipv4: null,
-    ipv6: null,
-    vip: null,
-    zone: null,
-    cloud: null,
-    system: null
+    projectId: null
   },
   columns: () => [
     {
@@ -59,99 +45,21 @@ const {
     },
     {
       key: 'name',
-      title: $t('page.asset.host.name'),
+      title: $t('page.opsManage.template.name'),
       align: 'center',
-      width: 160
-    },
-    {
-      key: 'ipv4',
-      title: $t('page.asset.host.ipv4'),
-      align: 'center',
-      width: 140
-    },
-    {
-      key: 'ipv6',
-      title: $t('page.asset.host.ipv6'),
-      align: 'center',
-      width: 220
-    },
-    {
-      key: 'vip',
-      title: $t('page.asset.host.vip'),
-      align: 'center',
-      width: 140
-    },
-    {
-      key: 'sshPort',
-      title: $t('page.asset.host.sshPort'),
-      align: 'center',
-      width: 80
-    },
-    {
-      key: 'zone',
-      title: $t('page.asset.host.zone'),
-      align: 'center',
-      width: 60
-    },
-    {
-      key: 'cloud',
-      title: $t('page.asset.host.cloud'),
-      align: 'center',
-      width: 60
-    },
-    {
-      key: 'system',
-      title: $t('page.asset.host.system'),
-      align: 'center',
-      width: 200
+      minWidth: 100
     },
     {
       key: 'projectName',
-      title: $t('page.asset.host.projectName'),
+      title: $t('page.opsManage.template.projectId'),
       align: 'center',
-      width: 100
-    },
-    {
-      key: 'cores',
-      title: $t('page.asset.host.cores'),
-      align: 'center',
-      width: 80
-    },
-    {
-      key: 'mem',
-      title: $t('page.asset.host.mem'),
-      align: 'center',
-      width: 80
-    },
-    {
-      key: 'dataDisk',
-      title: $t('page.asset.host.dataDisk'),
-      align: 'center',
-      width: 80
-    },
-    {
-      key: 'gameTotal',
-      title: $t('page.asset.project.gameTotal'),
-      align: 'center',
-      width: 90
-    },
-    {
-      key: 'crossTotal',
-      title: $t('page.asset.project.crossTotal'),
-      align: 'center',
-      width: 90
-    },
-    {
-      key: 'commonTotal',
-      title: $t('page.asset.project.commonTotal'),
-      align: 'center',
-      width: 90
+      minWidth: 100
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 100,
+      width: 130,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -188,7 +96,7 @@ const {
 async function handleBatchDelete() {
   // request
   console.log(checkedRowKeys.value);
-  const { error } = await deleteHosts(checkedRowKeys.value);
+  const { error } = await deleteTemplates(checkedRowKeys.value);
   if (error) {
     return;
   }
@@ -199,7 +107,7 @@ async function handleBatchDelete() {
 async function handleDelete(id: number) {
   // request
   console.log(id);
-  const { error } = await deleteHosts([id]);
+  const { error } = await deleteTemplates([id]);
   if (error) {
     return;
   }
@@ -214,8 +122,13 @@ function edit(id: number) {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <HostSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard :title="$t('page.asset.project.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <TemplateSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
+    <NCard
+      :title="$t('page.opsManage.template.title')"
+      :bordered="false"
+      size="small"
+      class="sm:flex-1-hidden card-wrapper"
+    >
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"
@@ -224,7 +137,6 @@ function edit(id: number) {
           @add="handleAdd"
           @delete="handleBatchDelete"
           @refresh="getData"
-          @buy-host="buyHost"
         />
       </template>
       <NDataTable
@@ -234,22 +146,21 @@ function edit(id: number) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="1810"
+        :scroll-x="394"
         :loading="loading"
         remote
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <HostOperateDrawer
+      <TemplateOperateDrawer
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"
         @submitted="getDataByPage"
       />
-      <BuyHostDialog v-model:visible="buyHostDialogVisible" @submitted="getDataByPage" />
     </NCard>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped></style> -->

@@ -21,3 +21,23 @@ export const CloudPlatformOptions: CommonType.Option<string>[] = [
     value: '移动云'
   }
 ];
+
+/** Method Options */
+export const MethodOptions: CommonType.Option[] = [
+  {
+    label: 'GET',
+    value: 'GET'
+  },
+  {
+    label: 'POST',
+    value: 'POST'
+  },
+  {
+    label: 'PUT',
+    value: 'PUT'
+  },
+  {
+    label: 'DELETE',
+    value: 'DELETE'
+  }
+];

@@ -316,9 +316,7 @@ declare namespace Api {
     }>;
 
     type HostSearchParams = CommonType.RecordNullable<
-      Omit<Api.AssetManage.Host, 'cores' | 'dataDisk' | 'mem' | 'projectId' | 'sshPort'> & {
-        projectName: string;
-      }
+      Omit<Api.AssetManage.Host, 'cores' | 'dataDisk' | 'mem' | 'sshPort'>
     > &
       Common.CommonSearchParams;
 
@@ -361,10 +359,40 @@ declare namespace Api {
     };
 
     type GameSearchParams = CommonType.RecordNullable<
-      Pick<Api.OpsManage.Game, 'id' | 'type' | 'status' | 'projectName' | 'hostName' | 'ipv4' | 'crossId' | 'commonId'>
+      Pick<Api.OpsManage.Game, 'id' | 'type' | 'status' | 'projectId' | 'hostName' | 'ipv4' | 'crossId' | 'commonId'>
     > &
       Common.CommonSearchParams;
 
     type GameList = Common.PaginatingQueryRecord<Game>;
+
+    type Template = Common.CommonRecord<{
+      name: string;
+      content: string;
+      projectId: number;
+    }>;
+
+    type TemplateSearchParams = CommonType.RecordNullable<Omit<Api.OpsManage.Template, 'content'>> &
+      Common.CommonSearchParams;
+
+    type TemplateList = Common.PaginatingQueryRecord<
+      Template & {
+        projectName: string;
+      }
+    >;
+
+    type BindTemplateParam = {
+      templateId: number;
+      paramIds: number[];
+    };
+
+    type ParamTemplate = Common.CommonRecord<{
+      keyword: string;
+      variable: string;
+    }>;
+
+    type ParamTemplateSearchParams = CommonType.RecordNullable<Omit<Api.OpsManage.ParamTemplate, 'variable'>> &
+      Common.CommonSearchParams;
+
+    type ParamTemplateList = Common.PaginatingQueryRecord<ParamTemplate>;
   }
 }

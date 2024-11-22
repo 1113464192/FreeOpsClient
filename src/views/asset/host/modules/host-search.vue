@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
 import { CloudPlatformOptions } from '@/constants/constants';
+import { fetchGetSelfAllProjects } from '@/service/api';
 
 defineOptions({
   name: 'HostSearch'
@@ -16,7 +18,26 @@ const emit = defineEmits<Emits>();
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
+const projectOptions = ref<CommonType.Option<number>[]>([]);
+
 const model = defineModel<Api.AssetManage.HostSearchParams>('model', { required: true });
+
+async function getProjectOptions() {
+  const { error, data } = await fetchGetSelfAllProjects();
+
+  if (!error) {
+    const options = data.map(item => ({
+      label: item.label,
+      value: item.value
+    }));
+
+    projectOptions.value = options;
+  }
+}
+
+onMounted(async () => {
+  await getProjectOptions();
+});
 
 async function reset() {
   await restoreValidation();
@@ -58,8 +79,8 @@ async function search() {
         <NFormItemGi span="18 s:9 m:5" :label="$t('page.asset.host.system')" path="system" class="pr-24px">
           <NInput v-model:value="model.system" :placeholder="$t('page.asset.host.search.system')" />
         </NFormItemGi>
-        <NFormItemGi span="18 s:9 m:5" :label="$t('page.asset.host.projectName')" path="projectName" class="pr-24px">
-          <NInput v-model:value="model.projectName" :placeholder="$t('page.asset.host.search.projectName')" />
+        <NFormItemGi span="18 s:9 m:5" :label="$t('page.asset.host.projectName')" path="projectId" class="pr-24px">
+          <NSelect v-model:value="model.projectId" filterable clearable :options="projectOptions" />
         </NFormItemGi>
 
         <NFormItemGi span="24 m:12" class="pr-24px">

@@ -793,6 +793,38 @@ declare namespace App {
               common: string;
             };
           };
+          template: {
+            title: string;
+            name: string;
+            content: string;
+            projectId: string;
+            addTemplate: string;
+            editTemplate: string;
+            paramBind: string;
+            form: {
+              name: string;
+              content: string;
+              projectId: string;
+            };
+            search: {
+              name: string;
+              projectId: string;
+            };
+          };
+          paramTemplate: {
+            title: string;
+            keyword: string;
+            variable: string;
+            addParamTemplate: string;
+            editParamTemplate: string;
+            form: {
+              keyword: string;
+              variable: string;
+            };
+            search: {
+              keyword: string;
+            };
+          };
         };
       };
       form: {

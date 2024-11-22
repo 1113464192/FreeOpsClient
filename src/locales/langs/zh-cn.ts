@@ -193,6 +193,8 @@ const local: App.I18n.Schema = {
     asset_host: '服务器管理',
     'ops-manage': '运维管理',
     'ops-manage_game': '游戏服管理',
+    'ops-manage_template': '模板管理',
+    'ops-manage_param-template': '参数模板管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -623,6 +625,38 @@ const local: App.I18n.Schema = {
           game: '游服',
           cross: '跨服',
           common: '公共服'
+        }
+      },
+      template: {
+        title: '模板列表',
+        name: '模板名称',
+        content: '模板内容',
+        projectId: '项目名称',
+        addTemplate: '新增模板',
+        editTemplate: '编辑模板',
+        paramBind: '参数模板关系',
+        form: {
+          name: '请输入模板名称',
+          content: '请输入模板内容',
+          projectId: '请选择项目名称'
+        },
+        search: {
+          name: '请输入模板名称',
+          projectId: '请输入项目ID'
+        }
+      },
+      paramTemplate: {
+        title: '参数模板列表',
+        keyword: '关键字',
+        variable: '映射的变量',
+        addParamTemplate: '新增参数模板',
+        editParamTemplate: '编辑参数模板',
+        form: {
+          keyword: '请输入关键字',
+          variable: '请输入映射的变量'
+        },
+        search: {
+          keyword: '请输入关键字'
         }
       }
     }
