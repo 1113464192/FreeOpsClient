@@ -1,7 +1,7 @@
-<!-- <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+<script setup lang="ts">
+import { computed, reactive, watch } from 'vue';
 import { useNaiveForm } from '@/hooks/common/form';
-import { fetchGetSelfAllProjects, fetchGetTemplateList, updateTemplate } from '@/service/api';
+import { updateParamTemplate } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -12,7 +12,7 @@ interface Props {
   /** the type of operation */
   operateType: NaiveUI.TableOperateType;
   /** the edit row data */
-  rowData?: Omit<Api.OpsManage.Template, 'status'> | null;
+  rowData?: Omit<Api.OpsManage.ParamTemplate, 'status'> | null;
 }
 
 const props = defineProps<Props>();
@@ -31,47 +31,22 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
-    add: $t('page.opsManage.template.addTemplate'),
-    edit: $t('page.opsManage.template.editTemplate')
+    add: $t('page.opsManage.paramTemplate.addParamTemplate'),
+    edit: $t('page.opsManage.paramTemplate.editParamTemplate')
   };
   return titles[props.operateType];
 });
 
-type Model = Omit<Api.OpsManage.Template, 'status'>;
+type Model = Omit<Api.OpsManage.ParamTemplate, 'status'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
     id: 0,
-    name: '',
-    content: '',
-    projectId: 0
+    keyword: '',
+    variable: ''
   };
-}
-
-const projectOptions = ref<CommonType.Option<number>[]>([]);
-async function getProjectOptions() {
-  const { error, data } = await fetchGetSelfAllProjects();
-
-  if (!error) {
-    const options = data.map(item => ({
-      label: item.label,
-      value: item.value
-    }));
-
-    projectOptions.value = options;
-  }
-}
-
-async function getTemplateContent() {
-  if (props.operateType === 'edit' && props.rowData) {
-    const { error, data } = await fetchGetTemplateList({ id: model.id });
-
-    if (!error) {
-      model.content = data.records[0].content;
-    }
-  }
 }
 
 function handleInitModel() {
@@ -90,8 +65,8 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   console.log('model', model);
-  // 更新服务器信息
-  const { error: templateError } = await updateTemplate(model);
+  // 更新参数模板信息
+  const { error: templateError } = await updateParamTemplate(model);
   if (templateError) {
     return;
   }
@@ -103,50 +78,32 @@ async function handleSubmit() {
 
 watch(visible, () => {
   if (visible.value) {
-    getProjectOptions();
     handleInitModel();
-    getTemplateContent();
     restoreValidation();
   }
 });
 </script>
 
 <template>
-  <NModal v-model:show="visible" :title="title" preset="card" class="w-1100px">
-    <NScrollbar class="h-680px pr-20px">
+  <NDrawer v-model:show="visible" display-directive="show" :width="360">
+    <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model">
-        <NFormItem :label="$t('page.opsManage.template.name')" path="name">
-          <NInput v-model:value="model.name" :placeholder="$t('page.opsManage.template.form.name')" />
+        <NFormItem :label="$t('page.opsManage.paramTemplate.keyword')" path="keyword">
+          <NInput v-model:value="model.keyword" :placeholder="$t('page.opsManage.paramTemplate.form.keyword')" />
         </NFormItem>
 
-        <NFormItem :label="$t('page.opsManage.template.content')" path="content">
-          <NInput
-            v-model:value="model.content"
-            type="textarea"
-            :autosize="{
-              minRows: 8,
-              maxRows: 16
-            }"
-            :placeholder="$t('page.opsManage.template.form.content')"
-          />
-        </NFormItem>
-
-        <NFormItem :label="$t('page.opsManage.template.projectId')" path="projectId">
-          <NSelect
-            v-model:value="model.projectId"
-            :options="projectOptions"
-            :placeholder="$t('page.opsManage.template.form.projectId')"
-          />
+        <NFormItem :label="$t('page.opsManage.paramTemplate.variable')" path="variable">
+          <NInput v-model:value="model.variable" :placeholder="$t('page.opsManage.paramTemplate.form.variable')" />
         </NFormItem>
       </NForm>
-    </NScrollbar>
-    <template #footer>
-      <NSpace :size="26" justify="end">
-        <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
-        <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
-      </NSpace>
-    </template>
-  </NModal>
+      <template #footer>
+        <NSpace :size="26" justify="end">
+          <NButton @click="closeDrawer">{{ $t('common.cancel') }}</NButton>
+          <NButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</NButton>
+        </NSpace>
+      </template>
+    </NDrawerContent>
+  </NDrawer>
 </template>
 
-<style scoped></style> -->
+<style scoped></style>

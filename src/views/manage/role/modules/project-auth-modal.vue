@@ -18,18 +18,13 @@ const visible = defineModel<boolean>('visible', {
   default: false
 });
 
-type ProjectConfig = {
-  id: number;
-  label: string;
-};
-
 function closeModal() {
   visible.value = false;
 }
 
 const title = computed(() => $t('common.edit') + $t('page.manage.role.projectAuth'));
 
-const tree = shallowRef<ProjectConfig[]>([]);
+const options = shallowRef<CommonType.Option<number>[]>([]);
 
 async function getAllProjects() {
   // request
@@ -37,8 +32,8 @@ async function getAllProjects() {
   if (error) {
     return;
   }
-  tree.value = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
-    id: item.id,
+  options.value = data.map((item: Pick<Api.AssetManage.Project, 'id' | 'name'>) => ({
+    value: item.id,
     label: item.name
   }));
 }
@@ -80,16 +75,7 @@ init();
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
-    <NTree
-      v-model:checked-keys="checks"
-      :data="tree"
-      key-field="id"
-      block-line
-      checkable
-      expand-on-click
-      virtual-scroll
-      class="h-280px"
-    />
+    <NSelect v-model:value="checks" multiple filterable :options="options" />
     <template #footer>
       <NSpace justify="end">
         <NButton size="small" class="mt-16px" @click="closeModal">

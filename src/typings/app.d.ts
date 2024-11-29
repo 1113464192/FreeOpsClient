@@ -259,7 +259,6 @@ declare namespace App {
       common: {
         action: string;
         add: string;
-        buyHost: string;
         addSuccess: string;
         backToHome: string;
         batchDelete: string;
@@ -303,6 +302,9 @@ declare namespace App {
           yes: string;
           no: string;
         };
+        nextStep: string;
+        previousStep: string;
+        show: string;
       };
       request: {
         logout: string;
@@ -427,7 +429,6 @@ declare namespace App {
         };
         home: {
           greeting: string;
-          weatherDesc: string;
           projectCount: string;
           todo: string;
           message: string;
@@ -714,12 +715,14 @@ declare namespace App {
             gameTotal: string;
             crossTotal: string;
             commonTotal: string;
+            buyHost: string;
             buyHostCount: string;
             form: {
               name: string;
               ipv4: string;
               ipv6: string;
               vip: string;
+              isIntranet: string;
               sshPort: string;
               projectName: string;
               zone: string;
@@ -823,6 +826,43 @@ declare namespace App {
             };
             search: {
               keyword: string;
+            };
+          };
+          task: {
+            title: string;
+            name: string;
+            checkTemplate: string;
+            template: string;
+            auditor: string;
+            host: string;
+            isIntranet: string;
+            isConcurrent: string;
+            project: string;
+            addTask: string;
+            editTask: string;
+            submit: string;
+            submitTitle: string;
+            submitAuditor: string;
+            execContent: string;
+            checkResponse: string;
+            command: string;
+            form: {
+              name: string;
+              checkTemplate: string;
+              template: string;
+              auditor: string;
+              host: string;
+              project: string;
+              execContent: string;
+              checkResponse: string;
+              submitAuditor: string;
+            };
+            search: {
+              name: string;
+              project: string;
+            };
+            error: {
+              radioValueError: string;
             };
           };
         };

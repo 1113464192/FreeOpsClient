@@ -1,11 +1,13 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
+import { useBoolean } from '@sa/hooks';
 import { useNaiveForm } from '@/hooks/common/form';
 import { fetchGetSelfAllProjects, fetchGetTemplateList, updateTemplate } from '@/service/api';
 import { $t } from '@/locales';
+import ParamBindModal from './param-bind-modal.vue';
 
 defineOptions({
-  name: 'TemplateOperateDrawer'
+  name: 'TemplateOperateModal'
 });
 
 interface Props {
@@ -17,6 +19,8 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const { bool: ParamBindVisible, setTrue: openParamBindModal } = useBoolean();
+
 interface Emits {
   (e: 'submitted'): void;
 }
@@ -26,8 +30,6 @@ const emit = defineEmits<Emits>();
 const visible = defineModel<boolean>('visible', {
   default: false
 });
-
-const isEdit = computed(() => props.operateType === 'edit');
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
@@ -92,7 +94,7 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   console.log('model', model);
-  // 更新服务器信息
+  // 更新操作模板信息
   const { error: templateError } = await updateTemplate(model);
   if (templateError) {
     return;
@@ -136,9 +138,15 @@ watch(visible, () => {
         <NFormItem :label="$t('page.opsManage.template.projectId')" path="projectId">
           <NSelect
             v-model:value="model.projectId"
+            filterable
             :options="projectOptions"
             :placeholder="$t('page.opsManage.template.form.projectId')"
           />
+        </NFormItem>
+
+        <NFormItem v-if="props.operateType === 'edit'" :label="$t('page.opsManage.template.paramBind')">
+          <NButton @click="openParamBindModal">{{ $t('page.opsManage.template.paramBind') }}</NButton>
+          <ParamBindModal v-model:visible="ParamBindVisible" :template-id="model.id"></ParamBindModal>
         </NFormItem>
       </NForm>
     </NScrollbar>
@@ -151,4 +159,4 @@ watch(visible, () => {
   </NModal>
 </template>
 
-<style scoped></style> -->
+<style scoped></style>

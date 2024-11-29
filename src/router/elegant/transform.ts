@@ -209,6 +209,7 @@ const routeMap: RouteMap = {
   "ops-manage": "/ops-manage",
   "ops-manage_game": "/ops-manage/game",
   "ops-manage_param-template": "/ops-manage/param-template",
+  "ops-manage_task": "/ops-manage/task",
   "ops-manage_template": "/ops-manage/template",
   "user-center": "/user-center"
 };

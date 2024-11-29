@@ -75,7 +75,7 @@ export function updateTemPlateParams(data: Api.OpsManage.BindTemplateParam) {
 
 // 查看操作模板关联的参数模板
 export function fetchGetTemplateParams(id: number) {
-  return request<Omit<Api.OpsManage.ParamTemplate, 'status'>>({
+  return request<Array<Omit<Api.OpsManage.ParamTemplate, 'status'>>>({
     url: '/ops/template-params',
     method: 'get',
     params: {
@@ -110,5 +110,67 @@ export function fetchGetParamTemplateList(params?: Api.OpsManage.ParamTemplateSe
     url: '/ops/param-template',
     method: 'get',
     params
+  });
+}
+
+// 新增/修改 操作任务
+export function updateTask(data: Omit<Api.OpsManage.Task, 'status' | 'projectName' | 'hostName'>) {
+  return request({
+    url: '/ops/task',
+    method: 'post',
+    data
+  });
+}
+
+// 删除任务
+export function deleteTasks(ids: number[]) {
+  return request({
+    url: '/ops/task',
+    method: 'delete',
+    data: {
+      ids
+    }
+  });
+}
+
+// 获取任务列表
+export function fetchGetTaskList(params?: Api.OpsManage.TaskSearchParams) {
+  return request<Api.OpsManage.TaskList>({
+    url: '/ops/task',
+    method: 'get',
+    params
+  });
+}
+
+// 提交执行任务
+export function submitTask(data: Api.OpsManage.SubmitTask) {
+  return request({
+    url: '/ops/submit-task',
+    method: 'post',
+    data
+  });
+}
+
+// 运行任务检查脚本
+export function runTaskCheckScript(taskId: number, execContent: string) {
+  return request<Array<Api.Common.SSHResult>>({
+    url: '/ops/run-task-check-script',
+    method: 'post',
+    data: {
+      taskId,
+      execContent
+    }
+  });
+}
+
+// 获取根据模板与运营执行需求内容生成的命令
+export function fetchGetTaskCommand(templateIds: number[], execContent: string) {
+  return request<string[]>({
+    url: '/ops/commands',
+    method: 'post',
+    data: {
+      templateIds,
+      execContent
+    }
   });
 }

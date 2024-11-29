@@ -9,7 +9,6 @@ const local: App.I18n.Schema = {
   common: {
     action: 'Action',
     add: 'Add',
-    buyHost: 'Buy Host',
     addSuccess: 'Add Success',
     backToHome: 'Back to home',
     batchDelete: 'Batch Delete',
@@ -52,7 +51,10 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
-    }
+    },
+    nextStep: 'Next',
+    previousStep: 'Previous',
+    show: 'Show'
   },
   request: {
     logout: 'Logout user after request failed',
@@ -195,6 +197,7 @@ const local: App.I18n.Schema = {
     'ops-manage_game': 'Game Manage',
     'ops-manage_template': 'Template Manage',
     'ops-manage_param-template': 'Param Template Manage',
+    'ops-manage_task': 'Task Manage',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -214,7 +217,7 @@ const local: App.I18n.Schema = {
         back: 'Back',
         validateSuccess: 'Verification passed',
         loginSuccess: 'Login successfully',
-        welcomeBack: 'Welcome back, {username} !'
+        welcomeBack: 'Welcome back, {nickname} !'
       },
       pwdLogin: {
         title: 'Password Login',
@@ -260,8 +263,7 @@ const local: App.I18n.Schema = {
       devDep: 'Development Dependency'
     },
     home: {
-      greeting: 'Good morning, {username}, today is another day full of vitality!',
-      weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
+      greeting: 'Hello {nickname}, today is another day full of vitality!',
       projectCount: 'Project Count',
       todo: 'Todo',
       message: 'Message',
@@ -549,12 +551,15 @@ const local: App.I18n.Schema = {
         gameTotal: 'Host Game Count',
         crossTotal: 'Host Cross Count',
         commonTotal: 'Host Common Count',
+        buyHost: 'Buy Host',
         buyHostCount: 'Buy Host Count',
         form: {
           name: 'Please enter host name',
           ipv4: 'Please enter IPv4',
           ipv6: 'Please enter IPv6',
           vip: 'Please enter internal IP',
+          isIntranet:
+            'If it is a channel and a management machine starts the service, the intranet can fill in 127.0.0.1',
           sshPort: 'Please enter SSH port',
           projectName: 'Please select project name',
           zone: 'Please enter zone',
@@ -658,6 +663,43 @@ const local: App.I18n.Schema = {
         },
         search: {
           keyword: 'Please enter keyword'
+        }
+      },
+      task: {
+        title: 'Task List',
+        name: 'Task Name',
+        checkTemplate: 'Check Template',
+        template: 'Script Template(in order)',
+        auditor: 'Default Auditor(can be multiple)',
+        host: 'Execution Host',
+        isIntranet: 'Intranet Execute',
+        isConcurrent: 'Concurrent Execute',
+        project: 'Project',
+        addTask: 'Add Task',
+        editTask: 'Edit Task',
+        submit: 'Submit for exec',
+        submitTitle: 'Submit Task',
+        execContent: 'Exec Content',
+        checkResponse: 'Check Response',
+        submitAuditor: 'Auditor(can be multiple)',
+        command: 'Command',
+        form: {
+          name: 'Please enter task name',
+          checkTemplate: 'Please select check template',
+          template: 'Please select script template in order',
+          auditor: 'If not selected, it will be approved by default',
+          host: 'Please select Execution host',
+          project: 'Please select project',
+          execContent: 'Please enter exec content',
+          checkResponse: 'Response is empty, please check the log of the operation and maintenance check script',
+          submitAuditor: 'Please select auditor'
+        },
+        search: {
+          name: 'Please enter task name',
+          project: 'Please select project'
+        },
+        error: {
+          radioValueError: 'There are radio options not selected'
         }
       }
     }

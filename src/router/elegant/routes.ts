@@ -405,6 +405,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'ops-manage_task',
+        path: '/ops-manage/task',
+        component: 'view.ops-manage_task',
+        meta: {
+          title: 'ops-manage_task',
+          i18nKey: 'route.ops-manage_task'
+        }
+      },
+      {
         name: 'ops-manage_template',
         path: '/ops-manage/template',
         component: 'view.ops-manage_template',

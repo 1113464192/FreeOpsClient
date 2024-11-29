@@ -30,7 +30,7 @@ export function fetchGetUserRoles(uid: number) {
 }
 
 /** get user list */
-export function fetchGetUserList(params: Api.SystemManage.UserSearchParams) {
+export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/users',
     method: 'get',

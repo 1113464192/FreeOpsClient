@@ -1,21 +1,17 @@
 <script setup lang="tsx">
-import { ref } from 'vue';
 import { NButton, NPopconfirm } from 'naive-ui';
+import { useBoolean } from '@sa/hooks';
 import { deleteHosts, fetchGetHostList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import HostOperateDrawer from './modules/host-operate-drawer.vue';
 import HostSearch from './modules/host-search.vue';
-import BuyHostDialog from './modules/buy-host-modal.vue';
+import BuyHostModal from './modules/buy-host-modal.vue';
 
 const appStore = useAppStore();
 
-const buyHostDialogVisible = ref(false);
-
-function buyHost() {
-  buyHostDialogVisible.value = true;
-}
+const { bool: buyHostModalVisible, setTrue: openBuyHostModal } = useBoolean();
 
 const {
   columns,
@@ -215,6 +211,11 @@ function edit(id: number) {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <HostSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
+    <NCard :title="$t('common.operate')" :bordered="false" size="small" class="card-wrapper">
+      <NButton @click="openBuyHostModal">
+        {{ $t('page.asset.host.buyHost') }}
+      </NButton>
+    </NCard>
     <NCard :title="$t('page.asset.project.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
         <TableHeaderOperation
@@ -224,7 +225,6 @@ function edit(id: number) {
           @add="handleAdd"
           @delete="handleBatchDelete"
           @refresh="getData"
-          @buy-host="buyHost"
         />
       </template>
       <NDataTable
@@ -234,7 +234,7 @@ function edit(id: number) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="1810"
+        :scroll-x="1882"
         :loading="loading"
         remote
         :row-key="row => row.id"
@@ -247,7 +247,7 @@ function edit(id: number) {
         :row-data="editingData"
         @submitted="getDataByPage"
       />
-      <BuyHostDialog v-model:visible="buyHostDialogVisible" @submitted="getDataByPage" />
+      <BuyHostModal v-model:visible="buyHostModalVisible" @submitted="getDataByPage" />
     </NCard>
   </div>
 </template>

@@ -28,6 +28,12 @@ declare namespace Api {
       status: number | null;
     } & T;
     type CommonSearchParams = Pick<PaginatingCommonParams, 'current' | 'size'>;
+
+    type SSHResult = {
+      hostIp: string;
+      status: number;
+      response: string;
+    };
   }
 
   /**
@@ -44,6 +50,7 @@ declare namespace Api {
     interface UserInfo {
       userId: string;
       username: string;
+      nickname: string;
       roles: string[];
       buttons: string[];
     }
@@ -394,5 +401,38 @@ declare namespace Api {
       Common.CommonSearchParams;
 
     type ParamTemplateList = Common.PaginatingQueryRecord<ParamTemplate>;
+
+    type Task = Common.CommonRecord<{
+      name: string;
+      checkTemplateId: number; // 被执行的运维检测脚本的模板，返回的打印信息是用于给运营审批查看的，没有则跳过检查
+      templateIds: number[]; // 默认执行的运维脚本模板id并排好执行顺序
+      auditors: number[]; // 默认的审批人
+      hostId: number;
+      hostName: string;
+      isIntranet: boolean; // 是否走内网执行
+      isConcurrent: boolean; // 是否不按顺序执行，而是并发执行
+      projectId: number;
+      projectName: string;
+    }>;
+
+    type TaskSearchParams = CommonType.RecordNullable<
+      Pick<Api.OpsManage.Task, 'id' | 'name' | 'projectId' | 'status'>
+    > &
+      Common.CommonSearchParams;
+
+    type TaskList = Common.PaginatingQueryRecord<
+      Task & {
+        projectName: string;
+      }
+    >;
+
+    interface SubmitTask {
+      taskId: number;
+      execContent: string;
+      checkResponse: string;
+      templateIds: number[]; // 执行的运维脚本模板id并排好执行顺序,这里之所以有是因为任务里的默认模板排序是可选的
+      auditors: number[]; // 审批人，这里之所以有是因为任务里的默认审批人是可选的
+      submitter: number;
+    }
   }
 }

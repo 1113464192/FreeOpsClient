@@ -136,10 +136,14 @@ watch(visible, () => {
             :placeholder="$t('page.asset.host.form.cloud')"
           />
         </NFormItem>
-
-        <NFormItem :label="$t('page.asset.host.ipv4')" path="ipv4">
-          <NInput v-model:value="model.ipv4" :placeholder="$t('page.asset.host.form.ipv4')" />
-        </NFormItem>
+        <NPopover trigger="hover">
+          <template #trigger>
+            <NFormItem :label="$t('page.asset.host.ipv4')" path="ipv4">
+              <NInput v-model:value="model.ipv4" :placeholder="$t('page.asset.host.form.ipv4')" />
+            </NFormItem>
+          </template>
+          <span>{{ $t('page.asset.host.form.isIntranet') }}</span>
+        </NPopover>
 
         <NFormItem :label="$t('page.asset.host.ipv6')" path="ipv6">
           <NInput v-model:value="model.ipv6" :placeholder="$t('page.asset.host.form.ipv6')" />

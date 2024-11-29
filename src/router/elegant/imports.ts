@@ -42,6 +42,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "multi-menu_second_child_home": () => import("@/views/multi-menu/second_child_home/index.vue"),
   "ops-manage_game": () => import("@/views/ops-manage/game/index.vue"),
   "ops-manage_param-template": () => import("@/views/ops-manage/param-template/index.vue"),
+  "ops-manage_task": () => import("@/views/ops-manage/task/index.vue"),
   "ops-manage_template": () => import("@/views/ops-manage/template/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
 };

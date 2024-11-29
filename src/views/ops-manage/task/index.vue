@@ -1,13 +1,18 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm } from 'naive-ui';
-import { deleteParamTemplates, fetchGetParamTemplateList } from '@/service/api';
+import { useBoolean } from '@sa/hooks';
+import { cloneDeep } from 'lodash-es';
+import { deleteTasks, fetchGetTaskList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import ParamTemplateOperateDrawer from './modules/param-template-operate-drawer.vue';
-import ParamTemplateSearch from './modules/param-template-search.vue';
+import TaskOperateDrawer from './modules/task-operate-drawer.vue';
+import TaskSearch from './modules/task-search.vue';
+import SubmitTaskModal from './modules/submit-task-modal.vue';
 
 const appStore = useAppStore();
+
+const { bool: visible, setTrue: openModal } = useBoolean();
 
 const {
   columns,
@@ -20,7 +25,7 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
-  apiFn: fetchGetParamTemplateList,
+  apiFn: fetchGetTaskList,
   showTotal: true,
   apiParams: {
     current: 1,
@@ -28,7 +33,8 @@ const {
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null,
-    keyword: null
+    name: null,
+    projectId: null
   },
   columns: () => [
     {
@@ -43,24 +49,41 @@ const {
       width: 64
     },
     {
-      key: 'keyword',
-      title: $t('page.opsManage.paramTemplate.keyword'),
+      key: 'name',
+      title: $t('page.opsManage.task.name'),
       align: 'center',
       minWidth: 100
     },
     {
-      key: 'variable',
-      title: $t('page.opsManage.paramTemplate.variable'),
+      key: 'hostName',
+      title: $t('page.opsManage.task.host'),
       align: 'center',
       minWidth: 100
+    },
+    {
+      key: 'isIntranet',
+      title: $t('page.opsManage.task.isIntranet'),
+      align: 'center',
+      minWidth: 40,
+      render: row => (row.isIntranet ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
+    },
+    {
+      key: 'isConcurrent',
+      title: $t('page.opsManage.task.isConcurrent'),
+      align: 'center',
+      minWidth: 40,
+      render: row => (row.isConcurrent ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 230,
       render: row => (
         <div class="flex-center gap-8px">
+          <NButton type="primary" ghost size="small" onClick={() => openSubmitTaskModal(row.id)}>
+            {$t('page.opsManage.task.submit')}
+          </NButton>
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
             {$t('common.edit')}
           </NButton>
@@ -95,7 +118,7 @@ const {
 async function handleBatchDelete() {
   // request
   console.log(checkedRowKeys.value);
-  const { error } = await deleteParamTemplates(checkedRowKeys.value);
+  const { error } = await deleteTasks(checkedRowKeys.value);
   if (error) {
     return;
   }
@@ -106,7 +129,7 @@ async function handleBatchDelete() {
 async function handleDelete(id: number) {
   // request
   console.log(id);
-  const { error } = await deleteParamTemplates([id]);
+  const { error } = await deleteTasks([id]);
   if (error) {
     return;
   }
@@ -117,13 +140,19 @@ async function handleDelete(id: number) {
 function edit(id: number) {
   handleEdit(id);
 }
+
+function openSubmitTaskModal(id: number) {
+  const findItem = data.value.find(item => item.id === id) || null;
+  editingData.value = cloneDeep(findItem);
+  openModal();
+}
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <ParamTemplateSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
+    <TaskSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
     <NCard
-      :title="$t('page.opsManage.template.title')"
+      :title="$t('page.opsManage.task.title')"
       :bordered="false"
       size="small"
       class="sm:flex-1-hidden card-wrapper"
@@ -145,19 +174,20 @@ function edit(id: number) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="442"
+        :scroll-x="622"
         :loading="loading"
         remote
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <ParamTemplateOperateDrawer
+      <TaskOperateDrawer
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"
         @submitted="getDataByPage"
       />
+      <SubmitTaskModal v-model:visible="visible" :row-data="editingData" />
     </NCard>
   </div>
 </template>

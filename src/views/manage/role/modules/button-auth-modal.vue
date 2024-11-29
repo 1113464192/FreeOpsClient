@@ -24,13 +24,7 @@ function closeModal() {
 
 const title = computed(() => $t('common.edit') + $t('page.manage.role.buttonAuth'));
 
-type ButtonConfig = {
-  id: number;
-  label: string;
-  code: string;
-};
-
-const tree = shallowRef<ButtonConfig[]>([]);
+const options = shallowRef<CommonType.Option<number>[]>([]);
 
 async function getAllButtons() {
   // request
@@ -38,10 +32,9 @@ async function getAllButtons() {
   if (error) {
     return;
   }
-  tree.value = data.records.map((item: Api.SystemManage.Button) => ({
-    id: item.id,
-    label: item.buttonDesc,
-    code: item.buttonCode
+  options.value = data.records.map((item: Pick<Api.SystemManage.Button, 'id' | 'buttonCode'>) => ({
+    value: item.id,
+    label: item.buttonCode
   }));
 }
 
@@ -82,16 +75,7 @@ init();
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
-    <NTree
-      v-model:checked-keys="checks"
-      :data="tree"
-      key-field="id"
-      block-line
-      checkable
-      expand-on-click
-      virtual-scroll
-      class="h-280px"
-    />
+    <NSelect v-model:value="checks" multiple filterable :options="options" />
     <template #footer>
       <NSpace justify="end">
         <NButton size="small" class="mt-16px" @click="closeModal">

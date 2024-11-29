@@ -1,10 +1,10 @@
-<!-- <script setup lang="tsx">
+<script setup lang="tsx">
 import { NButton, NPopconfirm } from 'naive-ui';
 import { deleteTemplates, fetchGetTemplateList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import TemplateOperateDrawer from './modules/template-operate-drawer.vue';
+import TemplateOperateModal from './modules/template-operate-modal.vue';
 import TemplateSearch from './modules/template-search.vue';
 
 const appStore = useAppStore();
@@ -146,14 +146,14 @@ function edit(id: number) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="394"
+        :scroll-x="442"
         :loading="loading"
         remote
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <TemplateOperateDrawer
+      <TemplateOperateModal
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"
@@ -163,4 +163,4 @@ function edit(id: number) {
   </div>
 </template>
 
-<style scoped></style> -->
+<style scoped></style>

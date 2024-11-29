@@ -5,6 +5,10 @@ import { createCloudHost, fetchGetSelfAllProjects } from '@/service/api';
 import { useNaiveForm } from '@/hooks/common/form';
 import { CloudPlatformOptions } from '@/constants/constants';
 
+defineOptions({
+  name: 'BuyHostModal'
+});
+
 const visible = defineModel<boolean>('visible', {
   default: false
 });
@@ -75,7 +79,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NModal v-model:show="visible" :title="$t('common.buyHost')" preset="card" class="w-800px">
+  <NModal v-model:show="visible" :title="$t('page.asset.host.buyHost')" preset="card" class="w-800px">
     <NForm ref="formRef" :model="model" label-placement="left" :label-width="100">
       <NFormItem :label="$t('page.asset.host.projectName')" path="projectId">
         <NSelect v-model:value="model.projectId" :options="projectOptions" />

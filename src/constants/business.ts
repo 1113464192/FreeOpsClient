@@ -44,3 +44,10 @@ export const gameTypeRecord: Record<Api.OpsManage.GameType, App.I18n.I18nKey> = 
 };
 
 export const gameTypeOptions = transformRecordToOption(gameTypeRecord);
+
+export const yesOrNoRecord: Record<number, App.I18n.I18nKey> = {
+  1: 'common.yesOrNo.yes',
+  2: 'common.yesOrNo.no'
+};
+
+export const yesOrNoOptions = transformRecordToOption(yesOrNoRecord);

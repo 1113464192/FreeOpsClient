@@ -26,6 +26,31 @@ export function transformRecordToOption<T extends Record<string, string>>(record
 }
 
 /**
+ * Transform boolean record to option
+ *
+ * @example
+ *   ```ts
+ *   const record = {
+ *     1: 'labelTrue',
+ *     2: 'labelFalse'
+ *   };
+ *   const options = transformBooleanRecordToOption(record);
+ *   // [
+ *   //   { value: true, label: 'labelTrue' },
+ *   //   { value: false, label: 'labelFalse' }
+ *   // ]
+ *   ```;
+ *
+ * @param record
+ */
+export function transformBooleanRecordToOption(record: Record<number, string>) {
+  return Object.entries(record).map(([value, label]) => ({
+    value: value === '1',
+    label
+  })) as CommonType.Option<boolean>[];
+}
+
+/**
  * Translate options
  *
  * @param options

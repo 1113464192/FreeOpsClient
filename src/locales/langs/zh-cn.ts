@@ -9,7 +9,6 @@ const local: App.I18n.Schema = {
   common: {
     action: '操作',
     add: '新增',
-    buyHost: '买服务器',
     addSuccess: '添加成功',
     backToHome: '返回首页',
     batchDelete: '批量删除',
@@ -52,7 +51,10 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: '是',
       no: '否'
-    }
+    },
+    nextStep: '下一步',
+    previousStep: '上一步',
+    show: '显示'
   },
   request: {
     logout: '请求失败后登出用户',
@@ -195,6 +197,7 @@ const local: App.I18n.Schema = {
     'ops-manage_game': '游戏服管理',
     'ops-manage_template': '模板管理',
     'ops-manage_param-template': '参数模板管理',
+    'ops-manage_task': '任务管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -214,7 +217,7 @@ const local: App.I18n.Schema = {
         back: '返回',
         validateSuccess: '验证成功',
         loginSuccess: '登录成功',
-        welcomeBack: '欢迎回来，{username} ！'
+        welcomeBack: '欢迎回来，{nickname} ！'
       },
       pwdLogin: {
         title: '密码登录',
@@ -260,8 +263,7 @@ const local: App.I18n.Schema = {
       devDep: '开发依赖'
     },
     home: {
-      greeting: '早安，{username}, 今天又是充满活力的一天!',
-      weatherDesc: '今日多云转晴，20℃ - 25℃!',
+      greeting: '{nickname}你好, 今天又是充满活力的一天!',
       projectCount: '项目数',
       todo: '待办',
       message: '消息',
@@ -548,12 +550,14 @@ const local: App.I18n.Schema = {
         gameTotal: '游服数量',
         crossTotal: '跨服数量',
         commonTotal: '公共服数量',
+        buyHost: '买服务器',
         buyHostCount: '买服务器总数',
         form: {
           name: '请输入服务器名',
           ipv4: '请输入ipv4',
           ipv6: '请输入ipv6',
           vip: '请输入内网IP',
+          isIntranet: '如果是一个渠道一个管理机启动服务,那内网可以填写127.0.0.1',
           sshPort: '请输入SSH端口',
           projectName: '请选择项目名',
           zone: '请输入地区',
@@ -657,6 +661,43 @@ const local: App.I18n.Schema = {
         },
         search: {
           keyword: '请输入关键字'
+        }
+      },
+      task: {
+        title: '任务列表',
+        name: '任务名',
+        checkTemplate: '检测模板',
+        template: '脚本模板(可按序多选)',
+        auditor: '默认审批人员(可多选)',
+        host: '执行服务器',
+        isIntranet: '内网执行',
+        isConcurrent: '并发执行',
+        project: '项目',
+        addTask: '新增任务',
+        editTask: '编辑任务',
+        submit: '提交执行任务',
+        submitTitle: '提交任务',
+        submitAuditor: '审批人员(可多选)',
+        execContent: '运营执行内容',
+        checkResponse: '检测脚本返回的结果',
+        command: '命令',
+        form: {
+          name: '请输入任务名',
+          checkTemplate: '请选择检测模板',
+          template: '请按顺序选择脚本模板',
+          auditor: '不选则默认无需审批',
+          host: '请选择执行的服务器',
+          project: '请选择项目',
+          execContent: '请输入运营执行内容',
+          checkResponse: '返回为空，请检查运维检查脚本的日志',
+          submitAuditor: '请选择审批人员'
+        },
+        search: {
+          name: '请输入任务名',
+          project: '请选择项目'
+        },
+        error: {
+          radioValueError: '有单选项未选择'
         }
       }
     }
