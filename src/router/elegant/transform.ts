@@ -207,9 +207,11 @@ const routeMap: RouteMap = {
   "multi-menu_second_child": "/multi-menu/second/child",
   "multi-menu_second_child_home": "/multi-menu/second/child/home",
   "ops-manage": "/ops-manage",
+  "ops-manage_approve-task": "/ops-manage/approve-task",
   "ops-manage_game": "/ops-manage/game",
   "ops-manage_param-template": "/ops-manage/param-template",
   "ops-manage_task": "/ops-manage/task",
+  "ops-manage_task-log": "/ops-manage/task-log",
   "ops-manage_template": "/ops-manage/template",
   "user-center": "/user-center"
 };

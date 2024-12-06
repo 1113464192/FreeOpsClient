@@ -21,6 +21,7 @@ const local: App.I18n.Schema = {
     confirm: 'Confirm',
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
+    confirmOperation: 'Are you sure you want to perform this operation?',
     confirmDelete: 'Are you sure you want to delete?',
     edit: 'Edit',
     error: 'Error',
@@ -54,7 +55,10 @@ const local: App.I18n.Schema = {
     },
     nextStep: 'Next',
     previousStep: 'Previous',
-    show: 'Show'
+    show: 'Show',
+    allow: 'Allow',
+    reject: 'Reject',
+    success: 'Success'
   },
   request: {
     logout: 'Logout user after request failed',
@@ -198,6 +202,8 @@ const local: App.I18n.Schema = {
     'ops-manage_template': 'Template Manage',
     'ops-manage_param-template': 'Param Template Manage',
     'ops-manage_task': 'Task Manage',
+    'ops-manage_approve-task': 'Approve Task',
+    'ops-manage_task-log': 'Task Log',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -683,6 +689,8 @@ const local: App.I18n.Schema = {
         checkResponse: 'Check Response',
         submitAuditor: 'Auditor(can be multiple)',
         command: 'Command',
+        taskPendingApproval: 'You have task pending approval',
+        approve: 'Approve',
         form: {
           name: 'Please enter task name',
           checkTemplate: 'Please select check template',
@@ -692,7 +700,8 @@ const local: App.I18n.Schema = {
           project: 'Please select project',
           execContent: 'Please enter exec content',
           checkResponse: 'Response is empty, please check the log of the operation and maintenance check script',
-          submitAuditor: 'Please select auditor'
+          submitAuditor: 'Please select auditor',
+          submitSuccess: 'Submit Success'
         },
         search: {
           name: 'Please enter task name',
@@ -700,6 +709,43 @@ const local: App.I18n.Schema = {
         },
         error: {
           radioValueError: 'There are radio options not selected'
+        }
+      },
+      taskLog: {
+        title: 'Task Log List',
+        startTime: 'Exec start Time',
+        endTime: 'Exec end Time',
+        name: 'Task Name',
+        hostIp: 'Host IP',
+        execContext: 'Operation Execution Content Template',
+        checkResponse: 'Check Response',
+        commands: 'Commands',
+        stepStatus: 'Step Status',
+        status: 'Task Status',
+        sshResponseStatus: 'SSH Response Status',
+        sshResponse: 'SSH Response',
+        auditors: 'Auditors',
+        pendingAuditors: 'Pending Auditors',
+        rejectAuditor: 'Reject Auditor',
+        project: 'Project',
+        submitter: 'Submitter',
+        realTimeLog: 'Real Time Log',
+        taskStatus: {
+          waiting: 'Waiting',
+          running: 'Running',
+          success: 'Success',
+          fail: 'Fail',
+          reject: 'Reject'
+        },
+        form: {
+          name: 'Please enter task name',
+          project: 'Please select project',
+          submitter: 'Please enter submitter username'
+        },
+        search: {
+          name: 'Please select task',
+          project: 'Please select project',
+          status: 'Please select task status'
         }
       }
     }

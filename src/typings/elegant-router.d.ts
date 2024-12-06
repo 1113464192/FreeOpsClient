@@ -63,9 +63,11 @@ declare module "@elegant-router/types" {
     "multi-menu_second_child": "/multi-menu/second/child";
     "multi-menu_second_child_home": "/multi-menu/second/child/home";
     "ops-manage": "/ops-manage";
+    "ops-manage_approve-task": "/ops-manage/approve-task";
     "ops-manage_game": "/ops-manage/game";
     "ops-manage_param-template": "/ops-manage/param-template";
     "ops-manage_task": "/ops-manage/task";
+    "ops-manage_task-log": "/ops-manage/task-log";
     "ops-manage_template": "/ops-manage/template";
     "user-center": "/user-center";
   };
@@ -167,8 +169,10 @@ declare module "@elegant-router/types" {
     | "manage_user"
     | "multi-menu_first_child"
     | "multi-menu_second_child_home"
+    | "ops-manage_approve-task"
     | "ops-manage_game"
     | "ops-manage_param-template"
+    | "ops-manage_task-log"
     | "ops-manage_task"
     | "ops-manage_template"
     | "user-center"

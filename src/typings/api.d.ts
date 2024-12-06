@@ -434,5 +434,64 @@ declare namespace Api {
       auditors: number[]; // 审批人，这里之所以有是因为任务里的默认审批人是可选的
       submitter: number;
     }
+
+    type TaskStatus = 0 | 1 | 2 | 3 | 4;
+
+    type TaskLogStepStatus = {
+      command: string;
+      startTime: string;
+      endTime: string;
+      status: TaskStatus;
+      response: string;
+      sshResponseStatus: number;
+    };
+
+    type TaskLog = Common.CommonRecord<{
+      startTime: string;
+      endTime: string;
+      name: string;
+      hostIp: string;
+      execContext: string;
+      checkResponse: string;
+      commands: string[];
+      stepStatus: TaskLogStepStatus[];
+      status: TaskStatus;
+      auditors: number[];
+      auditorNames: string[];
+      pendingAuditors: number[];
+      pendingAuditorNames: string[];
+      rejectAuditor: number;
+      rejectAuditorName: string;
+      projectName: string;
+      projectId: number;
+      submitter: number;
+      submitterName: string;
+    }>;
+
+    type TaskLogSearchParams = CommonType.RecordNullable<
+      Pick<Api.OpsManage.TaskLog, 'id' | 'name' | 'status' | 'projectId'> & {
+        username: string;
+      }
+    > &
+      Common.CommonSearchParams;
+
+    type TaskLogList = Common.PaginatingQueryRecord<TaskLog>;
+
+    type ApproveOpsTaskReq = {
+      id: number;
+      isAllow: boolean;
+    };
+
+    type GetUserTaskPendingReq = CommonType.RecordNullable<{
+      taskName: string;
+      projectId: number;
+      status: number;
+    }> &
+      Common.CommonSearchParams;
+
+    type TaskRealTimeLog = {
+      name: string;
+      submitterName: string;
+    } & TaskLogStepStatus;
   }
 }

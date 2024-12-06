@@ -174,3 +174,38 @@ export function fetchGetTaskCommand(templateIds: number[], execContent: string) 
     }
   });
 }
+
+// 查询用户待审批的任务
+export function fetchGetUserTaskPending(params?: Api.OpsManage.GetUserTaskPendingReq) {
+  return request<Api.OpsManage.TaskLogList>({
+    url: '/ops/task-pending',
+    method: 'get',
+    params
+  });
+}
+
+// 用户审批任务
+export function approveOpsTask(data: Api.OpsManage.ApproveOpsTaskReq) {
+  return request({
+    url: '/ops/approve-task',
+    method: 'put',
+    data
+  });
+}
+
+// 查询已结束的任务日志
+export function fetchGetOpsTaskLog(params?: Api.OpsManage.TaskLogSearchParams) {
+  return request<Api.OpsManage.TaskLogList>({
+    url: '/ops/task-log',
+    method: 'get',
+    params
+  });
+}
+
+// 实时查看运行中的任务
+export function fetchGetOpsTaskRunningWS() {
+  return request({
+    url: '/ops/task-running-ws',
+    method: 'get'
+  });
+}

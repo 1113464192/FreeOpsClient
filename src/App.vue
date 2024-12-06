@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { NConfigProvider, darkTheme } from 'naive-ui';
+import { customInit } from '@/composables';
 import { useAppStore } from './store/modules/app';
 import { useThemeStore } from './store/modules/theme';
 import { naiveDateLocales, naiveLocales } from './locales/naive';
@@ -21,6 +22,8 @@ const naiveLocale = computed(() => {
 const naiveDateLocale = computed(() => {
   return naiveDateLocales[appStore.locale];
 });
+
+customInit();
 </script>
 
 <template>

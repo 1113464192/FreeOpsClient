@@ -21,6 +21,7 @@ const local: App.I18n.Schema = {
     confirm: '确认',
     delete: '删除',
     deleteSuccess: '删除成功',
+    confirmOperation: '确认操作吗？',
     confirmDelete: '确认删除吗？',
     edit: '编辑',
     error: '错误',
@@ -54,7 +55,10 @@ const local: App.I18n.Schema = {
     },
     nextStep: '下一步',
     previousStep: '上一步',
-    show: '显示'
+    show: '显示',
+    allow: '允许',
+    reject: '拒绝',
+    success: '成功'
   },
   request: {
     logout: '请求失败后登出用户',
@@ -198,6 +202,8 @@ const local: App.I18n.Schema = {
     'ops-manage_template': '模板管理',
     'ops-manage_param-template': '参数模板管理',
     'ops-manage_task': '任务管理',
+    'ops-manage_approve-task': '审批任务',
+    'ops-manage_task-log': '任务日志',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -681,6 +687,8 @@ const local: App.I18n.Schema = {
         execContent: '运营执行内容',
         checkResponse: '检测脚本返回的结果',
         command: '命令',
+        taskPendingApproval: '您有任务待审批',
+        approve: '审批',
         form: {
           name: '请输入任务名',
           checkTemplate: '请选择检测模板',
@@ -690,7 +698,8 @@ const local: App.I18n.Schema = {
           project: '请选择项目',
           execContent: '请输入运营执行内容',
           checkResponse: '返回为空，请检查运维检查脚本的日志',
-          submitAuditor: '请选择审批人员'
+          submitAuditor: '请选择审批人员',
+          submitSuccess: '提交成功'
         },
         search: {
           name: '请输入任务名',
@@ -698,6 +707,43 @@ const local: App.I18n.Schema = {
         },
         error: {
           radioValueError: '有单选项未选择'
+        }
+      },
+      taskLog: {
+        title: '任务日志列表',
+        startTime: '执行开始时间',
+        endTime: '执行结束时间',
+        name: '任务名',
+        hostIp: '执行服务器IP',
+        execContext: '运营执行内容模板',
+        checkResponse: '检测返回',
+        commands: '命令',
+        stepStatus: '步骤状态',
+        status: '任务状态',
+        sshResponseStatus: 'SSH返回状态',
+        sshResponse: 'SSH返回内容',
+        auditors: '默认审批人',
+        pendingAuditors: '待审批人员',
+        rejectAuditor: '否决人',
+        project: '项目',
+        submitter: '提交人',
+        realTimeLog: '实时日志',
+        taskStatus: {
+          waiting: '等待中',
+          running: '执行中',
+          success: '执行成功',
+          fail: '执行失败',
+          reject: '拒绝执行'
+        },
+        form: {
+          name: '请输入任务名',
+          project: '请选择项目',
+          submitter: '请输入提交人用户名'
+        },
+        search: {
+          name: '请选择任务',
+          project: '请选择项目',
+          status: '请选择任务状态'
         }
       }
     }

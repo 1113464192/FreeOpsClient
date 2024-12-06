@@ -1,0 +1,104 @@
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { localStg } from '@/utils/storage';
+
+export function useWebSocket(url: string, onMessage: (data: any) => void) {
+  const socket = ref<WebSocket | null>(null);
+  const isConnected = ref(false);
+  let retryCount = 0;
+  const maxRetries = 5;
+  const token = localStg.get('token');
+  let shouldRetry = true; // 添加一个标志来控制是否应该重试连接
+
+  const connectWebSocket = () => {
+    if (retryCount >= maxRetries) {
+      console.error(`WebSocket连接失败超过${maxRetries}次，停止重试`);
+      window.$message?.error('WebSocket连接失败');
+      return;
+    }
+
+    socket.value = new WebSocket(url);
+
+    socket.value.onopen = () => {
+      isConnected.value = true;
+      console.log('WebSocket 连接成功');
+
+      // 检查 token 是否存在
+      if (!token) {
+        console.error('WebSocket 认证失败: 缺少 token');
+        socket.value?.close();
+        return;
+      }
+
+      // 发送 token 进行身份验证
+      socket.value?.send(JSON.stringify({ type: 'auth', token }));
+    };
+
+    socket.value.onmessage = event => {
+      let data;
+      try {
+        data = JSON.parse(event.data);
+      } catch (e) {
+        data = event.data; // 如果解析 JSON 失败，则将其视为纯文本
+      }
+      if (typeof data === 'object' && data.type === 'auth_result') {
+        if (!data.success) {
+          console.error('WebSocket 认证失败');
+          socket.value?.close();
+          retryCount += 1;
+        } else {
+          console.log('WebSocket 认证成功');
+          shouldRetry = true; // 认证成功后允许重试
+          retryCount = 0; // 重置重试计数
+        }
+      } else {
+        onMessage(data);
+      }
+    };
+
+    socket.value.onclose = event => {
+      isConnected.value = false;
+      console.log('WebSocket 连接关闭', event);
+      if (event.wasClean) {
+        shouldRetry = false; // 如果是正常关闭，则不再重试
+        console.log('WebSocket 正常关闭，停止重试');
+      } else {
+        console.warn(`WebSocket 异常关闭，第 ${retryCount} 次重试`);
+      }
+      retryCount += 1;
+      if (shouldRetry) {
+        setTimeout(connectWebSocket, 1000); // 延迟重试连接
+      }
+    };
+
+    socket.value.onerror = error => {
+      console.error('WebSocket 连接出错', error);
+      retryCount += 1;
+      if (shouldRetry) {
+        setTimeout(connectWebSocket, 1000); // 延迟重试连接
+      }
+    };
+  };
+
+  const closeWebSocket = () => {
+    shouldRetry = false; // 关闭连接时不再重试
+    if (socket.value) {
+      socket.value.close();
+      socket.value = null;
+      isConnected.value = false;
+    }
+  };
+
+  onMounted(() => {
+    connectWebSocket();
+  });
+
+  onBeforeUnmount(() => {
+    closeWebSocket();
+  });
+
+  return {
+    socket,
+    isConnected,
+    closeWebSocket
+  };
+}

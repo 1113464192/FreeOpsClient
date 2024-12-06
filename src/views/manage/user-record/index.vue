@@ -11,9 +11,35 @@ import UserRecordSearch from './modules/user-record-search.vue';
 const appStore = useAppStore();
 
 function handleButtonShow(titleValue: string, msg: string) {
+  let contentVNode;
+  // 如果 msg 为 undefined 或 null，则将其设置为空字符串
+  const message = msg || '';
+
+  try {
+    // 尝试解析 JSON
+    const jsonData = JSON.parse(message);
+
+    // 格式化 JSON
+    contentVNode = () => (
+      <pre style="white-space: pre-wrap; word-break: break-word; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        {JSON.stringify(jsonData, null, 2)}
+      </pre>
+    );
+  } catch {
+    // 如果不是 JSON，则按普通文本处理
+    const lines = message.split('\n');
+    contentVNode = () => (
+      <div>
+        {lines.map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
+    );
+  }
+
   window.$dialog?.info({
     title: $t(titleValue as App.I18n.I18nKey),
-    content: msg
+    content: contentVNode
   });
 }
 
@@ -56,19 +82,19 @@ const {
       key: 'username',
       title: $t('page.manage.userRecord.username'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'createdAt',
       title: $t('page.manage.userRecord.createdAt'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'ip',
       title: $t('page.manage.userRecord.ip'),
       align: 'center',
-      minWidth: 60
+      width: 60
     },
     {
       key: 'method',
@@ -79,7 +105,7 @@ const {
       key: 'path',
       title: $t('page.manage.userRecord.path'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'status',
@@ -97,7 +123,7 @@ const {
       key: 'agent',
       title: $t('page.manage.userRecord.agent'),
       align: 'center',
-      width: 130,
+      width: 100,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton
@@ -115,7 +141,7 @@ const {
       key: 'body',
       title: $t('page.manage.userRecord.body'),
       align: 'center',
-      width: 130,
+      width: 100,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton
@@ -133,7 +159,7 @@ const {
       key: 'resp',
       title: $t('page.manage.userRecord.resp'),
       align: 'center',
-      width: 130,
+      width: 100,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton
@@ -195,7 +221,7 @@ onMounted(async () => {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="702"
+        :scroll-x="1012"
         :loading="loading"
         remote
         :row-key="row => row.id"

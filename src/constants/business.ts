@@ -51,3 +51,13 @@ export const yesOrNoRecord: Record<number, App.I18n.I18nKey> = {
 };
 
 export const yesOrNoOptions = transformRecordToOption(yesOrNoRecord);
+
+export const taskStatusRecord: Record<Api.OpsManage.TaskStatus, App.I18n.I18nKey> = {
+  0: 'page.opsManage.taskLog.taskStatus.waiting',
+  1: 'page.opsManage.taskLog.taskStatus.running',
+  2: 'page.opsManage.taskLog.taskStatus.success',
+  3: 'page.opsManage.taskLog.taskStatus.fail',
+  4: 'page.opsManage.taskLog.taskStatus.reject'
+};
+
+export const taskStatusOptions = transformRecordToOption(taskStatusRecord);

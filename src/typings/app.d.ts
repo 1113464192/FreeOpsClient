@@ -271,6 +271,7 @@ declare namespace App {
         confirm: string;
         delete: string;
         deleteSuccess: string;
+        confirmOperation: string;
         confirmDelete: string;
         edit: string;
         error: string;
@@ -305,6 +306,9 @@ declare namespace App {
         nextStep: string;
         previousStep: string;
         show: string;
+        allow: string;
+        reject: string;
+        success: string;
       };
       request: {
         logout: string;
@@ -846,6 +850,8 @@ declare namespace App {
             execContent: string;
             checkResponse: string;
             command: string;
+            taskPendingApproval: string;
+            approve: string;
             form: {
               name: string;
               checkTemplate: string;
@@ -856,6 +862,7 @@ declare namespace App {
               execContent: string;
               checkResponse: string;
               submitAuditor: string;
+              submitSuccess: string;
             };
             search: {
               name: string;
@@ -863,6 +870,43 @@ declare namespace App {
             };
             error: {
               radioValueError: string;
+            };
+          };
+          taskLog: {
+            title: string;
+            startTime: string;
+            endTime: string;
+            name: string;
+            hostIp: string;
+            execContext: string;
+            checkResponse: string;
+            commands: string;
+            stepStatus: string;
+            status: string;
+            sshResponseStatus: string;
+            sshResponse: string;
+            auditors: string;
+            pendingAuditors: string;
+            rejectAuditor: string;
+            project: string;
+            submitter: string;
+            realTimeLog: string;
+            taskStatus: {
+              waiting: string;
+              running: string;
+              success: string;
+              fail: string;
+              reject: string;
+            };
+            form: {
+              name: string;
+              project: string;
+              submitter: string;
+            };
+            search: {
+              name: string;
+              project: string;
+              status: string;
             };
           };
         };

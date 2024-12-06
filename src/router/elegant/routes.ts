@@ -387,6 +387,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'ops-manage_approve-task',
+        path: '/ops-manage/approve-task',
+        component: 'view.ops-manage_approve-task',
+        meta: {
+          title: 'ops-manage_approve-task',
+          i18nKey: 'route.ops-manage_approve-task'
+        }
+      },
+      {
         name: 'ops-manage_game',
         path: '/ops-manage/game',
         component: 'view.ops-manage_game',
@@ -411,6 +420,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'ops-manage_task',
           i18nKey: 'route.ops-manage_task'
+        }
+      },
+      {
+        name: 'ops-manage_task-log',
+        path: '/ops-manage/task-log',
+        component: 'view.ops-manage_task-log',
+        meta: {
+          title: 'ops-manage_task-log',
+          i18nKey: 'route.ops-manage_task-log'
         }
       },
       {

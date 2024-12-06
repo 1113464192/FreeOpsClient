@@ -1,11 +1,12 @@
 <script setup lang="tsx">
-import { NButton, NPopconfirm } from 'naive-ui';
+import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import { cloneDeep } from 'lodash-es';
 import { deleteTasks, fetchGetTaskList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
+import { yesOrNoOptions } from '@/constants/business';
 import TaskOperateDrawer from './modules/task-operate-drawer.vue';
 import TaskSearch from './modules/task-search.vue';
 import SubmitTaskModal from './modules/submit-task-modal.vue';
@@ -65,14 +66,56 @@ const {
       title: $t('page.opsManage.task.isIntranet'),
       align: 'center',
       minWidth: 40,
-      render: row => (row.isIntranet ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
+      render: row => {
+        let isIntranet = 0;
+        if (row.isIntranet) {
+          isIntranet = 1;
+        } else {
+          isIntranet = 2;
+        }
+        const statusOption = yesOrNoOptions.find(option => String(option.value) === String(isIntranet));
+        const statusColor = (
+          {
+            1: 'success', // 是
+            2: 'warning' // 否
+          } as Record<number, 'success' | 'warning'>
+        )[isIntranet as number];
+        return (
+          <div class="flex-center gap-8px">
+            {<NTag type={statusColor}>{statusOption ? $t(statusOption.label as App.I18n.I18nKey) : isIntranet}</NTag>}
+          </div>
+        );
+      }
     },
     {
       key: 'isConcurrent',
       title: $t('page.opsManage.task.isConcurrent'),
       align: 'center',
       minWidth: 40,
-      render: row => (row.isConcurrent ? $t('common.yesOrNo.yes') : $t('common.yesOrNo.no'))
+      render: row => {
+        let isConcurrent = 0;
+        if (row.isConcurrent) {
+          isConcurrent = 1;
+        } else {
+          isConcurrent = 2;
+        }
+        const concurrentOption = yesOrNoOptions.find(option => String(option.value) === String(isConcurrent));
+        const concurrentColor = (
+          {
+            1: 'success', // 是
+            2: 'warning' // 否
+          } as Record<number, 'success' | 'warning'>
+        )[isConcurrent as number];
+        return (
+          <div class="flex-center gap-8px">
+            {
+              <NTag type={concurrentColor}>
+                {concurrentOption ? $t(concurrentOption.label as App.I18n.I18nKey) : isConcurrent}
+              </NTag>
+            }
+          </div>
+        );
+      }
     },
     {
       key: 'operate',
