@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { $t } from '@/locales';
 import { useAuthStore } from '@/store/modules/auth';
 import { updateUserPassword } from '@/service/api';
+import { REG_PWD } from '@/constants/reg';
 
 const authStore = useAuthStore();
 
@@ -21,6 +22,11 @@ function changeShowPwd() {
 }
 
 async function handleResetPassword() {
+  if (!REG_PWD.test(newPassword.value)) {
+    window.$message?.error($t('form.pwd.invalid'));
+    return;
+  }
+
   const userIdNumber = Number.parseInt(authStore.userInfo.userId, 10); // 10 表示十进制
   const { error } = await updateUserPassword({
     id: userIdNumber,
@@ -54,14 +60,18 @@ async function handleResetPassword() {
               {{ $t(changeShowPwdButtonContent) }}
             </NButton>
             <NInputGroup v-if="isShowPwd">
-              <NInput
-                v-model:value="newPassword"
-                type="password"
-                show-password-on="click"
-                placeholder="密码"
-                :maxlength="18"
-                :minlength="6"
-              />
+              <NTooltip trigger="hover">
+                <template #trigger>
+                  <NInput
+                    v-model:value="newPassword"
+                    type="password"
+                    show-password-on="click"
+                    :maxlength="18"
+                    :minlength="6"
+                  />
+                </template>
+                {{ $t('page.login.resetPwd.placeholder') }}
+              </NTooltip>
               <NButton type="primary" ghost @click="handleResetPassword()">
                 {{ $t('common.confirm') }}
               </NButton>

@@ -249,7 +249,9 @@ const local: App.I18n.Schema = {
         policy: '《Privacy Policy》'
       },
       resetPwd: {
-        title: 'Reset Password'
+        title: 'Reset Password',
+        placeholder:
+          'Must contain 6-18 characters, including numbers and letters, and allow decimal points and underscores'
       },
       bindWeChat: {
         title: 'Bind WeChat'
@@ -739,7 +741,7 @@ const local: App.I18n.Schema = {
     },
     phone: {
       required: 'Please enter phone number',
-      invalid: 'Phone number format is incorrect'
+      invalid: 'Password format is incorrect, 6-18 characters, must contain numbers and letters'
     },
     pwd: {
       required: 'Please enter password',

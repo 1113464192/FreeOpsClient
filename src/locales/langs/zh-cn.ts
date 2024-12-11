@@ -249,7 +249,8 @@ const local: App.I18n.Schema = {
         policy: '《隐私权政策》'
       },
       resetPwd: {
-        title: '重置密码'
+        title: '重置密码',
+        placeholder: '必须包含6-18位字符，包含数字与字母，允许包含小数点与下划线'
       },
       bindWeChat: {
         title: '绑定微信'
@@ -741,7 +742,7 @@ const local: App.I18n.Schema = {
     },
     pwd: {
       required: '请输入密码',
-      invalid: '密码格式不正确，6-18位字符，包含字母、数字、下划线'
+      invalid: '密码格式不正确，6-18位字符，必须包含数字与字母'
     },
     confirmPwd: {
       required: '请输入确认密码',
