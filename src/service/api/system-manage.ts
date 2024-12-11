@@ -280,14 +280,17 @@ export function deleteMenuButtons(ids: number[]) {
 
 // 用户记录查询
 export async function fetchGetUserRecordList(params: Api.SystemManage.UserRecordSearchParams) {
-  // 如果没有传入日期，则获取最新的日期,获取失败则继续执行触发报错
+  // 如果没有传入日期，则获取最新的日期
   if (!params.date) {
     const { data } = await fetchGetUserRecordMonths();
     if (data) {
       const dates = data.dates;
-      // 假设日期格式为 "YYYY_MM"，可以直接进行字符串比较
-      const latestDate = dates.sort().pop();
-      if (latestDate) {
+      // 如果dates不存在，就传null
+      if (!dates || dates.length === 0) {
+        params.date = null;
+      } else {
+        // 假设日期格式为 "YYYY_MM"，可以直接进行字符串比较
+        const latestDate = dates.sort().pop();
         params.date = latestDate;
       }
     }

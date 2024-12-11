@@ -1,7 +1,6 @@
 <script setup lang="tsx">
 import { onMounted } from 'vue';
 import { NButton } from 'naive-ui';
-// import { fetchGetUserRecordList, fetchGetUserRecordMonths } from '@/service/api';
 import { fetchGetUserRecordList, fetchGetUserRecordMonths } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
@@ -184,7 +183,12 @@ async function fetchLatestDate() {
       return;
     }
     const dates = mData.dates;
+    if (!dates) {
+      searchParams.date = null;
+      return;
+    }
     const latestDate = dates.sort().pop();
+
     if (latestDate) {
       searchParams.date = latestDate;
     }

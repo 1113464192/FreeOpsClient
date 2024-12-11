@@ -24,7 +24,7 @@ const statusOptions: CommonType.Option[] = [
 ];
 async function getUserRecordDate(): Promise<string[]> {
   const { data, error } = await fetchGetUserRecordMonths();
-  if (error) {
+  if (error || !data || !data.dates) {
     return [];
   }
   return data.dates.length > 0 ? data.dates : [];
