@@ -110,19 +110,19 @@ const {
       key: 'hostName',
       title: $t('page.opsManage.game.hostName'),
       align: 'center',
-      minWidth: 160
+      width: 160
     },
     {
       key: 'ipv4',
       title: $t('page.asset.host.ipv4'),
       align: 'center',
-      minWidth: 140
+      width: 140
     },
     {
       key: 'lbName',
       title: $t('page.opsManage.game.lbName'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'lbListenerPort',

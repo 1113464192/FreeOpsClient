@@ -39,5 +39,9 @@ export const MethodOptions: CommonType.Option[] = [
   {
     label: 'DELETE',
     value: 'DELETE'
+  },
+  {
+    label: 'PATCH',
+    value: 'PATCH'
   }
 ];

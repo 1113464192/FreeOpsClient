@@ -48,18 +48,18 @@ const {
       key: 'roleName',
       title: $t('page.manage.role.roleName'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'roleCode',
       title: $t('page.manage.role.roleCode'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'roleDesc',
       title: $t('page.manage.role.roleDesc'),
-      minWidth: 120
+      width: 120
     },
     {
       key: 'operate',
@@ -148,7 +148,7 @@ function edit(id: number) {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="702"
+        :scroll-x="612"
         :loading="loading"
         remote
         :row-key="row => row.id"

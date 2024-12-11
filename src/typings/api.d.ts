@@ -80,6 +80,14 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
+    /** home */
+    type HomeInfo = {
+      projectCount: number;
+      hostCount: number;
+      taskNeedApproveCount: number;
+      taskRunningCount: number;
+    };
+
     /** role */
     // 保留status是为了兼容soybean框架的table.ts
     type Role = Common.CommonRecord<{
@@ -489,9 +497,10 @@ declare namespace Api {
     }> &
       Common.CommonSearchParams;
 
-    type TaskRealTimeLog = {
+    type TaskRealTimeLog = TaskLogStepStatus & {
       name: string;
       submitterName: string;
-    } & TaskLogStepStatus;
+      children?: TaskLogStepStatus[];
+    };
   }
 }

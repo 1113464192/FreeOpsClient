@@ -29,7 +29,8 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
     {
       key: 'id',
       title: $t('common.id'),
-      align: 'center'
+      align: 'center',
+      width: 64
     },
     {
       key: 'menuType',
@@ -51,7 +52,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'menuName',
       title: $t('page.manage.menu.menuName'),
       align: 'center',
-      minWidth: 120,
+      width: 120,
       render: row => {
         const { i18nKey, menuName } = row;
 
@@ -85,13 +86,13 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       key: 'routeName',
       title: $t('page.manage.menu.routeName'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'routePath',
       title: $t('page.manage.menu.routePath'),
       align: 'center',
-      minWidth: 120
+      width: 120
     },
     {
       key: 'status',
@@ -255,7 +256,7 @@ init();
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="1088"
+        :scroll-x="1152"
         :loading="loading"
         :row-key="row => row.id"
         remote

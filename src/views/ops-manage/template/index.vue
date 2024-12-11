@@ -47,13 +47,13 @@ const {
       key: 'name',
       title: $t('page.opsManage.template.name'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'projectName',
       title: $t('page.opsManage.template.projectId'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'operate',

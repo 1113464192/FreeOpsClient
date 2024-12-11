@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { createReusableTemplate } from '@vueuse/core';
+import { fetchGetHomeInfo } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -19,52 +20,77 @@ interface CardData {
   icon: string;
 }
 
-const cardData = computed<CardData[]>(() => [
-  {
-    key: 'visitCount',
-    title: $t('page.home.visitCount'),
-    value: 9725,
-    unit: '',
-    color: {
-      start: '#ec4786',
-      end: '#b955a4'
-    },
-    icon: 'ant-design:bar-chart-outlined'
-  },
-  {
-    key: 'turnover',
-    title: $t('page.home.turnover'),
-    value: 1026,
-    unit: '$',
-    color: {
-      start: '#865ec0',
-      end: '#5144b4'
-    },
-    icon: 'ant-design:money-collect-outlined'
-  },
-  {
-    key: 'downloadCount',
-    title: $t('page.home.downloadCount'),
-    value: 970925,
-    unit: '',
-    color: {
-      start: '#56cdf3',
-      end: '#719de3'
-    },
-    icon: 'carbon:document-download'
-  },
-  {
-    key: 'dealCount',
-    title: $t('page.home.dealCount'),
-    value: 9527,
-    unit: '',
-    color: {
-      start: '#fcbc25',
-      end: '#f68057'
-    },
-    icon: 'ant-design:trademark-circle-outlined'
+const cardData = ref<CardData[]>([]);
+
+onMounted(async () => {
+  try {
+    const { data, error } = await fetchGetHomeInfo();
+    if (error) {
+      window.$message?.error?.($t('request.error'));
+      return;
+    } // else if (!data.hostCount) {
+    //   window.$message?.error?.($t('page.home.hostCount') + $t('common.error'));
+    //   return;
+    // } else if (!data.projectCount) {
+    //   window.$message?.error?.($t('page.home.projectCount') + $t('common.error'));
+    //   return;
+    // } else if (!data.taskNeedApproveCount) {
+    //   window.$message?.error?.($t('page.home.taskNeedApproveCount') + $t('common.error'));
+    //   return;
+    // } else if (!data.taskRunningCount) {
+    //   window.$message?.error?.($t('page.home.taskRunningCount') + $t('common.error'));
+    //   return;
+    // }
+    cardData.value = [
+      {
+        key: 'projectCount',
+        title: $t('page.home.projectCount'),
+        value: data.projectCount,
+        unit: '',
+        color: {
+          start: '#ec4786',
+          end: '#b955a4'
+        },
+        icon: 'arcticons:projectm'
+      },
+      {
+        key: 'hostCount',
+        title: $t('page.home.hostCount'),
+        value: data.hostCount,
+        unit: '',
+        color: {
+          start: '#865ec0',
+          end: '#5144b4'
+        },
+        icon: 'ant-design:cloud-server-outlined'
+      },
+      {
+        key: 'taskNeedApproveCount',
+        title: $t('page.home.taskNeedApproveCount'),
+        value: data.taskNeedApproveCount,
+        unit: '',
+        color: {
+          start: '#fcbc25',
+          end: '#f68057'
+        },
+        icon: 'material-symbols-light:order-approve-outline-rounded'
+      },
+      {
+        key: 'taskRunningCount',
+        title: $t('page.home.taskRunningCount'),
+        value: data.taskRunningCount,
+        unit: '',
+        color: {
+          start: '#26deca',
+          end: '#26a69a'
+        },
+        icon: 'carbon:job-run'
+      }
+    ];
+  } catch (error) {
+    console.error('Failed to fetch home info:', error);
   }
-]);
+});
 
 interface GradientBgProps {
   gradientColor: string;

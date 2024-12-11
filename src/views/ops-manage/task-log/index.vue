@@ -78,11 +78,6 @@ const {
   },
   columns: () => [
     {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
-    {
       key: 'id',
       title: $t('common.id'),
       align: 'center',

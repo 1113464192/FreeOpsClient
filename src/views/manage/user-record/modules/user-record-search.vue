@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { $t } from '@/locales';
 import { fetchGetUserRecordMonths } from '@/service/api';
+import { MethodOptions } from '@/constants/constants';
 defineOptions({
   name: 'UserRecordSearch'
 });
@@ -14,13 +15,6 @@ interface Emits {
 const emit = defineEmits<Emits>();
 
 const model = defineModel<Api.SystemManage.UserRecordSearchParams>('model', { required: true });
-
-const methodOptions: CommonType.Option[] = [
-  { label: 'GET', value: 'GET' },
-  { label: 'POST', value: 'POST' },
-  { label: 'PUT', value: 'PUT' },
-  { label: 'DELETE', value: 'DELETE' }
-];
 
 const statusOptions: CommonType.Option[] = [
   { label: '2xx', value: '2%' },
@@ -67,7 +61,7 @@ function search() {
           <NSelect
             v-model:value="model.method"
             :placeholder="$t('page.manage.userRecord.form.method')"
-            :options="methodOptions"
+            :options="MethodOptions"
             clearable
           />
         </NFormItemGi>

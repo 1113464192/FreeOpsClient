@@ -1,6 +1,14 @@
 import qs from 'qs';
 import { request } from '../request';
 
+/** get home info */
+export function fetchGetHomeInfo() {
+  return request<Api.SystemManage.HomeInfo>({
+    url: '/home/info',
+    method: 'get'
+  });
+}
+
 /** get role list */
 export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.RoleList>({

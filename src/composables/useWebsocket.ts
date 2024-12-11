@@ -40,6 +40,12 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
       } catch (e) {
         data = event.data; // 如果解析 JSON 失败，则将其视为纯文本
       }
+      // 检查是否是 Ping 消息
+      if (data === 'ping') {
+        console.log('收到 Ping 消息，返回 Pong');
+        socket.value?.send('pong');
+        return; // 不继续处理其他消息
+      }
       if (typeof data === 'object' && data.type === 'auth_result') {
         if (!data.success) {
           console.error('WebSocket 认证失败');
@@ -59,13 +65,13 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
       isConnected.value = false;
       console.log('WebSocket 连接关闭', event);
       if (event.wasClean) {
-        shouldRetry = false; // 如果是正常关闭，则不再重试
+        shouldRetry = false;
         console.log('WebSocket 正常关闭，停止重试');
       } else {
         console.warn(`WebSocket 异常关闭，第 ${retryCount} 次重试`);
       }
       retryCount += 1;
-      if (shouldRetry) {
+      if (shouldRetry && retryCount < maxRetries) {
         setTimeout(connectWebSocket, 1000); // 延迟重试连接
       }
     };
@@ -82,14 +88,16 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
   const closeWebSocket = () => {
     shouldRetry = false; // 关闭连接时不再重试
     if (socket.value) {
-      socket.value.close();
+      socket.value.close(1000, 'Client closed connection');
       socket.value = null;
       isConnected.value = false;
     }
   };
 
   onMounted(() => {
-    connectWebSocket();
+    if (socket.value === null) {
+      connectWebSocket();
+    }
   });
 
   onBeforeUnmount(() => {

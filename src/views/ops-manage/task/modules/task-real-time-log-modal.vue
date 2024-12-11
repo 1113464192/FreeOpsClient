@@ -21,7 +21,7 @@ let closeWebSocket: () => void;
 
 function createTaskReadTimeDataWebSocket() {
   const { VITE_SERVICE_BASE_URL } = import.meta.env;
-  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}ops/task-need-approve`;
+  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}ops/task-running-ws`;
   const { closeWebSocket: close } = useWebSocket(wsUrl, data => {
     taskData.value = data;
   });
@@ -65,9 +65,9 @@ function createColumns() {
   return [
     {
       title: $t('page.opsManage.taskLog.name'),
-      key: 'step',
+      key: 'name',
       align: 'center' as const,
-      width: 64
+      width: 150
     },
     {
       title: $t('page.opsManage.taskLog.commands'),
@@ -79,13 +79,13 @@ function createColumns() {
       title: $t('page.opsManage.taskLog.startTime'),
       key: 'startTime',
       align: 'center' as const,
-      width: 100
+      width: 150
     },
     {
       title: $t('page.opsManage.taskLog.endTime'),
       key: 'endTime',
       align: 'center' as const,
-      width: 100
+      width: 150
     },
     {
       title: $t('page.opsManage.taskLog.status'),
@@ -149,17 +149,21 @@ function createColumns() {
 
 const columns = createColumns();
 
-watch(visible, () => {
-  if (visible.value) {
-    createTaskReadTimeDataWebSocket();
-  } else {
-    closeWebSocket();
-  }
-});
+watch(
+  visible,
+  () => {
+    if (visible.value) {
+      createTaskReadTimeDataWebSocket();
+    } else {
+      closeWebSocket();
+    }
+  },
+  { immediate: true }
+); // 添加 immediate: true 以在初始化时立即响应当前值
 </script>
 
 <template>
-  <NModal v-model:show="visible" :title="title" preset="card" class="w-1300px">
+  <NModal v-model:show="visible" :title="title" preset="card" class="w-1500px">
     <NDataTable
       :columns="columns"
       :data="taskData"
@@ -168,7 +172,7 @@ watch(visible, () => {
       size="small"
       :flex-height="false"
       :virtual-scroll-x="true"
-      :scroll-x="1328"
+      :scroll-x="1414"
       remote
       :row-key="row => row.command"
     />

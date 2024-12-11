@@ -46,7 +46,7 @@ const {
       key: 'name',
       title: $t('page.asset.project.name'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'backendVersion',
@@ -100,7 +100,7 @@ const {
       key: 'cloudPlatform',
       title: $t('page.asset.project.cloudPlatform'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'hostTotal',
@@ -112,7 +112,7 @@ const {
       key: 'gameTotal',
       title: $t('page.asset.project.gameTotal'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'crossTotal',
@@ -228,7 +228,7 @@ function edit(id: number) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="2400"
+        :scroll-x="2352"
         :loading="loading"
         remote
         :row-key="row => row.id"

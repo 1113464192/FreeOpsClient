@@ -11,7 +11,7 @@ import BuyHostModal from './modules/buy-host-modal.vue';
 
 const appStore = useAppStore();
 
-const { bool: buyHostModalVisible, setTrue: openBuyHostModal } = useBoolean();
+const { bool: buyHostModalVisible, setTrue: openBuyHostModal, setFalse: closeBuyHostModal } = useBoolean();
 
 const {
   columns,
@@ -206,6 +206,11 @@ async function handleDelete(id: number) {
 function edit(id: number) {
   handleEdit(id);
 }
+
+function buyHostSuccess() {
+  closeBuyHostModal();
+  getDataByPage();
+}
 </script>
 
 <template>
@@ -247,7 +252,7 @@ function edit(id: number) {
         :row-data="editingData"
         @submitted="getDataByPage"
       />
-      <BuyHostModal v-model:visible="buyHostModalVisible" @submitted="getDataByPage" />
+      <BuyHostModal v-model:visible="buyHostModalVisible" @submitted="buyHostSuccess" />
     </NCard>
   </div>
 </template>

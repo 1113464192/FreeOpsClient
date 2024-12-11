@@ -51,7 +51,7 @@ const {
       key: 'username',
       title: $t('page.manage.user.username'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'userGender',
@@ -77,7 +77,7 @@ const {
       key: 'nickname',
       title: $t('page.manage.user.nickname'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'userPhone',
@@ -89,7 +89,7 @@ const {
       key: 'userEmail',
       title: $t('page.manage.user.userEmail'),
       align: 'center',
-      minWidth: 200
+      width: 200
     },
     {
       key: 'status',

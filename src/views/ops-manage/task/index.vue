@@ -10,10 +10,12 @@ import { yesOrNoOptions } from '@/constants/business';
 import TaskOperateDrawer from './modules/task-operate-drawer.vue';
 import TaskSearch from './modules/task-search.vue';
 import SubmitTaskModal from './modules/submit-task-modal.vue';
+import TaskRealTimeLogModal from './modules/task-real-time-log-modal.vue';
 
 const appStore = useAppStore();
 
 const { bool: visible, setTrue: openModal } = useBoolean();
+const { bool: RealTimeTaskLogModalVisible, setTrue: openRealTimeTaskModal } = useBoolean();
 
 const {
   columns,
@@ -53,19 +55,19 @@ const {
       key: 'name',
       title: $t('page.opsManage.task.name'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'hostName',
       title: $t('page.opsManage.task.host'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'isIntranet',
       title: $t('page.opsManage.task.isIntranet'),
       align: 'center',
-      minWidth: 40,
+      width: 40,
       render: row => {
         let isIntranet = 0;
         if (row.isIntranet) {
@@ -91,7 +93,7 @@ const {
       key: 'isConcurrent',
       title: $t('page.opsManage.task.isConcurrent'),
       align: 'center',
-      minWidth: 40,
+      width: 40,
       render: row => {
         let isConcurrent = 0;
         if (row.isConcurrent) {
@@ -194,6 +196,11 @@ function openSubmitTaskModal(id: number) {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <TaskSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
+    <NCard :title="$t('page.opsManage.taskLog.realTimeLog')" :bordered="false" size="small" class="card-wrapper">
+      <NButton @click="openRealTimeTaskModal">
+        {{ $t('page.opsManage.taskLog.realTimeLog') }}
+      </NButton>
+    </NCard>
     <NCard
       :title="$t('page.opsManage.task.title')"
       :bordered="false"
@@ -231,6 +238,7 @@ function openSubmitTaskModal(id: number) {
         @submitted="getDataByPage"
       />
       <SubmitTaskModal v-model:visible="visible" :row-data="editingData" />
+      <TaskRealTimeLogModal v-if="RealTimeTaskLogModalVisible" v-model:visible="RealTimeTaskLogModalVisible" />
     </NCard>
   </div>
 </template>

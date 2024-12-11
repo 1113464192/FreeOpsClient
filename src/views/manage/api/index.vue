@@ -26,34 +26,34 @@ const { columns, columnChecks, data, loading, pagination, searchParams, resetSea
         width: 48
       },
       {
-        key: 'id',
-        title: $t('common.id'),
-        align: 'center',
-        render: row => (row.id < 0 ? 0 : row.id)
+        key: 'index',
+        title: $t('common.index'),
+        width: 64,
+        align: 'center'
       },
       {
         key: 'path',
         title: $t('page.manage.api.path'),
         align: 'center',
-        minWidth: 120
+        width: 150
       },
       {
         key: 'method',
         title: $t('page.manage.api.method'),
         align: 'center',
-        minWidth: 120
+        width: 100
       },
       {
         key: 'apiGroup',
         title: $t('page.manage.api.apiGroup'),
         align: 'center',
-        minWidth: 120
+        width: 150
       },
       {
         key: 'description',
         title: $t('page.manage.api.description'),
         align: 'center',
-        minWidth: 120
+        width: 200
       },
       {
         key: 'operate',
@@ -61,7 +61,7 @@ const { columns, columnChecks, data, loading, pagination, searchParams, resetSea
         align: 'center',
         width: 120,
         render: row => (
-          <div class="flex-center justify-end gap-8px">
+          <div class="flex-center gap-8px">
             {row.id < 0 && (
               <NButton type="primary" ghost size="small" onClick={() => handleAddChildApi(row)}>
                 {$t('page.manage.api.addChildApi')}
@@ -178,7 +178,7 @@ init();
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="1088"
+        :scroll-x="862"
         :loading="loading"
         :row-key="row => row.id"
         remote

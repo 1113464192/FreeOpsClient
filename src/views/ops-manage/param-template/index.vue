@@ -46,13 +46,13 @@ const {
       key: 'keyword',
       title: $t('page.opsManage.paramTemplate.keyword'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'variable',
       title: $t('page.opsManage.paramTemplate.variable'),
       align: 'center',
-      minWidth: 100
+      width: 100
     },
     {
       key: 'operate',

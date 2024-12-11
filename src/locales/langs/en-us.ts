@@ -269,30 +269,11 @@ const local: App.I18n.Schema = {
       devDep: 'Development Dependency'
     },
     home: {
-      greeting: 'Hello {nickname}, today is another day full of vitality!',
+      greeting: '{nickname}你好, 今天又是充满活力的一天!',
       projectCount: 'Project Count',
-      todo: 'Todo',
-      message: 'Message',
-      downloadCount: 'Download Count',
-      registerCount: 'Register Count',
-      schedule: 'Work and rest Schedule',
-      study: 'Study',
-      work: 'Work',
-      rest: 'Rest',
-      entertainment: 'Entertainment',
-      visitCount: 'Visit Count',
-      turnover: 'Turnover',
-      dealCount: 'Deal Count',
-      projectNews: {
-        title: 'Project News',
-        moreNews: 'More News',
-        desc1: 'Soybean created the open source project soybean-admin on May 28, 2021!',
-        desc2: 'Yanbowe submitted a bug to soybean-admin, the multi-tab bar will not adapt.',
-        desc3: 'Soybean is ready to do sufficient preparation for the release of soybean-admin!',
-        desc4: 'Soybean is busy writing project documentation for soybean-admin!',
-        desc5: 'Soybean just wrote some of the workbench pages casually, and it was enough to see!'
-      },
-      creativity: 'Creativity'
+      hostCount: 'Host Count',
+      taskNeedApproveCount: 'Task Need Approve Count',
+      taskRunningCount: 'Task Running Count'
     },
     function: {
       tab: {
@@ -698,7 +679,7 @@ const local: App.I18n.Schema = {
           auditor: 'If not selected, it will be approved by default',
           host: 'Please select Execution host',
           project: 'Please select project',
-          execContent: 'Please enter exec content',
+          execContent: 'Parameter template keyword: mapped variable\nGameIds: 1_20\nAll server ids: 1_200',
           checkResponse: 'Response is empty, please check the log of the operation and maintenance check script',
           submitAuditor: 'Please select auditor',
           submitSuccess: 'Submit Success'
@@ -729,7 +710,7 @@ const local: App.I18n.Schema = {
         rejectAuditor: 'Reject Auditor',
         project: 'Project',
         submitter: 'Submitter',
-        realTimeLog: 'Real Time Log',
+        realTimeLog: 'Real Time Task Log',
         taskStatus: {
           waiting: 'Waiting',
           running: 'Running',
