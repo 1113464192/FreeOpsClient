@@ -21,6 +21,10 @@ function initCheckTaskApprove() {
       });
     }
   });
+  if (webSocketInstance.value?.isConnected.value || webSocketInstance.value?.socket.value !== null) {
+    return;
+  }
+  webSocketInstance.value.connectWebSocket();
 }
 
 export function customInit() {

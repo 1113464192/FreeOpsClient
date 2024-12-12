@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 import { localStg } from '@/utils/storage';
 
 export function useWebSocket(url: string, onMessage: (data: any) => void) {
@@ -94,12 +94,6 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
     }
   };
 
-  onMounted(() => {
-    if (socket.value === null) {
-      connectWebSocket();
-    }
-  });
-
   onBeforeUnmount(() => {
     closeWebSocket();
   });
@@ -107,6 +101,7 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
   return {
     socket,
     isConnected,
+    connectWebSocket,
     closeWebSocket
   };
 }
