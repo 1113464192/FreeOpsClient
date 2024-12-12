@@ -10,9 +10,11 @@ import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
 import { fetchGetConstantRoutes, fetchGetUserRoutes, fetchIsRouteExist } from '@/service/api';
+import { customInit } from '@/composables';
 import { useAppStore } from '../app';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
+
 import {
   filterAuthRoutesByRoles,
   getBreadcrumbsByRoute,
@@ -260,6 +262,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       handleUpdateRootRouteRedirect(home);
 
       setIsInitAuthRoute(true);
+
+      customInit();
     } else {
       // if fetch user routes failed, reset store
       authStore.resetStore();
