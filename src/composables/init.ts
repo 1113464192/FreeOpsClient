@@ -22,7 +22,7 @@ function initCheckTaskApprove() {
 
   if (
     webSocketInstance.value &&
-    (webSocketInstance.value.isConnected?.value || webSocketInstance.value.socket?.value !== null)
+    (webSocketInstance.value.isConnected?.value || webSocketInstance.value.socket?.value?.readyState === WebSocket.OPEN)
   ) {
     console.log('WebSocket 已经连接或正在连接，不需要重新初始化');
     return;

@@ -72,7 +72,7 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
       }
       retryCount += 1;
       if (shouldRetry && retryCount < maxRetries) {
-        setTimeout(connectWebSocket, 1000); // 延迟重试连接
+        setTimeout(connectWebSocket, 20000); // 延迟重试连接 20 秒
       }
     };
 
@@ -80,7 +80,7 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
       console.error('WebSocket 连接出错', error);
       retryCount += 1;
       if (shouldRetry) {
-        setTimeout(connectWebSocket, 1000); // 延迟重试连接
+        setTimeout(connectWebSocket, 20000); // 延迟重试连接 20 秒
       }
     };
   };
