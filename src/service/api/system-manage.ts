@@ -4,7 +4,7 @@ import { request } from '../request';
 /** get home info */
 export function fetchGetHomeInfo() {
   return request<Api.SystemManage.HomeInfo>({
-    url: '/home/info',
+    url: '/api/home/info',
     method: 'get'
   });
 }
@@ -12,7 +12,7 @@ export function fetchGetHomeInfo() {
 /** get role list */
 export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.RoleList>({
-    url: '/roles',
+    url: '/api/roles',
     method: 'get',
     params
   });
@@ -21,7 +21,7 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
 /** get all roles */
 export function fetchGetAllRoles() {
   return request<Api.SystemManage.AllRole[]>({
-    url: '/roles/all-summary',
+    url: '/api/roles/all-summary',
     method: 'get'
   });
 }
@@ -29,7 +29,7 @@ export function fetchGetAllRoles() {
 /** get roles of user */
 export function fetchGetUserRoles(uid: number) {
   return request<Api.SystemManage.RoleList>({
-    url: `/users/roles`,
+    url: `/api/users/roles`,
     method: 'get',
     params: {
       uid
@@ -40,7 +40,7 @@ export function fetchGetUserRoles(uid: number) {
 /** get user list */
 export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
-    url: '/users',
+    url: '/api/users',
     method: 'get',
     params
   });
@@ -49,7 +49,7 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
 /** get all self project */
 export function fetchGetSelfAllProjects() {
   return request<CommonType.Option<number>[]>({
-    url: '/users/project-options',
+    url: '/api/users/project-options',
     method: 'get'
   });
 }
@@ -57,7 +57,7 @@ export function fetchGetSelfAllProjects() {
 /** get menu list */
 export function fetchGetMenuList(params?: Api.SystemManage.MenuSearchParams) {
   return request<Api.SystemManage.MenuList>({
-    url: '/menus',
+    url: '/api/menus',
     method: 'get',
     params
   });
@@ -66,7 +66,7 @@ export function fetchGetMenuList(params?: Api.SystemManage.MenuSearchParams) {
 /** get button list */
 export function fetchGetButtonList(params?: Api.SystemManage.ButtonSearchParams) {
   return request<Api.SystemManage.ButtonList>({
-    url: '/buttons',
+    url: '/api/buttons',
     method: 'get',
     params
   });
@@ -75,7 +75,7 @@ export function fetchGetButtonList(params?: Api.SystemManage.ButtonSearchParams)
 /** get api list */
 export function fetchGetApiList(params?: Api.SystemManage.ApiSearchParams) {
   return request<Api.SystemManage.ApiList>({
-    url: '/apis',
+    url: '/api/apis',
     method: 'get',
     params
   });
@@ -84,7 +84,7 @@ export function fetchGetApiList(params?: Api.SystemManage.ApiSearchParams) {
 /** get all pages */
 export function fetchGetAllPages() {
   return request<string[]>({
-    url: '/menus/all-pages',
+    url: '/api/menus/all-pages',
     method: 'get'
   });
 }
@@ -92,7 +92,7 @@ export function fetchGetAllPages() {
 /** get api tree */
 export function fetchGetApiTree() {
   return request<Api.SystemManage.ApiTree[]>({
-    url: '/apis/tree',
+    url: '/api/apis/tree',
     method: 'get'
   });
 }
@@ -100,7 +100,7 @@ export function fetchGetApiTree() {
 /** get api group */
 export function fetchGetApiGroups() {
   return request<string[]>({
-    url: '/apis/group',
+    url: '/api/apis/group',
     method: 'get'
   });
 }
@@ -108,7 +108,7 @@ export function fetchGetApiGroups() {
 /** get menu tree */
 export function fetchGetMenuTree() {
   return request<Api.SystemManage.MenuTree[]>({
-    url: '/menus/tree',
+    url: '/api/menus/tree',
     method: 'get'
   });
 }
@@ -116,7 +116,7 @@ export function fetchGetMenuTree() {
 /** get the menu for role binding */
 export function fetchGetRoleMenus(ids: number[]) {
   return request<number[]>({
-    url: '/roles/menus',
+    url: '/api/roles/menus',
     method: 'get',
     params: {
       ids
@@ -129,7 +129,7 @@ export function fetchGetRoleMenus(ids: number[]) {
 
 export function fetchGetRoleApis(ids: number[]) {
   return request<number[]>({
-    url: '/roles/apis',
+    url: '/api/roles/apis',
     method: 'get',
     params: {
       ids
@@ -142,7 +142,7 @@ export function fetchGetRoleApis(ids: number[]) {
 
 export function fetchGetRoleButtons(ids: number[]) {
   return request<number[]>({
-    url: '/roles/buttons',
+    url: '/api/roles/buttons',
     method: 'get',
     params: {
       ids
@@ -155,7 +155,7 @@ export function fetchGetRoleButtons(ids: number[]) {
 
 export function fetchGetRoleProjects(ids: number[]) {
   return request<number[]>({
-    url: '/roles/projects',
+    url: '/api/roles/projects',
     method: 'get',
     params: {
       ids
@@ -168,7 +168,7 @@ export function fetchGetRoleProjects(ids: number[]) {
 
 export function updateUserRoles(userId: number, roleIds: number[]) {
   return request({
-    url: '/users/bind-roles',
+    url: '/api/users/bind-roles',
     method: 'put',
     data: {
       userId,
@@ -179,7 +179,7 @@ export function updateUserRoles(userId: number, roleIds: number[]) {
 
 export function updateUser(data: Api.SystemManage.User) {
   return request({
-    url: '/users',
+    url: '/api/users',
     method: 'post',
     data
   });
@@ -187,7 +187,7 @@ export function updateUser(data: Api.SystemManage.User) {
 
 export function updateRole(data: Omit<Api.SystemManage.Role, 'status'>) {
   return request({
-    url: '/roles',
+    url: '/api/roles',
     method: 'post',
     data
   });
@@ -195,7 +195,7 @@ export function updateRole(data: Omit<Api.SystemManage.Role, 'status'>) {
 
 export function updateRoleRelation(data: Api.SystemManage.RoleRelation) {
   return request({
-    url: '/roles/bind',
+    url: '/api/roles/bind',
     method: 'put',
     data
   });
@@ -203,7 +203,7 @@ export function updateRoleRelation(data: Api.SystemManage.RoleRelation) {
 
 export function updateButton(buttons: Api.SystemManage.UpdateButtonParams[]) {
   return request({
-    url: '/buttons',
+    url: '/api/buttons',
     method: 'post',
     data: {
       buttons
@@ -213,7 +213,7 @@ export function updateButton(buttons: Api.SystemManage.UpdateButtonParams[]) {
 
 export function updateMenu(data: Api.SystemManage.Menu) {
   return request({
-    url: '/menus',
+    url: '/api/menus',
     method: 'post',
     data
   });
@@ -221,7 +221,7 @@ export function updateMenu(data: Api.SystemManage.Menu) {
 
 export function updateApi(data: Omit<Api.SystemManage.ApiModel, 'status'>) {
   return request({
-    url: '/apis',
+    url: '/api/apis',
     method: 'post',
     data
   });
@@ -229,7 +229,7 @@ export function updateApi(data: Omit<Api.SystemManage.ApiModel, 'status'>) {
 
 export function deleteUsers(ids: number[]) {
   return request({
-    url: '/users',
+    url: '/api/users',
     method: 'delete',
     data: {
       ids
@@ -239,7 +239,7 @@ export function deleteUsers(ids: number[]) {
 
 export function deleteRoles(ids: number[]) {
   return request({
-    url: '/roles',
+    url: '/api/roles',
     method: 'delete',
     data: {
       ids
@@ -249,7 +249,7 @@ export function deleteRoles(ids: number[]) {
 
 export function deleteMenus(ids: number[]) {
   return request({
-    url: '/menus',
+    url: '/api/menus',
     method: 'delete',
     data: {
       ids
@@ -259,7 +259,7 @@ export function deleteMenus(ids: number[]) {
 
 export function deleteApis(ids: number[]) {
   return request({
-    url: '/apis',
+    url: '/api/apis',
     method: 'delete',
     data: {
       ids
@@ -270,7 +270,7 @@ export function deleteApis(ids: number[]) {
 // 注意，这里的ids是菜单的ids
 export function deleteMenuButtons(ids: number[]) {
   return request({
-    url: '/buttons/menus',
+    url: '/api/buttons/menus',
     method: 'delete',
     data: {
       ids
@@ -296,7 +296,7 @@ export async function fetchGetUserRecordList(params: Api.SystemManage.UserRecord
     }
   }
   return request<Api.SystemManage.UserRecordList>({
-    url: '/users/history-action',
+    url: '/api/users/history-action',
     method: 'get',
     params
   });
@@ -305,7 +305,7 @@ export async function fetchGetUserRecordList(params: Api.SystemManage.UserRecord
 // 用户操作记录表有几个月可供查询
 export function fetchGetUserRecordMonths() {
   return request<Api.SystemManage.UserRecordMonthsResponse>({
-    url: '/users/history-month-exist',
+    url: '/api/users/history-month-exist',
     method: 'get'
   });
 }
@@ -313,7 +313,7 @@ export function fetchGetUserRecordMonths() {
 // 修改用户密码
 export function updateUserPassword(data: Api.SystemManage.UpdatePasswordParams) {
   return request({
-    url: '/users/password',
+    url: '/api/users/password',
     method: 'patch',
     data
   });

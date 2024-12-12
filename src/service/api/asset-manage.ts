@@ -4,7 +4,7 @@ import { request } from '../request';
 // 新增/修改 项目对象
 export function updateProject(data: Omit<Api.AssetManage.Project, 'status'>) {
   return request({
-    url: '/projects',
+    url: '/api/projects',
     method: 'post',
     data
   });
@@ -13,7 +13,7 @@ export function updateProject(data: Omit<Api.AssetManage.Project, 'status'>) {
 // 删除项目
 export function deleteProjects(ids: number[]) {
   return request({
-    url: '/projects',
+    url: '/api/projects',
     method: 'delete',
     data: {
       ids
@@ -24,7 +24,7 @@ export function deleteProjects(ids: number[]) {
 // 获取项目列表
 export function fetchGetProjectList(params?: Api.AssetManage.ProjectSearchParams) {
   return request<Api.AssetManage.ProjectList>({
-    url: '/projects',
+    url: '/api/projects',
     method: 'get',
     params
   });
@@ -33,7 +33,7 @@ export function fetchGetProjectList(params?: Api.AssetManage.ProjectSearchParams
 // 获取项目列表简要信息
 export function fetchAllProjects() {
   return request<Pick<Api.AssetManage.Project, 'id' | 'name'>[]>({
-    url: '/projects/all-summary',
+    url: '/api/projects/all-summary',
     method: 'get'
   });
 }
@@ -41,7 +41,7 @@ export function fetchAllProjects() {
 // 获取项目主机列表
 export function fetchGetProjectHosts(ids: number[]) {
   return request<number[]>({
-    url: '/projects/hosts',
+    url: '/api/projects/hosts',
     method: 'get',
     params: {
       ids
@@ -54,7 +54,7 @@ export function fetchGetProjectHosts(ids: number[]) {
 
 export function fetchGetProjectGames(ids: number[]) {
   return request<number[]>({
-    url: '/projects/games',
+    url: '/api/projects/games',
     method: 'get',
     params: {
       ids
@@ -67,7 +67,7 @@ export function fetchGetProjectGames(ids: number[]) {
 
 export function updateHost(data: Omit<Api.AssetManage.Host, 'status'>) {
   return request({
-    url: '/hosts',
+    url: '/api/hosts',
     method: 'post',
     data
   });
@@ -75,7 +75,7 @@ export function updateHost(data: Omit<Api.AssetManage.Host, 'status'>) {
 
 export function fetchGetHostList(params: Api.AssetManage.HostSearchParams) {
   return request<Api.AssetManage.HostList>({
-    url: '/hosts',
+    url: '/api/hosts',
     method: 'get',
     params
   });
@@ -83,7 +83,7 @@ export function fetchGetHostList(params: Api.AssetManage.HostSearchParams) {
 
 export function fetchAllHosts(id: number) {
   return request<Pick<Api.AssetManage.Host, 'id' | 'name' | 'ipv4' | 'ipv6'>[]>({
-    url: '/hosts/summary',
+    url: '/api/hosts/summary',
     method: 'get',
     params: {
       id
@@ -93,7 +93,7 @@ export function fetchAllHosts(id: number) {
 
 export function deleteHosts(ids: number[]) {
   return request({
-    url: '/hosts',
+    url: '/api/hosts',
     method: 'delete',
     data: {
       ids

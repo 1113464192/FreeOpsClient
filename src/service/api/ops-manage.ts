@@ -9,7 +9,7 @@ export function updateGame(
   }
 ) {
   return request({
-    url: '/games',
+    url: '/api/games',
     method: 'post',
     data
   });
@@ -18,7 +18,7 @@ export function updateGame(
 // 删除项目
 export function deleteGames(ids: number[]) {
   return request({
-    url: '/games',
+    url: '/api/games',
     method: 'delete',
     data: {
       ids
@@ -29,7 +29,7 @@ export function deleteGames(ids: number[]) {
 // 获取游戏列表
 export function fetchGetGameList(params?: Api.OpsManage.GameSearchParams) {
   return request<Api.OpsManage.GameList>({
-    url: '/games',
+    url: '/api/games',
     method: 'get',
     params
   });
@@ -38,7 +38,7 @@ export function fetchGetGameList(params?: Api.OpsManage.GameSearchParams) {
 // 新增/修改 操作模板
 export function updateTemplate(data: Omit<Api.OpsManage.Template, 'status'>) {
   return request({
-    url: '/ops/template',
+    url: '/api/ops/template',
     method: 'post',
     data
   });
@@ -47,7 +47,7 @@ export function updateTemplate(data: Omit<Api.OpsManage.Template, 'status'>) {
 // 删除操作模板
 export function deleteTemplates(ids: number[]) {
   return request({
-    url: '/ops/template',
+    url: '/api/ops/template',
     method: 'delete',
     data: {
       ids
@@ -58,7 +58,7 @@ export function deleteTemplates(ids: number[]) {
 // 获取操作模板列表
 export function fetchGetTemplateList(params?: Api.OpsManage.TemplateSearchParams) {
   return request<Api.OpsManage.TemplateList>({
-    url: '/ops/template',
+    url: '/api/ops/template',
     method: 'get',
     params
   });
@@ -67,7 +67,7 @@ export function fetchGetTemplateList(params?: Api.OpsManage.TemplateSearchParams
 // 关联操作模板参数模板
 export function updateTemPlateParams(data: Api.OpsManage.BindTemplateParam) {
   return request({
-    url: '/ops/bind-template-params',
+    url: '/api/ops/bind-template-params',
     method: 'put',
     data
   });
@@ -76,7 +76,7 @@ export function updateTemPlateParams(data: Api.OpsManage.BindTemplateParam) {
 // 查看操作模板关联的参数模板
 export function fetchGetTemplateParams(id: number) {
   return request<Array<Omit<Api.OpsManage.ParamTemplate, 'status'>>>({
-    url: '/ops/template-params',
+    url: '/api/ops/template-params',
     method: 'get',
     params: {
       id
@@ -87,7 +87,7 @@ export function fetchGetTemplateParams(id: number) {
 // 新增/修改 参数模板
 export function updateParamTemplate(data: Omit<Api.OpsManage.ParamTemplate, 'status'>) {
   return request({
-    url: '/ops/param-template',
+    url: '/api/ops/param-template',
     method: 'post',
     data
   });
@@ -96,7 +96,7 @@ export function updateParamTemplate(data: Omit<Api.OpsManage.ParamTemplate, 'sta
 // 删除参数模板
 export function deleteParamTemplates(ids: number[]) {
   return request({
-    url: '/ops/param-template',
+    url: '/api/ops/param-template',
     method: 'delete',
     data: {
       ids
@@ -107,7 +107,7 @@ export function deleteParamTemplates(ids: number[]) {
 // 获取参数模板列表
 export function fetchGetParamTemplateList(params?: Api.OpsManage.ParamTemplateSearchParams) {
   return request<Api.OpsManage.ParamTemplateList>({
-    url: '/ops/param-template',
+    url: '/api/ops/param-template',
     method: 'get',
     params
   });
@@ -116,7 +116,7 @@ export function fetchGetParamTemplateList(params?: Api.OpsManage.ParamTemplateSe
 // 新增/修改 操作任务
 export function updateTask(data: Omit<Api.OpsManage.Task, 'status' | 'projectName' | 'hostName'>) {
   return request({
-    url: '/ops/task',
+    url: '/api/ops/task',
     method: 'post',
     data
   });
@@ -125,7 +125,7 @@ export function updateTask(data: Omit<Api.OpsManage.Task, 'status' | 'projectNam
 // 删除任务
 export function deleteTasks(ids: number[]) {
   return request({
-    url: '/ops/task',
+    url: '/api/ops/task',
     method: 'delete',
     data: {
       ids
@@ -136,7 +136,7 @@ export function deleteTasks(ids: number[]) {
 // 获取任务列表
 export function fetchGetTaskList(params?: Api.OpsManage.TaskSearchParams) {
   return request<Api.OpsManage.TaskList>({
-    url: '/ops/task',
+    url: '/api/ops/task',
     method: 'get',
     params
   });
@@ -145,7 +145,7 @@ export function fetchGetTaskList(params?: Api.OpsManage.TaskSearchParams) {
 // 提交执行任务
 export function submitTask(data: Api.OpsManage.SubmitTask) {
   return request({
-    url: '/ops/submit-task',
+    url: '/api/ops/submit-task',
     method: 'post',
     data
   });
@@ -154,7 +154,7 @@ export function submitTask(data: Api.OpsManage.SubmitTask) {
 // 运行任务检查脚本
 export function runTaskCheckScript(taskId: number, execContent: string) {
   return request<Array<Api.Common.SSHResult>>({
-    url: '/ops/run-task-check-script',
+    url: '/api/ops/run-task-check-script',
     method: 'post',
     data: {
       taskId,
@@ -166,7 +166,7 @@ export function runTaskCheckScript(taskId: number, execContent: string) {
 // 获取根据模板与运营执行需求内容生成的命令
 export function fetchGetTaskCommand(templateIds: number[], execContent: string) {
   return request<string[]>({
-    url: '/ops/commands',
+    url: '/api/ops/commands',
     method: 'post',
     data: {
       templateIds,
@@ -178,7 +178,7 @@ export function fetchGetTaskCommand(templateIds: number[], execContent: string) 
 // 查询用户待审批的任务
 export function fetchGetUserTaskPending(params?: Api.OpsManage.GetUserTaskPendingReq) {
   return request<Api.OpsManage.TaskLogList>({
-    url: '/ops/task-pending',
+    url: '/api/ops/task-pending',
     method: 'get',
     params
   });
@@ -187,7 +187,7 @@ export function fetchGetUserTaskPending(params?: Api.OpsManage.GetUserTaskPendin
 // 用户审批任务
 export function approveOpsTask(data: Api.OpsManage.ApproveOpsTaskReq) {
   return request({
-    url: '/ops/approve-task',
+    url: '/api/ops/approve-task',
     method: 'put',
     data
   });
@@ -196,7 +196,7 @@ export function approveOpsTask(data: Api.OpsManage.ApproveOpsTaskReq) {
 // 查询已结束的任务日志
 export function fetchGetOpsTaskLog(params?: Api.OpsManage.TaskLogSearchParams) {
   return request<Api.OpsManage.TaskLogList>({
-    url: '/ops/task-log',
+    url: '/api/ops/task-log',
     method: 'get',
     params
   });
@@ -205,7 +205,7 @@ export function fetchGetOpsTaskLog(params?: Api.OpsManage.TaskLogSearchParams) {
 // 实时查看运行中的任务
 export function fetchGetOpsTaskRunningWS() {
   return request({
-    url: '/ops/task-running-ws',
+    url: '/api/ops/task-running-ws',
     method: 'get'
   });
 }
