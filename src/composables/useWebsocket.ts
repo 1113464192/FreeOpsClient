@@ -99,8 +99,8 @@ export function useWebSocket(url: string, onMessage: (data: any) => void) {
   });
 
   return {
-    socket,
-    isConnected,
+    socket: ref(socket.value), // 确保返回的 socket 是 ref
+    isConnected: ref(isConnected.value), // 确保返回的 isConnected 是 ref
     connectWebSocket,
     closeWebSocket
   };
