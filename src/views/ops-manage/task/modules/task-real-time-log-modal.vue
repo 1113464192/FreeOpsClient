@@ -21,7 +21,7 @@ let closeWebSocket: () => void;
 
 function createTaskReadTimeDataWebSocket() {
   const { VITE_SERVICE_BASE_URL } = import.meta.env;
-  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}ops/task-running-ws`;
+  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}api/ops/task-running-ws`;
   const { closeWebSocket: close } = useWebSocket(wsUrl, data => {
     taskData.value = data;
   });

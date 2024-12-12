@@ -7,6 +7,7 @@ import { useRouterPush } from '@/hooks/common/router';
 import { fetchGetUserInfo, fetchLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
+import { customInit } from '@/composables';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -101,7 +102,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
     if (pass) {
       token.value = loginToken.token;
-
+      customInit();
       return true;
     }
 
@@ -126,6 +127,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
     if (hasToken) {
       const pass = await getUserInfo();
+      customInit();
 
       if (!pass) {
         resetStore();

@@ -5,8 +5,13 @@ import { useWebSocket } from './';
 const webSocketInstance = ref<any>(null); // 保存 WebSocket 实例
 
 function initCheckTaskApprove() {
+  if (webSocketInstance.value?.isConnected.value) {
+    console.log('WebSocket 已经连接，不需要重新初始化');
+    return;
+  }
+
   const { VITE_SERVICE_BASE_URL } = import.meta.env;
-  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}ops/task-need-approve`;
+  const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}api/ops/task-need-approve`;
   webSocketInstance.value = useWebSocket(wsUrl, data => {
     const hasTaskNeedApprove = data === true;
     if (hasTaskNeedApprove) {
