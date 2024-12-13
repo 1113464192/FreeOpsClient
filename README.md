@@ -1,179 +1,147 @@
-<div align="center">
-	<img src="./public/favicon.svg" width="160" />
-	<h1>SoybeanAdmin</h1>
-  <span>English | <a href="./README.zh_CN.md">中文</a></span>
-</div>
+# 欢迎来到FreeOps!
+> 这里是前端代码
 
----
+[后端代码入口](https://github.com/1113464192/FreeOpsServer)
 
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![github stars](https://img.shields.io/github/stars/soybeanjs/soybean-admin)](https://github.com/soybeanjs/soybean-admin)
-[![github forks](https://img.shields.io/github/forks/soybeanjs/soybean-admin)](https://github.com/soybeanjs/soybean-admin)
-[![gitee stars](https://gitee.com/honghuangdc/soybean-admin/badge/star.svg)](https://gitee.com/honghuangdc/soybean-admin)
+FreeOps是一个功能齐全的运维自动化平台，只需要接入运维入口脚本即可使用，涵盖有基本的RBAC、每个用户的操作记录、项目管理、服务器管理、云平台同步操作、工单审批、游戏服管理、操作模板管理、模板参数管理、任务管理、任务日志等
+基本上一个公司所需要的运维自动化业务，这里都能涵盖~
+>精力有限，如果后续有人关注到，再补webssh、CI等功能(后端已实现)
 
-<a href="https://hellogithub.com/repository/1298f27d5fe54959a16cf9686516ddb3" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=1298f27d5fe54959a16cf9686516ddb3&claim_uid=IiDXWmP4TEntjbV" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+## 功能细节补充
+> 普通用户(只有get权限且无法查看操作记录)
+> 
+> 账密
+> 
+> normal1
+> 
+> normal1_123456
 
+[项目展示](http://106.52.66.254:81/)
 
-> [!NOTE]
-> If you think `SoybeanAdmin` is helpful to you, or you like our project, please give us a ⭐️ on GitHub. Your support is the driving force for us to continue to improve and add new features! Thank you for your support!
+[后端接口展示](http://106.52.66.254:9080/swagger/index.html#/)
 
-## Introduction
+> RBAC等常见功能就忽略了，只介绍运维功能
+### 用户操作记录
+包含所有请求与返回，防止单表过大做了水平分表处理。
+### 项目管理
+有字段限制每个服务器限制部署的 服数/Mem，接入运维脚本后，可以在该页面直接 创建云项目 以及 同步云平台 的项目信息
+单项目单平台也可以多项目单平台
+> 如果单项目单平台，可以将对应服务器的运维管理机设置为127.0.0.1
+### 服务器管理
+接入运维脚本后，可以在该页面选择服务器数量进行购买
+### 模板参数管理
+根据运营从PHP处生成的执行内容，取出关键字对应的内容，映射到关联模板命令的变量，避免了人工修改变量出错风险
+### 任务管理
+可以关联模板顺序，选择主机(可选择内网执行or外网IP执行)，可选择按顺序执行or多模板同时执行，在执行前还可以选择增删用审批人与命令，如果不设置审批人，则直接执行。
+有任务执行时可以点开modal查看任务实时进度。
+### 审批任务
+包含提交人、运营从PHP处生成的执行内容、检查脚本返回的检查内容、待执行的命令、执行的管理机IP 等关键信息
+### 任务日志
+任务日志除了基本的每个命令的返回内容与SSH返回码，还包含提交人、运营从PHP处生成的执行内容、运维检查脚本返回的检查内容、审批人等关键信息
+## 部署方式
+### 环境依赖
+#### 前端
 
-[`SoybeanAdmin`](https://github.com/soybeanjs/soybean-admin) is a clean, elegant, beautiful and powerful admin template, based on the latest front-end technology stack, including Vue3, Vite5, TypeScript, Pinia and UnoCSS. It has built-in rich theme configuration and components, strict code specifications, and an automated file routing system. In addition, it also uses the online mock data solution based on ApiFox. `SoybeanAdmin` provides you with a one-stop admin solution, no additional configuration, and out of the box. It is also a best practice for learning cutting-edge technologies quickly.
+ - node-v18.20.3
 
+#### 后端
 
-## Features
+ - mysql8.0+/mariadb:11.2
+ - go-1.21.7
 
-- **Cutting-edge technology application**: using the latest popular technology stack such as Vue3, Vite5, TypeScript, Pinia and UnoCSS.
-- **Clear project architecture**: using pnpm monorepo architecture, clear structure, elegant and easy to understand.
-- **Strict code specifications**: follow the [SoybeanJS specification](https://docs.soybeanjs.cn/standard), integrate eslint, prettier and simple-git-hooks to ensure the code is standardized.
-- **TypeScript**: support strict type checking to improve code maintainability.
-- **Rich theme configuration**: built-in a variety of theme configurations, perfectly integrated with UnoCSS.
-- **Built-in internationalization solution**: easily realize multi-language support.
-- **Automated file routing system**: automatically generate route import, declaration and type. For more details, please refer to [Elegant Router](https://github.com/soybeanjs/elegant-router).
-- **Flexible permission routing**: support both front-end static routing and back-end dynamic routing.
-- **Rich page components**: built-in a variety of pages and components, including 403, 404, 500 pages, as well as layout components, tag components, theme configuration components, etc.
-- **Command line tool**: built-in efficient command line tool, git commit, delete file, release, etc.
-- **Mobile adaptation**: perfectly support mobile terminal to realize adaptive layout.
-
-
-## Version
-
-- **NaiveUI Version:**
-  - [Preview Link](https://naive.soybeanjs.cn/)
-  - [Github Repository](https://github.com/soybeanjs/soybean-admin)
-  - [Gitee Repository](https://gitee.com/honghuangdc/soybean-admin)
-
-- **AntDesignVue Version:**
-  - [Preview Link](https://antd.soybeanjs.cn/)
-  - [Github Repository](https://github.com/soybeanjs/soybean-admin-antd)
-  - [Gitee Repository](https://gitee.com/honghuangdc/soybean-admin-antd)
-
-- **Legacy Version:**
-  - [Preview Link](https://legacy.soybeanjs.cn/)
-  - [Github Repository](https://github.com/soybeanjs/soybean-admin/tree/legacy)
+> P.S：go用1.19试过也可以，没有特殊库绝大多数版本应该通用，Mysql也没有使用特殊字段类型
 
 
-## Documentation
+> 部署上述所需环境，然后假设git clone到/data目录下
+### 后端
+#### 数据库
+> 此处以mariadb举例，使用docker便于示例
+> 
+> 可以将mariadb换成mysql
+##### vim /data/mariadb-docker.yaml 
 
-- [Link](https://docs.soybeanjs.cn)
-- [Legacy Docs](https://legacy-docs.soybeanjs.cn)
+    version: '3'
+    services:
+      db:
+        image: "mariadb:11.2"
+        ports:
+          - "3306:3306"
+        volumes:
+          - /data/mariadb-11.2/data:/var/lib/mysql
+        environment:
+          TIME_ZONE: Asia/Shanghai
+          MYSQL_ROOT_PASSWORD: "yourPassword"
+##### docker-compose -f mariadb-docker.yaml up -d
+##### 健康检查
+    docker ps
+#### 启动后端服务
+> 配置好configs/config.yaml的mysql/mariadb路径
 
-## Example Images
+    cd /data/FreeOpsServer/ && go run main.go
+    // 如果能启动，则Crtrl+C关闭，然后执行编译
+    go build -o FreeOpsServer main.go
+    后台启动(二选一)：nohup ./FreeOpsServer > /dev/null 2>&1 &
+    前台启动(二选一)：./FreeOpsServer
+    docker cp /data/FreeOpsServer/init.sql yourDockerContainerID:/tmp/init.sql
+    docker exec -it yourDockerContainerID bash
+    mariadb -uroot -p'yourDBPassword' yourDatabaseName < /tmp/init.sql
 
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-01.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-02.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-03.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-04.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-05.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-06.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-07.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-08.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-09.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-10.png)
-![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-mobile.png)
+### 前端
+> 配置好.env*的对应后端url后
 
+    cd /data/FreeOpsClient && npm install -g pnpm
+    pnpm i
+    pnpm run build
+### Nginx
+#### 部署
+    apt install nginx
+#### vim /etc/nginx/conf.d/freeOps.conf 
 
-## Usage
+    server { 
+            listen 80;
+            server_name yourAdmin;
+            proxy_buffer_size 64k;
+            proxy_buffers   32 32k;
+            proxy_busy_buffers_size 128k;
+            access_log /var/log/nginx/freeops.log;
+            error_log /var/log/nginx/freeops_error.log;            
+            location / { 
+                root /data/FreeOpsClient/dist;
+                index  index.html index.htm;
+                try_files $uri $uri/ /index.html;
+            } 
+    	location /api/ {
+                proxy_pass http://127.0.0.1:9080;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;    # WebSocket 协议升级
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            
+                # CORS 支持
+                add_header 'Access-Control-Allow-Origin' $http_origin;
+                add_header 'Access-Control-Allow-Credentials' 'true';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,web-token,app-token,Authorization,Accept,Origin,Keep-Alive,User-Agent,X-Mx-ReqToken,X-Data-Type,X-Auth-Token,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,x-request-id';
+                add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+            }
+    }
+#### 刷新
+    nginx -t && nginx -s reload
 
-**Environment Preparation**
+    
 
-Make sure your environment meets the following requirements:
-
-- **git**: you need git to clone and manage project versions.
-- **NodeJS**: >=18.12.0, recommended 18.19.0 or higher.
-- **pnpm**: >= 8.7.0, recommended 8.14.0 or higher.
-
-**Clone Project**
-
-```bash
-git clone https://github.com/soybeanjs/soybean-admin.git
-```
-
-**Install Dependencies**
-
-```bash
-pnpm i
-```
-> Since this project uses the pnpm monorepo management method, please do not use npm or yarn to install dependencies.
-
-**Start Project**
-
-```bash
-pnpm dev
-```
-
-**Build Project**
-
-```bash
-pnpm build
-```
-
-## Ecosystem
-
-- [electron-mock-admin](https://github.com/lixin59/electron-mock-api): A Mock Api management system that helps front-end developers quickly implement interface mocks.
-- [T-Shell](https://github.com/TheBlindM/T-Shell): A terminal emulator and SSH client with configurable command prompts.
-- [pea](https://github.com/haitang1894/pea) : Adopting SpringBoot3.2 + JDK21, MyBatis-Plus, SpringSecurity security framework, etc., suitable for the simple permission system developed by [soybean-admin](https://gitee.com/honghuangdc/soybean-admin).
-- [MalusAdmin](https://github.com/pridejoy/MalusAdmin): A backend management framework developed based on Vue3/TypeScript/NaiveUI and NET7 & Sqlsugar. It is implemented in the most original and simplest way, with a fresh and elegant front-end, a clear and elegant backend structure, and powerful functions.
-- [PanisAdmin](https://github.com/paynezhuang/panis-admin): Adopting SpringBoot 3, SaToken, MySQL and other frameworks to develop and modify [soybean-admin](https://github.com/soybeanjs/soybean-admin) for the second time, adapting dynamic menu/button-level authorization. Retaining the original flavor, fresh and elegant, high-value back-end management system scaffold.
-- [snail-job](https://github.com/aizuda/snail-job): A distributed task retry and task scheduling platform with "high performance, high value and high activity".
-- [SuperApi](https://github.com/TmmTop/SuperApi): Quickly turn your idea into an online stable product! Entity-less library and table building, add, delete, change and check entity-less library table, support 15 kinds of condition query, as well as paging, list, unlimited tree list and other functions of the API deployment! With interface documentation, Auth authorisation, interface flow restriction, access to the client's real IP, advanced server caching components, dynamic APIs and other features, we look forward to your experience!
-- [FastSoyAdmin](https://github.com/sleep1223/fast-soy-admin): A modern Management Platform based on FastAPI+Vue3+Naive UI.
+    
+    
 
 
-## How to Contribute
 
-We warmly welcome and appreciate all forms of contributions. If you have any ideas or suggestions, please feel free to share them by submitting [pull requests](https://github.com/soybeanjs/soybean-admin/pulls) or creating GitHub [issue](https://github.com/soybeanjs/soybean-admin/issues/new).
+ 
 
-## Git Commit Guidelines
+## 联系我
+ 如果在二开/学习过程中有疑问，可以联系邮箱：fqh1113464192@gmail.com
+ 因为这也是我初次从0手搓运维平台，如果有意见或者批评也可以联系我，看到就会回。
+ 辛苦看到这里！！再次感谢！
+ 
 
-This project has built-in `commit` command, you can execute `pnpm commit` to generate commit information that conforms to [Conventional Commits](https://www.conventionalcommits.org/) specification. When submitting PR, please be sure to use `commit` command to create commit information to ensure the standardization of information.
-
-## Browser Support
-
-It is recommended to use the latest version of Chrome in development for a better experience.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png" alt="IE" width="24px" height="24px"  />](http://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/) |
-| --- | --- | --- | --- | --- |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-## OpenSource Author
-
-[Soybean](https://github.com/honghuangdc)
-
-## Contributors
-
-Thanks the following people for their contributions. If you want to contribute to this project, please refer to [How to Contribute](#how-to-contribute).
-
-<a href="https://github.com/soybeanjs/soybean-admin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=soybeanjs/soybean-admin" />
-</a>
-
-## Communication
-
-`SoybeanAdmin` is a completely open source and free project, helping developers to develop medium and large-scale management systems more conveniently. It also provides WeChat and QQ communication groups. If you have any questions, please feel free to ask in the group.
-
-  <div>
-  	<p>QQ Group</p>
-    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/qq-soybean-admin-2.jpg" style="width:200px" />
-  </div>
-	<!-- <div>
-		<p>WeChat Group</p>
-		<img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/picgo/soybean-admin-wechat-0620.jpg" style="width:200px" />
-	</div> -->
-	<div>
-		<p>Add the following WeChat to invite to the WeChat group</p>
-		<img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/wechat-soybeanjs.jpg" style="width:200px" />
-	</div>
-  <div>
-    <p>Add Soybean's WeChat for business consultation, cooperation, project architecture, one-on-one guidance, etc.</p>
-    <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/wechat-soybean.jpg" style="width:200px" />
-  </div>
-
-## Star Trend
-
-[![Star History Chart](https://api.star-history.com/svg?repos=soybeanjs/soybean-admin&type=Date)](https://star-history.com/#soybeanjs/soybean-admin&Date)
-
-## License
-
-This project is based on the [MIT © 2021 Soybean](./LICENSE) protocol, for learning purposes only, please retain the author's copyright information for commercial use, the author does not guarantee and is not responsible for the software.
