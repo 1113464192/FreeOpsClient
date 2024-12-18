@@ -7,7 +7,7 @@
 
 FreeOps是一个功能齐全的运维自动化平台，只需要接入运维入口脚本即可使用，涵盖有基本的RBAC、每个用户的操作记录、项目管理、服务器管理、云平台同步操作、工单审批、游戏服管理、操作模板管理、模板参数管理、任务管理、任务日志等
 基本上一个公司所需要的运维自动化业务，这里都能涵盖~
->精力有限，如果后续有人关注到，再补CI等功能(后端已实现)
+>精力有限，如果后续有人关注到，再补webssh、CI等功能(后端已实现)
 
 ## 功能特性
 > 普通用户(只有get权限且无法查看操作记录)
@@ -77,11 +77,14 @@ FreeOps是一个功能齐全的运维自动化平台，只需要接入运维入�
         environment:
           TIME_ZONE: Asia/Shanghai
           MYSQL_ROOT_PASSWORD: "yourPassword"
-##### docker-compose -f mariadb-docker.yaml up -d
+##### 启动数据库
+    docker-compose -f mariadb-docker.yaml up -d
 ##### 健康检查
     docker ps
+##### 创建数据库
+    docker exec -it yourDockerContainerID mariadb -uyourUser -p'yourPassword' -e "CREATE DATABASE yourDatabaseName CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 #### 启动后端服务
-> 配置好configs/config.yaml的mysql/mariadb路径
+> 配置好configs/config.yaml，尤其是mysql/mariadb路径
 
     cd /data/FreeOpsServer/ && go run main.go
     // 如果能启动，则Crtrl+C关闭，然后执行编译
@@ -93,7 +96,7 @@ FreeOps是一个功能齐全的运维自动化平台，只需要接入运维入�
     mariadb -uroot -p'yourDBPassword' yourDatabaseName < /tmp/init.sql
 
 ### 前端
-> 配置好.env*的对应后端url后
+> 配置好.env*的对应后端url
 
     cd /data/FreeOpsClient && npm install -g pnpm
     pnpm i
@@ -149,5 +152,3 @@ FreeOps是一个功能齐全的运维自动化平台，只需要接入运维入�
  如果在二开/学习过程中有疑问，可以联系邮箱：fqh1113464192@gmail.com
  因为这也是我初次从0手搓运维平台，如果有意见或者批评也可以联系我，看到就会回。
  辛苦看到这里！！再次感谢！
-
-
