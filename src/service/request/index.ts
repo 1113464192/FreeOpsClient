@@ -4,11 +4,47 @@ import { useAuthStore } from '@/store/modules/auth';
 import { $t } from '@/locales';
 import { localStg } from '@/utils/storage';
 import { getServiceBaseURL } from '@/utils/service';
+import { router } from '@/router';
 import { handleRefreshToken, showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
 
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
 const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
+
+function handleHttpError(status: number) {
+  switch (status) {
+    case 403:
+      router.push({ name: 'exception_403' });
+      break;
+    case 404:
+      router.push({ name: 'exception_404' });
+      break;
+    case 500:
+      router.push({ name: 'exception_500' });
+      break;
+    default:
+      break;
+  }
+}
+
+function handleBackendError(error: any) {
+  let message = error.message;
+  let backendErrorCode = '';
+
+  if (error.code === BACKEND_ERROR_CODE || error.response?.data?.code === BACKEND_ERROR_CODE) {
+    message = `${error.response?.data?.msg}   ${error.message}`;
+    backendErrorCode = error.response?.data?.code || '';
+  }
+
+  return { message, backendErrorCode };
+}
+
+function shouldSkipError(backendErrorCode: string) {
+  const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
+  const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
+
+  return modalLogoutCodes.includes(backendErrorCode) || expiredTokenCodes.includes(backendErrorCode);
+}
 
 export const request = createFlatRequest<App.Service.Response, RequestInstanceState>(
   {
@@ -100,29 +136,21 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       return response.data.data;
     },
     onError(error) {
-      // when the request is fail, you can show error message
-
-      let message = error.message;
-      let backendErrorCode = '';
-
-      // get backend error message and code
-      if (error.code === BACKEND_ERROR_CODE || error.response?.data?.code === BACKEND_ERROR_CODE) {
-        message = `${error.response?.data?.msg}   ${error.message}`;
-        backendErrorCode = error.response?.data?.code || '';
-      }
-
-      // the error message is displayed in the modal
-      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(backendErrorCode)) {
+      // handle HTTP status errors
+      if (error.response?.status) {
+        handleHttpError(error.response.status);
         return;
       }
 
-      // when the token is expired, refresh token and retry request, so no need to show error message
-      const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
-      if (expiredTokenCodes.includes(backendErrorCode)) {
+      // handle backend errors
+      const { message, backendErrorCode } = handleBackendError(error);
+
+      // check if the error should be skipped
+      if (shouldSkipError(backendErrorCode)) {
         return;
       }
 
+      // show error message
       showErrorMsg(request.state, message);
     }
   }
