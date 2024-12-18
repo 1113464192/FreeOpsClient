@@ -74,6 +74,12 @@ importers:
       win-node-env:
         specifier: ^0.6.1
         version: 0.6.1
+      xterm:
+        specifier: ^4.4.0
+        version: 4.19.0
+      xterm-addon-fit:
+        specifier: ^0.8.0
+        version: 0.8.0(xterm@4.19.0)
     devDependencies:
       '@elegant-router/vue':
         specifier: 0.3.7
@@ -4695,6 +4701,16 @@ packages:
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
     engines: {node: '>=12'}
+
+  xterm-addon-fit@0.8.0:
+    resolution: {integrity: sha512-yj3Np7XlvxxhYF/EJ7p3KHaMt6OdwQ+HDu573Vx1lRXsVxOcnVJs51RgjZOouIZOczTsskaS+CpXspK81/DLqw==}
+    deprecated: This package is now deprecated. Move to @xterm/addon-fit instead.
+    peerDependencies:
+      xterm: ^5.0.0
+
+  xterm@4.19.0:
+    resolution: {integrity: sha512-c3Cp4eOVsYY5Q839dR5IejghRPpxciGmLWWaP9g+ppfMeBChMeLa1DCA+pmX/jyDZ+zxFOmlJL/82qVdayVoGQ==}
+    deprecated: This package is now deprecated. Move to @xterm/xterm instead.
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -9739,6 +9755,12 @@ snapshots:
   xdg-basedir@5.1.0: {}
 
   xml-name-validator@4.0.0: {}
+
+  xterm-addon-fit@0.8.0(xterm@4.19.0):
+    dependencies:
+      xterm: 4.19.0
+
+  xterm@4.19.0: {}
 
   y18n@5.0.8: {}
 

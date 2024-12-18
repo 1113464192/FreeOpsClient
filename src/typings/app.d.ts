@@ -703,6 +703,9 @@ declare namespace App {
             commonTotal: string;
             buyHost: string;
             buyHostCount: string;
+            webSSH: string;
+            webSSHTips1: string;
+            webSSHTips2: string;
             form: {
               name: string;
               ipv4: string;

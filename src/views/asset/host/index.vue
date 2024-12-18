@@ -5,14 +5,21 @@ import { deleteHosts, fetchGetHostList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
+import { useAuth } from '@/hooks/business/auth';
 import HostOperateDrawer from './modules/host-operate-drawer.vue';
 import HostSearch from './modules/host-search.vue';
 import BuyHostModal from './modules/buy-host-modal.vue';
+import WebSSHModal from './modules/webSSHModal.vue';
+
+let hid = 0;
 
 const appStore = useAppStore();
 
-const { bool: buyHostModalVisible, setTrue: openBuyHostModal, setFalse: closeBuyHostModal } = useBoolean();
+const { hasAuth } = useAuth();
 
+const { bool: buyHostModalVisible, setTrue: openBuyHostModal, setFalse: closeBuyHostModal } = useBoolean();
+const { bool: webSSHVisible, setTrue: openWebSSHModal } = useBoolean();
+const hasWebSSHAuth = hasAuth('webssh');
 const {
   columns,
   columnChecks,
@@ -147,9 +154,14 @@ const {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 100,
+      width: 260,
       render: row => (
         <div class="flex-center gap-8px">
+          {hasWebSSHAuth && (
+            <NButton type="warning" ghost size="small" onClick={() => openWebSSH(row.id)}>
+              {$t('page.asset.host.webSSH')}
+            </NButton>
+          )}
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
             {$t('common.edit')}
           </NButton>
@@ -211,6 +223,11 @@ function buyHostSuccess() {
   closeBuyHostModal();
   getDataByPage();
 }
+
+function openWebSSH(id: number) {
+  hid = id;
+  openWebSSHModal();
+}
 </script>
 
 <template>
@@ -239,7 +256,7 @@ function buyHostSuccess() {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="1882"
+        :scroll-x="2042"
         :loading="loading"
         remote
         :row-key="row => row.id"
@@ -253,6 +270,7 @@ function buyHostSuccess() {
         @submitted="getDataByPage"
       />
       <BuyHostModal v-model:visible="buyHostModalVisible" @submitted="buyHostSuccess" />
+      <WebSSHModal v-model:visible="webSSHVisible" :hid="hid" />
     </NCard>
   </div>
 </template>

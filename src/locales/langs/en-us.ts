@@ -436,7 +436,7 @@ const local: App.I18n.Schema = {
         multiTab: 'Multi Tab',
         fixedIndexInTab: 'Fixed Index In Tab',
         query: 'Query Params',
-        button: 'Button(If modified, rebind the role)',
+        button: 'Create Button(If modified, rebind the role)',
         props: 'Props',
         assignProps: 'assignProps(if null, Default path args)',
         buttonCode: 'Button Code',
@@ -542,6 +542,11 @@ const local: App.I18n.Schema = {
         commonTotal: 'Host Common Count',
         buyHost: 'Buy Host',
         buyHostCount: 'Buy Host Count',
+        webSSH: 'webSSH',
+        webSSHTips1:
+          'If the development user does not have a personal key or uses jumpserver, the user and key in the freeOPS configuration file are used by default (only ls, less permissions are provided, which is more secure. Here, all users are provided for display, so only cd permissions are provided)',
+        webSSHTips2:
+          'If you log in with a key, you can change it to automatically obtain the key field of the current user (the backend provides an interface to write the key) to prevent other users from impersonating',
         form: {
           name: 'Please enter host name',
           ipv4: 'Please enter IPv4',

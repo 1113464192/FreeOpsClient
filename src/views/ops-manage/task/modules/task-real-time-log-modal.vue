@@ -27,10 +27,10 @@ function createTaskReadTimeDataWebSocket() {
     isConnected,
     connectWebSocket,
     closeWebSocket: close
-  } = useWebSocket(wsUrl, data => {
+  } = useWebSocket(wsUrl, '', data => {
     taskData.value = data;
   });
-  if (!isConnected.value && socket.value === null) {
+  if (!isConnected.value && socket.value?.readyState !== WebSocket.OPEN) {
     connectWebSocket();
   }
   closeWebSocket = close;

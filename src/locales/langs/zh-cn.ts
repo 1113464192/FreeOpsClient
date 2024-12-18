@@ -434,7 +434,7 @@ const local: App.I18n.Schema = {
         multiTab: '支持多页签',
         fixedIndexInTab: '固定在页签中的序号',
         query: '路由参数',
-        button: '按钮(有修改需要重新绑定角色)',
+        button: '创建按钮(有修改需要重新绑定角色)',
         props: '传递属性',
         assignProps: '指定属性传递(为空则默认路径参数)',
         buttonCode: '按钮编码',
@@ -540,6 +540,10 @@ const local: App.I18n.Schema = {
         commonTotal: '公共服数量',
         buyHost: '买服务器',
         buyHostCount: '买服务器总数',
+        webSSH: 'webSSH',
+        webSSHTips1:
+          '假设开发用户没个人密钥或使用jumpserver，就在这默认使用freeOPS配置文件的用户与密钥(只提供ls、less等权限比较安全，这里为了展示提供所有用户，所以只提供cd权限)',
+        webSSHTips2: '如果按密钥登录，可改为自动获取当前用户的密钥字段(后端有提供写入密钥的接口)，防止冒用其它user',
         form: {
           name: '请输入服务器名',
           ipv4: '请输入ipv4',

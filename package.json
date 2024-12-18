@@ -67,7 +67,9 @@
     "vue-draggable-plus": "0.5.0",
     "vue-i18n": "9.13.1",
     "vue-router": "4.4.0",
-    "win-node-env": "^0.6.1"
+    "win-node-env": "^0.6.1",
+    "xterm": "^4.4.0",
+    "xterm-addon-fit": "^0.8.0"
   },
   "devDependencies": {
     "@elegant-router/vue": "0.3.7",

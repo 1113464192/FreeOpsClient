@@ -9,7 +9,7 @@ function initCheckTaskApprove() {
     console.log('WebSocket 未初始化，开始创建实例');
     const { VITE_SERVICE_BASE_URL } = import.meta.env;
     const wsUrl = `${VITE_SERVICE_BASE_URL.replace(/^http(s)?:/, 'ws$1:')}api/ops/task-need-approve`;
-    webSocketInstance.value = useWebSocket(wsUrl, data => {
+    webSocketInstance.value = useWebSocket(wsUrl, '', data => {
       const hasTaskNeedApprove = data === true;
       if (hasTaskNeedApprove) {
         window.$notification?.success({
