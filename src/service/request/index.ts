@@ -137,7 +137,10 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     },
     onError(error) {
       // handle HTTP status errors
-      if (error.response?.status) {
+      if (
+        error.response?.status &&
+        (error.response.status === 403 || error.response.status === 404 || error.response.status === 500)
+      ) {
         handleHttpError(error.response.status);
         return;
       }

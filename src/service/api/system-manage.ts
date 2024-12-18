@@ -178,7 +178,7 @@ export function updateUserRoles(userId: number, roleIds: number[]) {
 }
 
 export function updateUser(data: Api.SystemManage.User) {
-  return request({
+  return request<string>({
     url: '/api/users',
     method: 'post',
     data

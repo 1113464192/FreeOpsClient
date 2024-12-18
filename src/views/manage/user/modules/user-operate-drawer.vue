@@ -116,7 +116,7 @@ async function handleSubmit() {
   await validate();
   console.log('model', model);
   // 更新用户信息
-  const { error: userError } = await updateUser(model);
+  const { data: passwd, error: userError } = await updateUser(model);
   if (userError) {
     return;
   }
@@ -150,6 +150,10 @@ async function handleSubmit() {
   window.$message?.success($t('common.updateSuccess'));
   closeDrawer();
   emit('submitted');
+  window.$dialog?.info({
+    title: $t('page.manage.user.password'),
+    content: passwd
+  });
 }
 
 watch(visible, () => {
