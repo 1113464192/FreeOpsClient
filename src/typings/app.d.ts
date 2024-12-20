@@ -838,6 +838,7 @@ declare namespace App {
             command: string;
             taskPendingApproval: string;
             approve: string;
+            execTime: string;
             form: {
               name: string;
               checkTemplate: string;
@@ -849,6 +850,7 @@ declare namespace App {
               checkResponse: string;
               submitAuditor: string;
               submitSuccess: string;
+              execTime: string;
               isImmediate: string;
             };
             search: {

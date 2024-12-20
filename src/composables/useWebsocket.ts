@@ -51,6 +51,12 @@ export function useWebSocket(url: string, afterData: string, onMessage: (data: a
       if (typeof data === 'object' && data.wsError) {
         console.error('WebSocket 错误:', data.wsError);
         window.$message?.error(`WebSocket 错误: ${data.wsError}`);
+        shouldRetry = false; // 关闭连接时不再重试
+        if (socket.value) {
+          socket.value.close(1000, 'Client closed connection');
+          socket.value = null;
+          isConnected.value = false;
+        }
         return;
       }
 

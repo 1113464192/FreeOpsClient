@@ -676,6 +676,7 @@ const local: App.I18n.Schema = {
         command: '命令',
         taskPendingApproval: '您有任务待审批',
         approve: '审批',
+        execTime: '执行时间',
         form: {
           name: '请输入任务名',
           checkTemplate: '请选择检测模板',
@@ -687,6 +688,7 @@ const local: App.I18n.Schema = {
           checkResponse: '返回为空，请检查运维检查脚本的日志',
           submitAuditor: '请选择审批人员',
           submitSuccess: '提交成功',
+          execTime: '执行时间(只能填当前时间1min后的时间)',
           isImmediate: '是否立即执行'
         },
         search: {

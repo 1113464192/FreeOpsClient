@@ -475,6 +475,7 @@ declare namespace Api {
       projectId: number;
       submitter: number;
       submitterName: string;
+      execTime: string;
     }>;
 
     type TaskLogSearchParams = CommonType.RecordNullable<

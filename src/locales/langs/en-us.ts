@@ -680,6 +680,7 @@ const local: App.I18n.Schema = {
         command: 'Command',
         taskPendingApproval: 'You have task pending approval',
         approve: 'Approve',
+        execTime: 'Exec Time',
         form: {
           name: 'Please enter task name',
           checkTemplate: 'Please select check template',
@@ -691,8 +692,8 @@ const local: App.I18n.Schema = {
           checkResponse: 'Response is empty, please check the log of the operation and maintenance check script',
           submitAuditor: 'Please select auditor',
           submitSuccess: 'Submit Success',
-          // isImmediate: '是否立即执行'
-          isImmediate: 'Whether to execute immediately'
+          isImmediate: 'Whether to execute immediately',
+          execTime: 'Exec Time(Only the current time 1min later can be filled in)'
         },
         search: {
           name: 'Please enter task name',

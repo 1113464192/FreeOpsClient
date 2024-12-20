@@ -254,7 +254,7 @@ async function initializeModal() {
               <NRadio :value="false">{{ $t('common.yesOrNo.no') }}</NRadio>
             </NRadioGroup>
           </NFormItem>
-          <NFormItem v-if="!isImmediate" path="execTime" label="执行时间">
+          <NFormItem v-if="!isImmediate" path="execTime" :label="$t('page.opsManage.task.form.execTime')">
             <NDatePicker v-model:value="model.execTime" type="datetime" clearable :is-date-disabled="isTimeDisabled" />
           </NFormItem>
           <NFormItem :label="$t('page.opsManage.task.command')">

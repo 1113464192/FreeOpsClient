@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { NButton, NPopconfirm } from 'naive-ui';
+import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { approveOpsTask, fetchGetUserTaskPending } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
@@ -80,6 +80,19 @@ const {
       title: $t('page.opsManage.taskLog.name'),
       align: 'center',
       width: 100
+    },
+    {
+      key: 'execTime',
+      title: $t('page.opsManage.task.execTime'),
+      align: 'center',
+      width: 150,
+      render: row => {
+        return (
+          <div class="flex-center gap-8px">
+            {row.execTime ? <NTag type="info">{row.execTime}</NTag> : <NTag type="success">now</NTag>}
+          </div>
+        );
+      }
     },
     {
       key: 'hostIp',
@@ -264,7 +277,7 @@ async function approveTask(taskId: number, isAllow: boolean) {
         size="small"
         :flex-height="!appStore.isMobile"
         :virtual-scroll-x="true"
-        :scroll-x="1332"
+        :scroll-x="1482"
         :loading="loading"
         remote
         :row-key="row => row.id"
