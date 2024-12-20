@@ -690,7 +690,9 @@ const local: App.I18n.Schema = {
           execContent: 'Parameter template keyword: mapped variable\nGameIds: 1_20\nAll server ids: 1_200',
           checkResponse: 'Response is empty, please check the log of the operation and maintenance check script',
           submitAuditor: 'Please select auditor',
-          submitSuccess: 'Submit Success'
+          submitSuccess: 'Submit Success',
+          // isImmediate: '是否立即执行'
+          isImmediate: 'Whether to execute immediately'
         },
         search: {
           name: 'Please enter task name',

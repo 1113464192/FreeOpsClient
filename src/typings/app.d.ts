@@ -849,6 +849,7 @@ declare namespace App {
               checkResponse: string;
               submitAuditor: string;
               submitSuccess: string;
+              isImmediate: string;
             };
             search: {
               name: string;

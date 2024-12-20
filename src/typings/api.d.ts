@@ -441,6 +441,7 @@ declare namespace Api {
       templateIds: number[]; // 执行的运维脚本模板id并排好执行顺序,这里之所以有是因为任务里的默认模板排序是可选的
       auditors: number[]; // 审批人，这里之所以有是因为任务里的默认审批人是可选的
       submitter: number;
+      execTime: number; // 指定执行时间(不选默认审批完或者没有审批人就立即执行)
     }
 
     type TaskStatus = 0 | 1 | 2 | 3 | 4;

@@ -686,7 +686,8 @@ const local: App.I18n.Schema = {
           execContent: '参数模板关键字：映射的变量\n游服: 1_20\n所有服：1_200',
           checkResponse: '返回为空，请检查运维检查脚本的日志',
           submitAuditor: '请选择审批人员',
-          submitSuccess: '提交成功'
+          submitSuccess: '提交成功',
+          isImmediate: '是否立即执行'
         },
         search: {
           name: '请输入任务名',

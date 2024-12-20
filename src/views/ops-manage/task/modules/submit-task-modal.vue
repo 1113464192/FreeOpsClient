@@ -40,6 +40,8 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const title = $t('page.opsManage.task.submitTitle');
 
+const isImmediate = shallowRef<boolean>(true); // 是否立即执行
+
 const model: Api.OpsManage.SubmitTask = reactive(createDefaultModel());
 
 function createDefaultModel(): Api.OpsManage.SubmitTask {
@@ -49,7 +51,8 @@ function createDefaultModel(): Api.OpsManage.SubmitTask {
     checkResponse: '',
     templateIds: [],
     auditors: [],
-    submitter: Number.parseInt(useAuthStore().userInfo.userId, 10)
+    submitter: Number.parseInt(useAuthStore().userInfo.userId, 10),
+    execTime: Date.now() + 24 * 60 * 60 * 1000
   };
 }
 
@@ -65,6 +68,11 @@ async function getUserOptions() {
 
     userOptions.value = options;
   }
+}
+
+function isTimeDisabled(ts: number): boolean {
+  const now = Date.now();
+  return ts < now + 60 * 1000; // 禁用当前时间加一分钟之前的时间
 }
 
 const templateOptions = shallowRef<CommonType.Option<number>[]>([]);
@@ -139,6 +147,9 @@ async function handleSubmit() {
   await validate();
   console.log('model', model);
   // 更新操作模板信息
+  if (isImmediate.value) {
+    model.execTime = 0;
+  }
   const { error: taskError } = await submitTask(model);
   if (taskError) {
     return;
@@ -236,6 +247,15 @@ async function initializeModal() {
               :options="userOptions"
               :placeholder="$t('page.opsManage.task.form.submitAuditor')"
             />
+          </NFormItem>
+          <NFormItem :label="$t('page.opsManage.task.form.isImmediate')">
+            <NRadioGroup v-model:value="isImmediate">
+              <NRadio :value="true">{{ $t('common.yesOrNo.yes') }}</NRadio>
+              <NRadio :value="false">{{ $t('common.yesOrNo.no') }}</NRadio>
+            </NRadioGroup>
+          </NFormItem>
+          <NFormItem v-if="!isImmediate" path="execTime" label="执行时间">
+            <NDatePicker v-model:value="model.execTime" type="datetime" clearable :is-date-disabled="isTimeDisabled" />
           </NFormItem>
           <NFormItem :label="$t('page.opsManage.task.command')">
             <NList>

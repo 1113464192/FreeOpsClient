@@ -44,6 +44,7 @@ declare module 'vue' {
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
     NDataTable: typeof import('naive-ui')['NDataTable']
+    NDatePicker: typeof import('naive-ui')['NDatePicker']
     NDescriptions: typeof import('naive-ui')['NDescriptions']
     NDescriptionsItem: typeof import('naive-ui')['NDescriptionsItem']
     NDialog: typeof import('naive-ui')['NDialog']
