@@ -1,4 +1,5 @@
 # 欢迎来到FreeOps!
+> 工作繁忙，已不再更新，列举可以改掉的问题，二开时可以自行更改：1️⃣ websocket可以只需要一个连接，按请求时特定标记作区分，而不是现在这样一个功能的长链接生成一个websocket。
 > 这里是前端代码
 >
 >基于[honghuangdc](https://github.com/honghuangdc)大佬的[soybean-admin](https://github.com/soybeanjs/soybean-admin)项目开发的前端页面，感谢大佬的代码(让我这个一点前端都看不懂的萌新也能写出前端页面)
